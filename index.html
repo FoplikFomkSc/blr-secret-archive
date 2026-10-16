@@ -422,22 +422,35 @@
     }
 
     const screens = ["screen1", "screen2", "screen3", "screen4", "screen5"];
-    let currentScreen = 0;
+let currentScreen = 0;
 
-    function showScreen(index) {
-      screens.forEach((id, i) => {
-        document.getElementById(id).classList.toggle("active", i === index);
-      });
-      currentScreen = index;
+function showScreen(index, save = true) {
+  screens.forEach((id, i) => {
+    document.getElementById(id).classList.toggle("active", i === index);
+  });
+  currentScreen = index;
 
-      if (index === 4) {
-        const status = document.getElementById("statusText");
-        status.classList.add("secret-active");
-      } else {
-        document.getElementById("statusText").classList.remove("secret-active");
-      }
-    }
+  if (index === 4) {
+    const status = document.getElementById("statusText");
+    status.classList.add("secret-active");
+  } else {
+    document.getElementById("statusText").classList.remove("secret-active");
+  }
 
+  if (save) {
+    localStorage.setItem("blr_screen", index);
+  }
+}
+
+// Восстановление прогресса при загрузке
+const saved = localStorage.getItem("blr_screen");
+if (saved !== null) {
+  const idx = parseInt(saved, 10);
+  if (idx >= 0 && idx < screens.length) {
+    showScreen(idx, false);
+  }
+}
+    
     // === СЕКРЕТНАЯ КНОПКА (SIGNAL ACTIVE) ===
     document.getElementById("statusText").addEventListener("click", function() {
       if (currentScreen === 4) {
