@@ -47,21 +47,15 @@
     .status {
       color: #8be0b5;
       user-select: none;
+      cursor: default;
     }
 
-    /* Секретная кнопка — активируется только после этапа 4 */
-    .status.secret-active {
+    .status.secret-ready {
       cursor: pointer;
-      animation: pulse 1.6s infinite;
     }
 
-    .status.secret-active:hover {
+    .status.secret-ready:hover {
       color: #c6b8ff;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
     }
 
     .panel {
@@ -115,6 +109,11 @@
       font-size: 14px;
       line-height: 1.8;
       margin-bottom: 28px;
+    }
+
+    .description strong {
+      color: #d9d7ef;
+      letter-spacing: 1px;
     }
 
     .separator {
@@ -189,19 +188,6 @@
       color: #ff9aab;
       background: #3a1925;
       border: 1px solid #6c293d;
-    }
-
-    .message.success {
-      display: block;
-      color: #c6b8ff;
-      background: #211a37;
-      border: 1px solid #59468b;
-    }
-
-    .next-title {
-      margin: 0 0 8px;
-      color: white;
-      font-size: 17px;
     }
 
     .numbers {
@@ -308,12 +294,11 @@
         <div class="eyebrow">TRANSMISSION 002</div>
         <h1>Семь осколков.</h1>
         <p class="description">
-          Ты прошёл первый барьер. Но архив не открывается так просто.
+          Целостность передачи нарушена. Фрагменты сохранили порядок,
+          но утратили ориентацию. Каждый несёт метку спектра.
           <br><br>
-          Перед тобой — фрагменты передачи. Некоторые из них помнят время.
-          Некоторые — нет. Некоторые — потеряли порядок.
-          <br><br>
-          Смотри внимательно.
+          Спектр указывает на класс. Класс — на операцию.
+          Операция — на результат.
         </p>
         <div class="separator"></div>
         <div class="numbers">
@@ -338,13 +323,14 @@
       <!-- ЭКРАН 3 -->
       <div id="screen3" class="screen">
         <div class="eyebrow">TRANSMISSION 003</div>
-        <h1>Сложи.</h1>
+        <h1>Редукция.</h1>
         <p class="description">
-          Ты получил число. Но это ещё не ответ.
+          Результат предыдущего уровня не является конечным значением.
+          Он — носитель. Каждый его компонент обладает массой.
           <br><br>
           <strong style="font-size:20px;letter-spacing:2px;">67000903</strong>
           <br><br>
-          Каждая цифра имеет вес. Сложи их.
+          Сверни компоненты в единую скалярную величину.
         </p>
         <div class="separator"></div>
         <form id="form3">
@@ -360,39 +346,30 @@
       <!-- ЭКРАН 4 -->
       <div id="screen4" class="screen">
         <div class="eyebrow">TRANSMISSION 004</div>
-        <h1>Найди букву.</h1>
+        <h1>Индекс.</h1>
         <p class="description">
-          У тебя есть число. У архива есть имя.
+          Полученная величина — не ответ, а адрес.
+          <br><br>
+          Архив имеет имя. Имя имеет структуру.
+          Структура линейна. Позиция в структуре — ключ.
           <br><br>
           <strong style="letter-spacing:1px;">BLR SECRET ARCHIVES PROTOCOL B</strong>
           <br><br>
-          Возьми букву под номером, который ты получил. Она станет ключом.
+          Определи элемент, соответствующий адресу.
+          Он — часть будущей последовательности.
         </p>
-        <div class="separator"></div>
-        <form id="form4">
-          <label for="code4">ACCESS CODE / КОД ДОСТУПА</label>
-          <div class="input-row">
-            <input id="code4" type="text" placeholder="Введи букву..." maxlength="5" autocomplete="off" spellcheck="false" required>
-            <button type="submit">ПРОВЕРИТЬ</button>
-          </div>
-        </form>
-        <div id="message4" class="message"></div>
       </div>
 
       <!-- ЭКРАН 5 -->
       <div id="screen5" class="screen">
         <div class="eyebrow">TRANSMISSION 005</div>
-        <h1>Первый этап пройден.</h1>
+        <h1>Следующий уровень.</h1>
         <p class="description">
-          Ты получил ключ. Но архив ещё закрыт.
+          Сигнал принят. Архив реагирует.
           <br><br>
-          <strong>Оглянись. Сигнал ждёт.</strong>
+          Продолжение следует.
         </p>
         <div class="separator"></div>
-        <div style="padding:18px;background:#211a37;border:1px solid #59468b;border-radius:7px;text-align:center;">
-          <div style="color:#85809f;font-size:11px;letter-spacing:2px;margin-bottom:8px;">КЛЮЧ</div>
-          <div style="font-size:34px;font-weight:bold;letter-spacing:4px;color:#fff;">L</div>
-        </div>
         <div style="margin-top:22px;color:#85809f;font-size:11px;letter-spacing:2px;text-align:center;">
           STAGE 001 // COMPLETE
         </div>
@@ -411,7 +388,6 @@
     const HASH_1 = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a";
     const HASH_2 = "2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435";
     const HASH_3 = "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569";
-    const HASH_4 = "72dfcfb0c470ac255cde83fb8fe38de8a128188e03ea5ba5b2a93adbea1062fa";
 
     async function makeHash(text) {
       const data = new TextEncoder().encode(text);
@@ -422,49 +398,51 @@
     }
 
     const screens = ["screen1", "screen2", "screen3", "screen4", "screen5"];
-let currentScreen = 0;
+    let currentScreen = 0;
+    let secretTimer = null;
 
-function showScreen(index, save = true) {
-  screens.forEach((id, i) => {
-    document.getElementById(id).classList.toggle("active", i === index);
-  });
-  currentScreen = index;
+    function showScreen(index, save = true) {
+      screens.forEach((id, i) => {
+        document.getElementById(id).classList.toggle("active", i === index);
+      });
+      currentScreen = index;
 
-  if (index === 4) {
-    const status = document.getElementById("statusText");
-    status.classList.add("secret-active");
-  } else {
-    document.getElementById("statusText").classList.remove("secret-active");
-  }
+      if (secretTimer) {
+        clearTimeout(secretTimer);
+        secretTimer = null;
+      }
+      const status = document.getElementById("statusText");
+      status.classList.remove("secret-ready");
 
-  if (save) {
-    localStorage.setItem("blr_screen", index);
-  }
-}
+      if (index === 3) {
+        secretTimer = setTimeout(function() {
+          status.classList.add("secret-ready");
+        }, 10000);
+      }
 
-// Восстановление прогресса при загрузке
-const saved = localStorage.getItem("blr_screen");
-if (saved !== null) {
-  const idx = parseInt(saved, 10);
-  if (idx >= 0 && idx < screens.length) {
-    showScreen(idx, false);
-  }
-}
-    
-    // === СЕКРЕТНАЯ КНОПКА (SIGNAL ACTIVE) ===
+      if (save) {
+        localStorage.setItem("blr_screen", index);
+      }
+    }
+
+    const saved = localStorage.getItem("blr_screen");
+    if (saved !== null) {
+      const idx = parseInt(saved, 10);
+      if (idx >= 0 && idx < screens.length) {
+        showScreen(idx, false);
+      }
+    }
+
     document.getElementById("statusText").addEventListener("click", function() {
-      if (currentScreen === 4) {
-        alert("СИГНАЛ АКТИВИРОВАН. ВТОРОЙ ЭТАП ОТКРЫТ.");
-        // Здесь потом будет переход на второй этап
+      if (currentScreen === 3 && this.classList.contains("secret-ready")) {
+        showScreen(4);
       }
     });
 
-    // === СТРЕЛКА НАЗАД ===
     document.getElementById("backLink").addEventListener("click", function() {
       if (currentScreen > 0) showScreen(currentScreen - 1);
     });
 
-    // === ФОРМА 1 ===
     document.getElementById("form1").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code1").value.trim().toUpperCase();
@@ -477,7 +455,6 @@ if (saved !== null) {
       }
     });
 
-    // === ФОРМА 2 ===
     document.getElementById("form2").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code2").value.trim().toUpperCase();
@@ -490,7 +467,6 @@ if (saved !== null) {
       }
     });
 
-    // === ФОРМА 3 ===
     document.getElementById("form3").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code3").value.trim().toUpperCase();
@@ -502,19 +478,6 @@ if (saved !== null) {
         m.textContent = "ДОСТУП ОТКЛОНЁН. Ответ неверный.";
       }
     });
-
-    // === ФОРМА 4 ===
-    document.getElementById("form4").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code4").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_4) {
-        showScreen(4);
-      } else {
-        const m = document.getElementById("message4");
-        m.className = "message error";
-        m.textContent = "ДОСТУП ОТКЛОНЁН. Буква неверная.";
-      }
-    });
   </script>
 </body>
-          </html>
+</html>
