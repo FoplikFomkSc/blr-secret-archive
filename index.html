@@ -278,19 +278,29 @@
   </main>
 
   <script>
-    // Код, который игрок должен найти в игре.
-    const SECRET_CODE = "PRUZEK-07";
+        // Отпечаток кода. Сам код игрок должен найти в игре.
+    const SECRET_HASH = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a";
+
+    // Функция превращает введённый код в отпечаток.
+    async function makeHash(text) {
+      const data = new TextEncoder().encode(text);
+      const buffer = await crypto.subtle.digest("SHA-256", data);
+      return [...new Uint8Array(buffer)]
+        .map(x => x.toString(16).padStart(2, "0"))
+        .join("");
+    }
 
     const form = document.getElementById("codeForm");
     const input = document.getElementById("secretCode");
     const message = document.getElementById("message");
 
-    form.addEventListener("submit", function(event) {
+        form.addEventListener("submit", async function(event) {
       event.preventDefault();
 
       const enteredCode = input.value.trim().toUpperCase();
+      const enteredHash = await makeHash(enteredCode);
 
-      if (enteredCode === SECRET_CODE) {
+      if (enteredHash === SECRET_HASH) {
         message.className = "message success";
         message.innerHTML = `
           <h2 class="next-title">ДОСТУП РАЗРЕШЁН</h2>
