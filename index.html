@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090a10">
   <title>Unknown Transmission | Ball Ricoshet</title>
   <style>
     * { box-sizing: border-box; }
@@ -35,8 +36,11 @@
     .num-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .num-color { font-size: 11px; color: #f0efff; font-family: monospace; }
     .num-value { font-size: 22px; font-weight: bold; color: #f0efff; }
-    .footer { display: flex; justify-content: space-between; margin-top: 20px; color: #555a70; font-size: 9px; }
-    .back-link { color: #777d96; cursor: pointer; }
+    .nav-footer { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
+    .nav-btn { flex: 1; padding: 12px; background: #23253a; color: #a6aac0; border-radius: 7px; text-align: center; cursor: pointer; font-size: 12px; font-weight: bold; border: 1px solid #34364d; transition: 0.2s; }
+    .nav-btn:hover { background: #2f324a; color: white; }
+    .nav-btn.hidden { visibility: hidden; }
+    .bottom-footer { display: flex; justify-content: space-between; margin-top: 20px; color: #555a70; font-size: 9px; }
     .screen { display: none; }
     .screen.active { display: block; }
     .sudoku-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 2px; background: #23253a; border: 2px solid #5c8dff; padding: 2px; max-width: 360px; margin: 0 auto 20px; }
@@ -56,185 +60,196 @@
       <span>BR // ARCHIVE</span>
       <span id="statusText" class="status">● SIGNAL ACTIVE</span>
     </div>
+    
     <section class="panel">
       <div class="symbol">⌁</div>
-          <!-- Экран 1 -->
-    <div id="screen1" class="screen active">
-      <div class="eyebrow">UNKNOWN TRANSMISSION</div>
-      <h1>Ты нашёл нас.</h1>
-      <p class="description">Эта передача не должна была попасть в открытый доступ. Если ты здесь, значит, ты обнаружил то, что другие пропустили.<br><br>У тебя есть код. Введи его, чтобы узнать, что скрывается дальше.</p>
-      <div class="separator"></div>
-      <form id="form1">
-        <label for="code1">ACCESS CODE</label>
-        <div class="input-row"><input id="code1" type="text" placeholder="Введи код..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-      </form>
-      <div id="message1" class="message"></div>
-    </div>
 
-    <!-- Экран 2 -->
-    <div id="screen2" class="screen">
-      <div class="eyebrow">TRANSMISSION 002</div>
-      <h1>Семь осколков.</h1>
-      <p class="description">Целостность передачи нарушена. Каждый несёт метку спектра. Спектр указывает на класс. Класс — на операцию.</p>
-      <div class="separator"></div>
-      <div class="numbers">
-        <div class="num-block"><span class="num-color">c94444</span><span class="num-value">7072</span></div>
-        <div class="num-block"><span class="num-color">55aa55</span><span class="num-value">3</span></div>
-        <div class="num-block"><span class="num-color">e05555</span><span class="num-value">5081</span></div>
-        <div class="num-block"><span class="num-color">5577cc</span><span class="num-value">6202</span></div>
-        <div class="num-block"><span class="num-color">449944</span><span class="num-value">1</span></div>
-        <div class="num-block"><span class="num-color">ff88aa</span><span class="num-value">2113</span></div>
-        <div class="num-block"><span class="num-color">4466bb</span><span class="num-value">7202</span></div>
+      <!-- Экран 1 -->
+      <div id="screen1" class="screen active">
+        <div class="eyebrow">UNKNOWN TRANSMISSION</div>
+        <h1>Ты нашёл нас.</h1>
+        <p class="description">Эта передача не должна была попасть в открытый доступ. Если ты здесь, значит, ты обнаружил то, что другие пропустили.<br><br>У тебя есть код. Введи его, чтобы узнать, что скрывается дальше.</p>
+        <div class="separator"></div>
+        <form id="form1">
+          <label for="code1">ACCESS CODE</label>
+          <div class="input-row"><input id="code1" type="text" placeholder="Введи код..." required><button type="submit">ПРОВЕРИТЬ</button></div>
+        </form>
+        <div id="message1" class="message"></div>
       </div>
-      <form id="form2">
-        <label for="code2">ACCESS CODE</label>
-        <div class="input-row"><input id="code2" type="text" placeholder="Введи ответ..." required><button type="submit"><span class="mirror">ПРОВЕРИТЬ</span></button></div>
-      </form>
-      <div id="message2" class="message"></div>
-    </div>
 
-    <!-- Экран 3 -->
-    <div id="screen3" class="screen">
-      <div class="eyebrow">TRANSMISSION 003</div>
-      <h1>Редукция.</h1>
-      <p class="description">Результат предыдущего уровня не является конечным значением.<br><br><strong style="font-size:20px;">67000903</strong><br><br>Сверни компоненты в единую скалярную величину.</p>
-      <div class="separator"></div>
-      <form id="form3">
-        <label for="code3">ACCESS CODE</label>
-        <div class="input-row"><input id="code3" type="text" placeholder="Введи ответ..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-      </form>
-      <div id="message3" class="message"></div>
-    </div>
-
-    <!-- Экран 4 -->
-    <div id="screen4" class="screen">
-      <div class="eyebrow">TRANSMISSION 004</div>
-      <h1>Индекс.</h1>
-      <p class="description">Полученная величина — не ответ, а адрес.<br><br>Архив имеет имя. Имя имеет структуру. Позиция в структуре — ключ.<br><br><strong>BLR SECRET ARCHIVES PROTOCOL B</strong><br><br>Определи элемент, соответствующий адресу.</p>
-    </div>
-
-    <!-- Экран 5 -->
-    <div id="screen5" class="screen">
-      <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div>
-      <h1>Протокол Ares.</h1>
-      <p class="description">Система защиты активирована. Расшифруй название протокола.</p>
-      <div class="separator"></div>
-      <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; text-align:center; font-family:monospace; font-size:12px; color:#5c8dff;">
-        01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001
-      </div>
-      <form id="form5">
-        <label for="code5">ACCESS CODE</label>
-        <div class="input-row"><input id="code5" type="text" placeholder="Введи название..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-      </form>
-      <div id="message5" class="message"></div>
-    </div>
-
-    <!-- Экран 6 -->
-    <div id="screen6" class="screen">
-      <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div>
-      <h1>Спектр.</h1>
-      <p class="description">Калибровка. Переведи фрагменты, сложи значения и найди резонанс. Введи три значения через запятую.</p>
-      <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; font-family:monospace; font-size:12px;">
-        #006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a
-      </div>
-      <form id="form6">
-        <label for="code6">РЕЗОНАНС (X,X,X)</label>
-        <div class="input-row"><input id="code6" type="text" placeholder="100,200,300" required><button type="submit">ПРОВЕРИТЬ</button></div>
-      </form>
-      <div id="message6" class="message"></div>
-    </div>
-
-    <!-- Экран 7 -->
-    <div id="screen7" class="screen">
-      <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div>
-      <h1>Перехват.</h1>
-      <p class="description">Врата откроются тому, кто узрит суть в отражении. Прочти послание, глядя в зеркало.</p>
-      <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin:20px 0; text-align:center; font-family:monospace; font-size:16px; color:#9b7bff;">
-        ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
-      </div>
-      <form id="form7">
-        <label for="code7">ACCESS CODE</label>
-        <div class="input-row"><input id="code7" type="text" placeholder="Расшифровка..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-      </form>
-      <div id="message7" class="message"></div>
-    </div>
-
-    <!-- Экран 8 -->
-    <div id="screen8" class="screen">
-      <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div>
-      <h1>Сбой ядра.</h1>
-      <p class="description">Восстанови утраченную координату. Найди единственный пустой слот в матрице.</p>
-      <div class="sudoku-grid">
-        <div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">8</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div><div class="sudoku-cell">2</div>
-        <div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div>
-        <div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">8</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div>
-        <div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">9</div><div class="sudoku-cell">7</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">3</div>
-        <div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div>
-        <div class="sudoku-cell">7</div><div class="sudoku-cell">1</div><div class="sudoku-cell">3</div><div class="sudoku-cell">9</div><div class="sudoku-cell">2</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div>
-        <div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">4</div>
-        <div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">7</div><div class="sudoku-cell">4</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">3</div><div class="sudoku-cell">5</div>
-        <div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">5</div><div class="sudoku-cell empty">?</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div>
-      </div>
-      <form id="form8">
-        <label for="code8">ПРОПУЩЕННАЯ ЦИФРА</label>
-        <div class="input-row"><input id="code8" type="text" placeholder="Число..." required><button type="submit">ВОССТАНОВИТЬ</button></div>
-      </form>
-      <div id="message8" class="message"></div>
-      <div id="panelNext8" style="display:none; margin-top:20px; text-align:center;">
-        <button onclick="showScreen(8)" style="padding:12px; width:100%;">СБОРКА РОБОТОВ</button>
-      </div>
-    </div>
-
-    <!-- Экран 9 -->
-    <div id="screen9" class="screen">
-      <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div>
-      <h1>Сборка шаблона.</h1>
-      <div style="background:#0c0e17; padding:10px; border:1px solid #ff4444; border-radius:7px; font-family:monospace; font-size:11px; color:#ff9aab; margin:15px 0;">
-        > ЛОГ 1: Корпус — только металл.<br>
-        > ЛОГ 2: Руки — полимеры не подходят.<br>
-        > ЛОГ 3: Провод — строго 5 Ом.<br>
-        > ЛОГ 4: Ноги — никакого пластика.
-      </div>
-      <div class="assembly-row"><span>КОРПУС:</span><select id="part_body"><option value="wrong1">Пластиковый</option><option value="right">Титановый</option></select></div>
-      <div class="assembly-row"><span>РУКИ:</span><select id="part_arms"><option value="wrong1">Полимерные</option><option value="right">Стальные</option></select></div>
-      <div class="assembly-row"><span>НОГИ:</span><select id="part_legs"><option value="right">Металлические</option><option value="wrong1">Пластиковые</option></select></div>
-      <div class="assembly-row"><span>ПРОВОД:</span><select id="part_wire"><option value="wrong1">Медный (3 Ом)</option><option value="right">Серебряный (5 Ом)</option></select></div>
-      <div class="separator"></div>
-      <button id="btnAssemble" style="width:100%; padding:15px;">ЗАПУСТИТЬ СИНТЕЗ</button>
-      <div id="message9" class="message"></div>
-      <div id="panelNext9" style="display:none; margin-top:20px; text-align:center;">
-        <button onclick="showScreen(9)" style="padding:12px; width:100%; background:#ff0000;">ЗАЩИТИТЬ БУНКЕР</button>
-      </div>
-    </div>
-
-    <!-- Экран 10 -->
-    <div id="screen10" class="screen">
-      <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div>
-      <h1>Защита.</h1>
-      <div id="defenseHUD" style="display:none; margin-bottom: 15px;">
-        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
-          <span>HP: <span id="hpDisplay">100</span></span>
-          <span>ВРЕМЯ: <span id="timeDisplay">120</span>с</span>
+      <!-- Экран 2 -->
+      <div id="screen2" class="screen">
+        <div class="eyebrow">TRANSMISSION 002</div>
+        <h1>Семь осколков.</h1>
+        <p class="description">Целостность передачи нарушена. Каждый несёт метку спектра. Спектр указывает на класс. Класс — на операцию.</p>
+        <div class="separator"></div>
+        <div class="numbers">
+          <div class="num-block"><span class="num-color">c94444</span><span class="num-value">7072</span></div>
+          <div class="num-block"><span class="num-color">55aa55</span><span class="num-value">3</span></div>
+          <div class="num-block"><span class="num-color">e05555</span><span class="num-value">5081</span></div>
+          <div class="num-block"><span class="num-color">5577cc</span><span class="num-value">6202</span></div>
+          <div class="num-block"><span class="num-color">449944</span><span class="num-value">1</span></div>
+          <div class="num-block"><span class="num-color">ff88aa</span><span class="num-value">2113</span></div>
+          <div class="num-block"><span class="num-color">4466bb</span><span class="num-value">7202</span></div>
         </div>
-        <div style="height:10px; background:#3a1925; border-radius:5px;"><div id="hpBar" style="width:100%; height:100%; background:#8be0b5;"></div></div>
+        <form id="form2">
+          <label for="code2">ACCESS CODE</label>
+          <div class="input-row"><input id="code2" type="text" placeholder="Введи ответ..." required><button type="submit"><span class="mirror">ПРОВЕРИТЬ</span></button></div>
+        </form>
+        <div id="message2" class="message"></div>
       </div>
-      <div id="gameArea" style="position:relative; width:100%; height:300px; background:#090b13; border:1px solid #23253a; border-radius:7px; overflow:hidden; cursor:crosshair;">
-        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>
-        <div id="messageGame" class="message" style="position:absolute; top:10px; left:10px; right:10px;"></div>
+
+      <!-- Экран 3 -->
+      <div id="screen3" class="screen">
+        <div class="eyebrow">TRANSMISSION 003</div>
+        <h1>Редукция.</h1>
+        <p class="description">Результат предыдущего уровня не является конечным значением.<br><br><strong style="font-size:20px;">67000903</strong><br><br>Сверни компоненты в единую скалярную величину.</p>
+        <div class="separator"></div>
+        <form id="form3">
+          <label for="code3">ACCESS CODE</label>
+          <div class="input-row"><input id="code3" type="text" placeholder="Введи ответ..." required><button type="submit">ПРОВЕРИТЬ</button></div>
+        </form>
+        <div id="message3" class="message"></div>
       </div>
-      <button id="btnStartDefense" style="width:100%; margin-top:15px; padding:15px;">НАЧАТЬ ЗАЩИТУ</button>
-      <div id="panelNext10" style="display:none; margin-top:20px; text-align:center;">
-        <button onclick="alert('КОНЕЦ 2 ЭТАПА')" style="padding:15px; width:100%; background:#8be0b5; color:#000;">ПЕРЕЙТИ К ЭТАПУ 3</button>
+
+      <!-- Экран 4 -->
+      <div id="screen4" class="screen">
+        <div class="eyebrow">TRANSMISSION 004</div>
+        <h1>Индекс.</h1>
+        <p class="description">Полученная величина — не ответ, а адрес.<br><br>Архив имеет имя. Имя имеет структуру. Позиция в структуре — ключ.<br><br><strong>BLR SECRET ARCHIVES PROTOCOL B</strong><br><br>Определи элемент, соответствующий адресу.</p>
       </div>
+
+      <!-- Экран 5 -->
+      <div id="screen5" class="screen">
+        <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div>
+        <h1>Протокол Ares.</h1>
+        <p class="description">Система защиты активирована. Расшифруй название протокола.</p>
+        <div class="separator"></div>
+        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; text-align:center; font-family:monospace; font-size:12px; color:#5c8dff;">
+          01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001
+        </div>
+        <form id="form5">
+          <label for="code5">ACCESS CODE</label>
+          <div class="input-row"><input id="code5" type="text" placeholder="Введи название..." required><button type="submit">ПРОВЕРИТЬ</button></div>
+        </form>
+        <div id="message5" class="message"></div>
+      </div>
+
+      <!-- Экран 6 -->
+      <div id="screen6" class="screen">
+        <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div>
+        <h1>Спектр.</h1>
+        <p class="description">Калибровка. Переведи фрагменты, сложи значения и найди резонанс. Введи три значения через запятую.</p>
+        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; font-family:monospace; font-size:12px;">
+          #006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a
+        </div>
+        <form id="form6">
+          <label for="code6">РЕЗОНАНС (X,X,X)</label>
+          <div class="input-row"><input id="code6" type="text" placeholder="100,200,300" required><button type="submit">ПРОВЕРИТЬ</button></div>
+        </form>
+        <div id="message6" class="message"></div>
+      </div>
+
+      <!-- Экран 7 -->
+      <div id="screen7" class="screen">
+        <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div>
+        <h1>Перехват.</h1>
+        <p class="description">Врата откроются тому, кто узрит суть в отражении. Прочти послание, глядя в зеркало.</p>
+        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin:20px 0; text-align:center; font-family:monospace; font-size:16px; color:#9b7bff;">
+          ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
+        </div>
+        <form id="form7">
+          <label for="code7">ACCESS CODE</label>
+          <div class="input-row"><input id="code7" type="text" placeholder="Расшифровка..." required><button type="submit">ПРОВЕРИТЬ</button></div>
+        </form>
+        <div id="message7" class="message"></div>
+      </div>
+
+      <!-- Экран 8 -->
+      <div id="screen8" class="screen">
+        <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div>
+        <h1>Сбой ядра.</h1>
+        <p class="description">Восстанови утраченную координату. Найди единственный пустой слот в матрице.</p>
+        <div class="sudoku-grid">
+          <div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">8</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div><div class="sudoku-cell">2</div>
+          <div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div>
+          <div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">8</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div>
+          <div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">9</div><div class="sudoku-cell">7</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">3</div>
+          <div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div>
+          <div class="sudoku-cell">7</div><div class="sudoku-cell">1</div><div class="sudoku-cell">3</div><div class="sudoku-cell">9</div><div class="sudoku-cell">2</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div>
+          <div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">4</div>
+          <div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">7</div><div class="sudoku-cell">4</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">3</div><div class="sudoku-cell">5</div>
+          <div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">5</div><div class="sudoku-cell empty">?</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div>
+        </div>
+        <form id="form8">
+          <label for="code8">ПРОПУЩЕННАЯ ЦИФРА</label>
+          <div class="input-row"><input id="code8" type="text" placeholder="Число..." required><button type="submit">ВОССТАНОВИТЬ</button></div>
+        </form>
+        <div id="message8" class="message"></div>
+        <div id="panelNext8" style="display:none; margin-top:20px; text-align:center;">
+          <button onclick="showScreen(8)" style="padding:12px; width:100%;">СБОРКА РОБОТОВ</button>
+        </div>
+      </div>
+
+      <!-- Экран 9 -->
+      <div id="screen9" class="screen">
+        <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div>
+        <h1>Сборка шаблона.</h1>
+        <div style="background:#0c0e17; padding:10px; border:1px solid #ff4444; border-radius:7px; font-family:monospace; font-size:11px; color:#ff9aab; margin:15px 0;">
+          > ЛОГ 1: Корпус — только металл.<br>> ЛОГ 2: Руки — полимеры не подходят.<br>> ЛОГ 3: Провод — строго 5 Ом.<br>> ЛОГ 4: Ноги — никакого пластика.
+        </div>
+        <div class="assembly-row"><span>КОРПУС:</span><select id="part_body"><option value="wrong1">Пластиковый</option><option value="right">Титановый</option></select></div>
+        <div class="assembly-row"><span>РУКИ:</span><select id="part_arms"><option value="wrong1">Полимерные</option><option value="right">Стальные</option></select></div>
+        <div class="assembly-row"><span>НОГИ:</span><select id="part_legs"><option value="right">Металлические</option><option value="wrong1">Пластиковые</option></select></div>
+        <div class="assembly-row"><span>ПРОВОД:</span><select id="part_wire"><option value="wrong1">Медный (3 Ом)</option><option value="right">Серебряный (5 Ом)</option></select></div>
+        <div class="separator"></div>
+        <button id="btnAssemble" style="width:100%; padding:15px;">ЗАПУСТИТЬ СИНТЕЗ</button>
+        <div id="message9" class="message"></div>
+        <div id="panelNext9" style="display:none; margin-top:20px; text-align:center;">
+          <button onclick="showScreen(9)" style="padding:12px; width:100%; background:#ff0000;">ЗАЩИТИТЬ БУНКЕР</button>
+        </div>
+      </div>
+
+      <!-- Экран 10 -->
+      <div id="screen10" class="screen">
+        <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div>
+        <h1>Защита.</h1>
+        <div id="defenseHUD" style="display:none; margin-bottom: 15px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
+            <span>HP: <span id="hpDisplay">100</span></span><span>ВРЕМЯ: <span id="timeDisplay">120</span>с</span>
+          </div>
+          <div style="height:10px; background:#3a1925; border-radius:5px;"><div id="hpBar" style="width:100%; height:100%; background:#8be0b5;"></div></div>
+        </div>
+        <div id="gameArea" style="position:relative; width:100%; height:300px; background:#090b13; border:1px solid #23253a; border-radius:7px; overflow:hidden; cursor:crosshair;">
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>
+          <div id="messageGame" class="message" style="position:absolute; top:10px; left:10px; right:10px;"></div>
+        </div>
+        <button id="btnStartDefense" style="width:100%; margin-top:15px; padding:15px;">НАЧАТЬ ЗАЩИТУ</button>
+        <div id="panelNext10" style="display:none; margin-top:20px; text-align:center;">
+          <button onclick="alert('КОНЕЦ 2 ЭТАПА')" style="padding:15px; width:100%; background:#8be0b5; color:#000;">ПЕРЕЙТИ К ЭТАПУ 3</button>
+        </div>
+      </div>
+      
+      <!-- Кнопки навигации -->
+      <div class="nav-footer">
+        <div id="btnBack" class="nav-btn hidden" onclick="goBack()">← НАЗАД</div>
+        <div id="btnForward" class="nav-btn hidden" onclick="goForward()">ВПЕРЕД →</div>
+      </div>
+
+    </section>
+    
+    <div class="bottom-footer">
+      <span>BALL RICOSHet</span>
+      <span>ARCHIVE 001</span>
     </div>
-  </section>
-  <div class="footer">
-    <span>BALL RICOSHet</span>
-    <span id="backLink" class="back-link">← НАЗАД</span>
-    <span>ARCHIVE 001</span>
-  </div>
-</main>
+  </main>
     <script>
+    const HASH_1 = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a";
+    const HASH_2 = "2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435";
+    const HASH_3 = "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569";
+    const HASH_5 = "680b0297a3f78487b904407550931744752547436f377a1549c78e6a789cbaf9"; // ARESPROTOCOLPURGEALPHA
+    const HASH_7 = "72dfcfb0c470ac255cde83fb8fe38de8a128188e03ea5ba5b2a93adbea1062fa"; // AREX_PROTECTION_CODE_ACTIVE_BLIR
+
     async function makeHash(text) {
       const data = new TextEncoder().encode(text);
       const buffer = await crypto.subtle.digest("SHA-256", data);
@@ -247,75 +262,90 @@
 
     function showScreen(index, save = true) {
       if (index >= screens.length) return;
+      
       screens.forEach((id, i) => {
         const el = document.getElementById(id);
         if(el) el.classList.toggle("active", i === index);
       });
       currentScreen = index;
 
+      // Логика секретной кнопки
       if (secretTimer) { clearTimeout(secretTimer); secretTimer = null; }
       const status = document.getElementById("statusText");
       status.classList.remove("secret-ready");
-
       if (index === 3) {
         secretTimer = setTimeout(() => status.classList.add("secret-ready"), 10000);
       }
+
+      // Логика кнопок навигации
+      document.getElementById("btnBack").classList.toggle("hidden", index === 0);
+      document.getElementById("btnForward").classList.toggle("hidden", index === 0 || index === 4 || index === 9);
+
       if (save) localStorage.setItem("blr_screen", index);
     }
 
+    function goBack() {
+      if (currentScreen > 0) showScreen(currentScreen - 1);
+    }
+
+    function goForward() {
+      // Кнопка вперед работает только если мы не на 1, не на 5(индекс 4) и не на 10(индекс 9)
+      if (currentScreen > 0 && currentScreen < 9) showScreen(currentScreen + 1);
+    }
+
+    // Восстановление прогресса
     const saved = localStorage.getItem("blr_screen");
     if (saved !== null) {
       const idx = parseInt(saved, 10);
       if (idx >= 0 && idx < screens.length) showScreen(idx, false);
+    } else {
+      showScreen(0, false);
     }
 
     document.getElementById("statusText").addEventListener("click", function() {
       if (currentScreen === 3 && this.classList.contains("secret-ready")) showScreen(4); 
     });
 
-    document.getElementById("backLink").addEventListener("click", function() {
-      if (currentScreen > 0) showScreen(currentScreen - 1);
-    });
-
-    document.getElementById("form1").addEventListener("submit", function(e) {
+    // ФОРМЫ
+    document.getElementById("form1").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code1").value.trim().toUpperCase();
-      if (val === "PRUZEK-07") showScreen(1); 
+      if (await makeHash(val) === HASH_1) showScreen(1); 
       else { const m = document.getElementById("message1"); m.className = "message error"; m.textContent = "НЕВЕРНО"; }
     });
 
-    document.getElementById("form2").addEventListener("submit", function(e) {
+    document.getElementById("form2").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code2").value.trim().toUpperCase();
-      if (val === "67000903") showScreen(2); 
+      if (await makeHash(val) === HASH_2) showScreen(2); 
       else { const m = document.getElementById("message2"); m.className = "message error"; m.textContent = "НЕВЕРНО"; }
     });
 
-    document.getElementById("form3").addEventListener("submit", function(e) {
+    document.getElementById("form3").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code3").value.trim().toUpperCase();
-      if (val === "25") showScreen(3); 
+      if (await makeHash(val) === HASH_3) showScreen(3); 
       else { const m = document.getElementById("message3"); m.className = "message error"; m.textContent = "НЕВЕРНО"; }
     });
 
-    document.getElementById("form5").addEventListener("submit", function(e) {
+    document.getElementById("form5").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code5").value.trim().toUpperCase();
-      if (val === "ARESPROTOCOLPURGEALPHA") showScreen(5); 
+      if (await makeHash(val) === HASH_5) showScreen(5); 
       else { const m = document.getElementById("message5"); m.className = "message error"; m.textContent = "ОШИБКА"; }
     });
 
-    document.getElementById("form6").addEventListener("submit", function(e) {
+    document.getElementById("form6").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code6").value.trim().replace(/\s/g, '');
       if (val === "338,330,140") showScreen(6); 
       else { const m = document.getElementById("message6"); m.className = "message error"; m.textContent = "НЕ СОВПАЛО"; }
     });
 
-    document.getElementById("form7").addEventListener("submit", function(e) {
+    document.getElementById("form7").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code7").value.trim().toUpperCase();
-      if (val === "AREX_PROTECTION_CODE_ACTIVE_BLIR") showScreen(7); 
+      if (await makeHash(val) === HASH_7) showScreen(7); 
       else { const m = document.getElementById("message7"); m.className = "message error"; m.textContent = "НЕ РАСШИФРОВАНО"; }
     });
 
