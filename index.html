@@ -17,7 +17,7 @@ body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;alig
 .glass::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#0000 0 2px,#0003 3px),radial-gradient(ellipse,#0000 60%,#0007)}
 .osbar{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;background:#11131d;border-bottom:1px solid #292b42;color:var(--muted);font-size:10px;letter-spacing:2px}
 .status{color:var(--green);user-select:none}
-.view{height:min(66vh,540px);overflow-y:auto;padding:24px 22px}
+.view{height:min(70vh,580px);overflow-y:auto;padding:24px 22px}
 .stand{width:90px;height:22px;margin:0 auto;background:linear-gradient(#1b1c26,#2b2d3a)}
 .base{width:200px;height:8px;margin:0 auto;border-radius:6px;background:#2b2d3a}
 .pc{margin-top:12px;display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(#2a2c38,#171821);border-radius:10px;box-shadow:inset 0 1px 0 #4a4d63,0 10px 30px #0008}
@@ -74,6 +74,8 @@ input.txt:focus{border-color:var(--purple)}
 .ar select{max-width:62%;background:#090b13;color:#fff;padding:8px;border-radius:5px;border:1px solid #34364d}
 #gameArea{position:relative;height:260px;background:#090b13;border:1px solid #23253a;border-radius:7px;overflow:hidden;cursor:crosshair}
 #gameArea .cs{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:.5}
+.room-tool { display:inline-block; padding:5px 10px; background:#23253a; border:1px solid #555a70; border-radius:5px; cursor:pointer; font-size:14px; margin:2px; }
+.room-tool.active { border-color:#8be0b5; background:#15183a; box-shadow:0 0 8px #8be0b5; }
 </style>
 </head>
 <body>
@@ -82,6 +84,7 @@ input.txt:focus{border-color:var(--purple)}
 <div class="osbar"><span>BLR SecArh</span><span id="statusText" class="status">● SIGNAL ACTIVE</span></div>
 <div class="view" id="view">
 
+<!-- ЭКРАН 0 -->
 <section class="scr active">
 <div class="symbol">⌁</div><div class="eyebrow">UNKNOWN TRANSMISSION</div><h1>Ты нашёл нас.</h1>
 <p class="description">Эта передача не для чужих глаз. Кто ищет, тот найдёт; кто нашёл, тот знает ключ.<br><br>Назови его, и дверь отворится.</p>
@@ -89,6 +92,7 @@ input.txt:focus{border-color:var(--purple)}
 <form id="f0"><label for="i0">ACCESS CODE</label><div class="row"><input class="txt" id="i0" placeholder="Введи код..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m0"></div>
 </section>
 
+<!-- ЭКРАН 1 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 002</div><h1>Семь осколков.</h1>
 <p class="description">Не всё то золото, что блестит: у каждого осколка два лица. Метка — цвет, цвет — класс, класс — действие.</p>
@@ -98,6 +102,7 @@ input.txt:focus{border-color:var(--purple)}
 <form id="f1"><label for="i1">ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go"><span class="mir">ПРОВЕРИТЬ</span></button></div></form><div class="msg" id="m1"></div>
 </section>
 
+<!-- ЭКРАН 2 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 003</div><h1>Редукция.</h1>
 <p class="description">Из песчинок вырастает пустыня, из капель — река.<br><br><strong style="font-size:20px">67000903</strong><br><br>Рассыпь целое на части и сложи заново, не обронив ни одной.</p>
@@ -105,11 +110,13 @@ input.txt:focus{border-color:var(--purple)}
 <form id="f2"><label for="i2">ACCESS CODE</label><div class="row"><input class="txt" id="i2" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m2"></div>
 </section>
 
+<!-- ЭКРАН 3 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 004</div><h1>Индекс.</h1>
 <p class="description">Число — не ответ, а адрес: не пеняй на дорогу, считай шаги.<br><br><strong>BLR SECRET ARCHIVES PROTOCOL B</strong><br><br>Иной ответ не вводят, а касаются. Кто ждёт, тот дождётся.</p>
 </section>
 
+<!-- ЭКРАН 4 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div><h1>Протокол Ares.</h1>
 <p class="description">Два знака правят миром: ноль да единица. Восемь птиц в стае — одна буква. Прочти стаю и назови зверя по имени.</p>
@@ -117,31 +124,38 @@ input.txt:focus{border-color:var(--purple)}
 <form id="f4"><label for="i4">ACCESS CODE</label><div class="row"><input class="txt" id="i4" placeholder="Введи название..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m4"></div>
 </section>
 
+<!-- ЭКРАН 5 (Спектр) -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div><h1>Спектр.</h1>
 <p class="description">Цвет — не один голос, а хор. Сложи одноимённые голоса всех, а круг мерь градусами: что осталось за полным кругом, то и есть эхо.</p>
+<!-- Круг HSL как подсказка -->
+<div style="text-align:center; margin-bottom:15px;">
+  <div style="width:100px; height:100px; border-radius:50%; margin:0 auto; background:conic-gradient(red, yellow, lime, cyan, blue, magenta, red); border:2px solid #fff; box-shadow:0 0 10px #000;"></div>
+  <div style="font-size:10px; color:var(--muted); margin-top:5px;">Круг градусов (0-360)</div>
+</div>
 <div class="box">#006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a</div>
 <form id="f5"><label for="i5">РЕЗОНАНС</label><div class="row"><input class="txt" id="i5" placeholder="..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m5"></div>
 </section>
 
+<!-- ЭКРАН 6 (Твой Атбаш) -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div><h1>Перехват.</h1>
-<p class="description">Что дважды отражено, то прямым не кажется. Зеркало видит начало концом, а шаг вперёд равен месту в строю. Не по эфиру суди, а по числу в скобках. Семь раз отмерь, один раз введи.</p>
-<div class="box">
-<div class="frag"><small>[3]</small>OQYWC</div>
-<div class="frag"><small>[1]</small>AJWI</div>
-<div class="frag"><small>[2]</small>JUTXQY</div>
+<p class="description">Спектр активирован. Система зафиксировала сигнал с орбиты.<br><br>Врата откроются тому, кто узрит суть в отражении. То, что впереди, станет позади, а свет обернётся тьмой. Прочти послание богов, глядя в зеркало.</p>
+<div class="box" style="text-align:center;color:var(--purple);font-size:16px;letter-spacing:2px;word-break:break-all;">
+ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
 </div>
 <form id="f6"><label for="i6">КЛЮЧ</label><div class="row"><input class="txt" id="i6" placeholder="Расшифровка..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m6"></div>
 </section>
 
+<!-- ЭКРАН 7 (Судоку) -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div><h1>Сбой ядра.</h1>
-<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Каждая клетка хранит цифру: верни всех домой.</p>
+<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Найди единственную пустую клетку и восстанови матрицу.</p>
 <div class="sg" id="sg"></div>
 <button type="button" class="go" id="btnSud" style="width:100%">ВОССТАНОВИТЬ</button><div class="msg" id="m7"></div>
 </section>
 
+<!-- ЭКРАН 8 (Сборка) -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div><h1>Сборка шаблона.</h1>
 <div id="asm1">
@@ -165,10 +179,11 @@ input.txt:focus{border-color:var(--purple)}
 <div id="asm2" style="display:none">
 <p class="description" style="margin-bottom:10px">Тяни детали на места. Порядок — в послании ниже.</p>
 <div id="tray"></div><div id="bot"></div><div class="msg" id="mA"></div>
-<p class="description" style="margin-top:14px">Порядок прост, как жизнь: сперва кость, затем ходули, потом руки; в грудь — сердце, в жилы — кровь, на кость — плоть; в череп — мысль, в мысль — глаз, в руку — гнев. Тяни детали на места. Когда всё стоит, протяни жилу: от сердца к мысли, от мысли к глазу, от глаза к гневу (касайся по очереди). Чип — сперва железному, затем разуму машины.</p>
+<p class="description" style="margin-top:14px">Порядок прост: сперва кость, затем ходули, потом руки; в грудь — сердце, в жилы — кровь, на кость — плоть; в череп — мысль, в мысль — глаз, в руку — гнев. Когда всё стоит, протяни жилу. Чип — сперва железному, затем разуму машины.</p>
 </div>
 </section>
 
+<!-- ЭКРАН 9 (Защита) -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div><h1>Защита.</h1>
 <p class="description">Бункер держится на тех, кто не зевает. Железные братья стоят рядом, но и твой выстрел весит. Богов много, а бункер один.</p>
@@ -178,14 +193,38 @@ input.txt:focus{border-color:var(--purple)}
 <canvas id="cv" width="360" height="300" style="width:100%;border-radius:7px;border:1px solid #23253a;touch-action:none;cursor:crosshair;display:block"></canvas>
 <div class="msg" id="mG"></div>
 <button type="button" class="go" id="btnDef" style="width:100%;margin-top:12px;padding:14px">НАЧАТЬ ЗАЩИТУ</button>
-<div class="msg success" id="mEnd" style="display:none">КОНЕЦ 2 ЭТАПА. ЭТАП 3 СКОРО.</div>
+</section>
+
+<!-- ЭКРАН 10 (КОМНАТА - ЭТАП 3) -->
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 011 // STAGE 3</div><h1>Бункер. Отсек 3.</h1>
+<p class="description">Связь с внешним миром потеряна. Вам нужно найти ключ доступа, чтобы открыть дверь в командный центр. Оглядитесь.</p>
+<div id="inv" style="display:flex; gap:10px; padding:10px; background:#0c0e17; border:1px solid #34364d; border-radius:6px; margin-bottom:10px; min-height:50px; justify-content:center;">
+  <div class="room-tool" id="slot1" style="width:40px; height:40px; display:grid; place-items:center;"></div>
+  <div class="room-tool" id="slot2" style="width:40px; height:40px; display:grid; place-items:center;"></div>
+  <div class="room-tool" id="slot3" style="width:40px; height:40px; display:grid; place-items:center;"></div>
+</div>
+<div id="roomView" style="position:relative; width:100%; height:280px; background:linear-gradient(to bottom, #151725 60%, #090a10 60%); border:1px solid #5c8dff; border-radius:8px; overflow:hidden;">
+  <div id="obj_door" style="position:absolute; right:5%; bottom:40%; font-size:60px; cursor:pointer; line-height:1;">🚪</div>
+  <div id="obj_closet" style="position:absolute; left:15%; bottom:40%; font-size:60px; cursor:pointer; line-height:1; transition: transform 0.5s;">🚪</div>
+  <div id="obj_hatch" style="position:absolute; left:18%; bottom:40%; font-size:40px; cursor:pointer; line-height:1; display:none;">🪜</div>
+  <div id="obj_capsules" style="position:absolute; left:40%; bottom:40%; font-size:50px; cursor:pointer; line-height:1;">🧪</div>
+  <div id="obj_table" style="position:absolute; left:70%; bottom:40%; font-size:40px; cursor:pointer; line-height:1;">🪑</div>
+  <div id="obj_nightstand" style="position:absolute; left:85%; bottom:40%; font-size:40px; cursor:pointer; line-height:1;">🗄️</div>
+  <div id="obj_safe" style="position:absolute; left:55%; bottom:40%; font-size:40px; cursor:pointer; line-height:1;">🧰</div>
+  <div style="position:absolute; bottom:0; width:100%; height:40%; background:#0c0e17; border-top:2px solid #23253a;"></div>
+  <div id="infoPanel" style="display:none; position:absolute; bottom:0; left:0; right:0; background:#090b13ee; padding:15px; border-top:1px solid #5c8dff; font-size:13px; color:#fff; z-index:10;">
+     <span id="infoText"></span><button id="closeInfo" style="margin-left:10px; padding:4px 8px; cursor:pointer;">X</button>
+  </div>
+</div>
+<div id="roomMsg" class="msg"></div>
 </section>
 
 </div></div>
 <div class="pc">
 <div class="leds"><i class="led on" id="pwr"></i><i class="led hdd" id="hdd"></i><i class="led err" id="errL"></i></div>
 <button class="key" id="btnBack">◀ НАЗАД</button>
-<div class="lcd" id="lcd">STEP 01/10</div>
+<div class="lcd" id="lcd">STEP 01/11</div>
 <button class="key" id="btnFwd">ВПЕРЁД ▶</button>
 <button class="key" id="btnSnd" style="flex:0 0 auto">🔊</button><div class="vents"><i></i><i></i><i></i><i></i></div>
 </div>
@@ -227,19 +266,16 @@ const HS={
 0:"fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a",
 1:"2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435",
 2:"b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569",
-4:"e19d974cff7d169a5afd16e2535a6009e076ceb30d3cacd2d9cde4f02d8f3777",
-5:"3bf85e3a647f4bb7b1b173edb828f9424916493d85c214063e9f3b6bc1ad7862",
-6:"5c195c099ffe27c005dd4054aeb4a62864f2ec74e75b76e3efca0c635d96b9e1",
-7:"4c5e72057519c48e1a2430cbedb7cff3a4a1d244eb28b8d865f85141f643017d",
-8:"84903ba3c96eef4e0351e6e0e11f897873a40c026413be1f2cd381ebd8e3e341"};
+4:"7d7fa5865a2bb65d219ee11319a07b36339c0f7275552e39a246c074fe5e9694", 
+5:"c6be512eb57a1b0dc7d938b84b5c87185448d3a7c7e5f10b2a2c33c1c4b2c4c1", 
+6:"72dfcfb0c470ac255cde83fb8fe38de8a128188e03ea5ba5b2a93adbea1062fa",
+7:"3d8dbd98077ee9635cc55e3911d6832c2d47b310f0101d56b5c12cd519ac2bf9",
+8:"dcdb7b092f68ab6ffd373a8e8c036afbd43543f9e58594070ed5171f2fff0bd2"};
 const LK={"А":"A","В":"B","Е":"E","К":"K","М":"M","Н":"H","О":"O","Р":"P","С":"C","Т":"T","Х":"X"};
 const LY={"Й":"Q","Ц":"W","У":"E","К":"R","Е":"T","Н":"Y","Г":"U","Ш":"I","Щ":"O","З":"P","Ф":"A","Ы":"S","В":"D","А":"F","П":"G","Р":"H","О":"J","Л":"K","Д":"L","Я":"Z","Ч":"X","С":"C","М":"V","И":"B","Т":"N","Ь":"M"};
 const fixD=v=>v.replace(/[\u2010-\u2015\u2212]/g,"-");
 const mp=(v,m)=>v.toUpperCase().replace(/[А-ЯЁ]/g,c=>m[c]||c);
-const NORM={
-up:v=>fixD(v).trim().toUpperCase(),
-an:v=>v.toUpperCase().replace(/[^A-Z0-9]/g,""),
-ns:v=>v.replace(/\s/g,"")};
+const NORM={up:v=>fixD(v).trim().toUpperCase(),an:v=>v.toUpperCase().replace(/[^A-Z0-9]/g,""),ns:v=>v.replace(/\s/g,"")};
 const scr=[...document.querySelectorAll(".scr")];
 let cur=0,maxS=0,secT=null,secOn=false;
 const st=$("statusText");
@@ -254,7 +290,7 @@ function show(i,save=true){
  if(i===3)secT=setTimeout(()=>{secOn=true;$("pwr").classList.add("warn")},10000);
  $("btnBack").disabled=i===0||!!G;
  $("btnFwd").disabled=!!G||i>=maxS||i===3&&maxS<4;
- $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/10";
+ $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/"+(scr.length);
  if(save){try{localStorage.setItem("blr_screen",i);localStorage.setItem("blr_max",maxS)}catch(e){}}
 }
 $("btnBack").onclick=()=>show(cur-1);
@@ -298,14 +334,14 @@ bind(5,v=>(v.match(/\d+/g)||[]).join(","),"НЕ СОВПАЛО");
 bind(6,NORM.an,"НЕ РАСШИФРОВАНО");
 
 /* Судоку */
-const PZ="53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
 const SG=[];
 (function(){
  const g=$("sg");
+ const sol=[5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,6,1,7,9,8];
  for(let k=0;k<81;k++){
-  const r=Math.floor(k/9),c=k%9,el=document.createElement("input"),ch=PZ[k];
+  const r=Math.floor(k/9),c=k%9,el=document.createElement("input");
   el.maxLength=1;el.inputMode="numeric";
-  if(ch!=="."){el.value=ch;el.readOnly=true}
+  if(k!==77){el.value=sol[k];el.readOnly=true}
   else el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
   if((Math.floor(r/3)+Math.floor(c/3))%2)el.classList.add("al");
   if(c%3===2&&c<8)el.classList.add("br");
@@ -315,7 +351,7 @@ const SG=[];
 })();
 $("btnSud").onclick=async()=>{
  blink();
- if(await H(SG.map(e=>e.value||"0").join(""))===HS[7]){msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");sfx("ok");setTimeout(()=>{$("m7").className="msg";show(8)},900)}
+ if(SG[77].value==="8"){msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");sfx("ok");setTimeout(()=>{$("m7").className="msg";show(7)},900)}
  else bad();
 };
 
@@ -325,13 +361,13 @@ $("sel").innerHTML=PT.map((p,k)=>`<div class="ar"><span>${p[0]}</span><select id
 $("btnAsm").onclick=async()=>{
  blink();
  const v=PT.map((_,k)=>$("p"+k).value).join("|");
- if(await H(v)===HS[8]){sfx("ok");$("asm1").style.display="none";$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
+ if(v === "TI|ST|AL|AG|A|IR|EF|LS|NP|HE"){sfx("ok");$("asm1").style.display="none";$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
  else bad();
 };
 
 /* Сборка: перетаскивание */
 const SL={brain:[95,0,50,38,"РАЗУМ"],lens:[150,6,40,30,"ГЛАЗ"],body:[80,44,80,86,"КОСТЬ"],core:[92,50,26,26,"СЕРДЦЕ"],fuel:[122,50,26,26,"ЖИЛЫ"],arms:[30,50,44,70,"РУКИ"],muscles:[166,50,44,70,"ПЛОТЬ"],weapon:[30,126,44,40,"ГНЕВ"],chip:[166,126,44,40,"ЧИП"],legs:[80,136,80,70,"НОГИ"],pc:[0,172,72,36,"🖥 ПК"]};
-const IT=[["body","🧱",0],["legs","🦿",2],["arms","🦾",1],["core","💠",4],["fuel","🩸",9],["muscles","💪",6],["brain","🧠",8],["lens","👁",5],["weapon","🔫",7]];
+const IT=[["body","🧱"],["legs","🦿"],["arms","🦾"],["core","💠"],["fuel","🩸"],["muscles","💪"],["brain","🧠"],["lens","👁"],["weapon","🔫"]];
 const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","w_core","w_brain","w_lens","w_weapon","chip","pc"];
 let st2=0;
 function buildAsm(){
@@ -339,8 +375,8 @@ function buildAsm(){
  for(const k in SL){const d=document.createElement("div"),p=SL[k];d.className="sl";d.dataset.slot=k;d.textContent=p[4];
   d.style.cssText=`left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px`;
   d.onclick=()=>{if(String(STEPS[st2]).startsWith("w_"))act("w_"+k)};bot.appendChild(d)}
- IT.map(([k,e,n])=>({k,t:e+" "+$("p"+n).selectedOptions[0].text})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
- msg("mA","success","Шаг 1/15");
+ IT.map(([k,e])=>({k,t:e})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
+ msg("mA","success","Шаг 1/14");
 }
 function addChip(k,t){
  const el=document.createElement("div");el.className="chip";el.textContent=t;
@@ -358,7 +394,7 @@ function act(k,el){
  st2++;sfx("snap");
  const sl=document.querySelector('#bot [data-slot="'+k.replace("w_","")+'"]');
  if(k.startsWith("w_"))sl.classList.add("w");
- else if(k==="pc"){sfx("win");msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");setTimeout(()=>{$("mA").className="msg";show(9)},1300);return}
+ else if(k==="pc"){sfx("win");msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");setTimeout(()=>{$("mA").className="msg";show(8)},1300);return}
  else{sl.classList.add("f");sl.textContent=k==="chip"?"💾":IT.find(i=>i[0]===k)[1];if(k!=="chip")el.remove()}
  if(st2===13)addChip("chip","💾 ЧИП");
  msg("mA","success","Шаг "+(st2+1)+"/15");
@@ -366,14 +402,14 @@ function act(k,el){
 
 /* Защита */
 const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
-const TY={imp:{e:"👹",hp:1,v:55,d:6,s:26},thu:{e:"⚡",hp:2,v:70,d:8,s:26},tit:{e:"👺",hp:5,v:28,d:20,s:40},boss:{e:"🐲",hp:25,v:16,d:45,s:64}};
+const TY={imp:{e:"👹",hp:1,v:65,d:6,s:26},thu:{e:"⚡",hp:2,v:85,d:8,s:26},tit:{e:"👺",hp:5,v:35,d:20,s:40},boss:{e:"🐲",hp:25,v:20,d:45,s:64}};
 const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.random()*1.5+.5]);
 let G=null,raf=0;
 bd.onclick=()=>{
  if(G)return;
  G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
  bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";$("mEnd").style.display="none";
- show(9,false);hud();raf=requestAnimationFrame(loop);
+ show(8,false);hud();raf=requestAnimationFrame(loop);
 };
 function spawn(t){
  if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.15+p*.15?"tit":r<.5?"thu":"imp"}
@@ -393,14 +429,14 @@ function loop(ts){
  if(!G)return;
  const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
  G.t-=dt;G.sp-=dt;G.sh=Math.max(0,G.sh-dt*20);
- if(G.sp<=0){spawn();G.sp=Math.max(.45,1.2-(120-G.t)/120*.8)}
+ if(G.sp<=0){spawn();G.sp=Math.max(.35,1.0-(120-G.t)/120*.8)}
  if(!G.boss&&G.t<60){G.boss=1;spawn("boss")}
  for(const e of G.en.slice()){
   const y=TY[e.t],dx=180-e.x,dy=250-e.y,d=Math.hypot(dx,dy);
   e.x+=dx/d*y.v*dt+(e.t==="thu"?Math.sin(G.t*6+e.ph)*60*dt:0);e.y+=dy/d*y.v*dt;
   if(d<34){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=8;sfx("hit")}
  }
- for(const b of G.bots){b.c-=dt;if(b.c<=0&&G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);fire(e.x,e.y,b.x,false);b.c=1.5}}
+ for(const b of G.bots){b.c-=dt;if(b.c<=0&&G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);fire(e.x,e.y,b.x,false);b.c=3.0}} // Роботы стреляют реже (раз в 3 сек)
  draw();hud();
  if(G.hp<=0)return endG(false);
  if(G.t<=0)return endG(true);
@@ -431,10 +467,109 @@ function hud(){
 }
 function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
 function endG(win){
- stopGame();show(9,false);
+ stopGame();show(8,false);
  if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";$("mEnd").style.display="block"}
  else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
 }
+
+/* ЭТАП 3: КОМНАТА */
+let inv = { slot1: null, slot2: null, slot3: null };
+let activeSlot = null;
+let roomState = { nightstand: false, closetMoved: false, hatchOpen: false, capsulesBroken: false, safeOpened: false, safeBackOpened: false };
+
+function updateInv() {
+  ['slot1','slot2','slot3'].forEach((s) => {
+    const el = document.getElementById(s);
+    el.textContent = inv[s] || "";
+    el.className = activeSlot === s ? "room-tool active" : "room-tool";
+  });
+}
+function addItem(item) {
+  if(!inv.slot1) inv.slot1 = item;
+  else if(!inv.slot2) inv.slot2 = item;
+  else if(!inv.slot3) inv.slot3 = item;
+  updateInv(); sfx("snap");
+}
+function showInfo(text) {
+  document.getElementById("infoText").innerHTML = text;
+  document.getElementById("infoPanel").style.display = "block";
+}
+document.getElementById("closeInfo").onclick = () => document.getElementById("infoPanel").style.display = "none";
+
+['slot1','slot2','slot3'].forEach(s => {
+  document.getElementById(s).onclick = () => {
+    if(!inv[s]) return;
+    activeSlot = (activeSlot === s) ? null : s;
+    updateInv(); sfx("click");
+  };
+});
+
+document.getElementById("obj_nightstand").onclick = () => {
+  if(!roomState.nightstand) {
+    showInfo("Вы открыли тумбочку. Внутри лежит <b>Отвертка</b>.");
+    addItem("🪛"); roomState.nightstand = true;
+  } else { showInfo("Больше ничего нет."); }
+};
+
+document.getElementById("obj_table").onclick = () => {
+  showInfo("<b>Записка на столе:</b><br><br>«Они возможно врут. Что если переставить местами?»");
+};
+
+document.getElementById("obj_closet").onclick = () => {
+  if(!roomState.closetMoved) {
+    showInfo("Вы толкнули шкаф, он сдвинулся вправо, открыв <b>Люк</b> в полу.");
+    document.getElementById("obj_closet").style.transform = "translateX(80px)";
+    document.getElementById("obj_hatch").style.display = "block";
+    roomState.closetMoved = true;
+  } else { showInfo("Шкаф уже сдвинут."); }
+};
+
+document.getElementById("obj_hatch").onclick = () => {
+  if(!roomState.hatchOpen) {
+    if(activeSlot && inv[activeSlot] === "🪛") {
+      showInfo("Вы открутили люк отверткой. Внутри лежит <b>Молоток</b>.");
+      addItem("🔨"); inv[activeSlot] = null; activeSlot = null; updateInv(); roomState.hatchOpen = true;
+    } else { showInfo("Люк прикручен болтами. Нужен инструмент."); }
+  } else { showInfo("Люк пуст."); }
+};
+
+document.getElementById("obj_capsules").onclick = () => {
+  if(!roomState.capsulesBroken) {
+    if(activeSlot && inv[activeSlot] === "🔨") {
+      showInfo("Вы разбили капсулы молотком. Внутри два тела. У одного на груди выцарапано: <b>45</b>. У другого: <b>99301</b>.");
+      document.getElementById("obj_capsules").textContent = "💀"; roomState.capsulesBroken = true;
+    } else { showInfo("Капсулы из прочного стекла. Нужен тяжелый предмет."); }
+  } else { showInfo("Осколки и два трупа. Код на них: 45 и 99301."); }
+};
+
+document.getElementById("obj_safe").onclick = () => {
+  if(!roomState.safeOpened) {
+    const code = prompt("Введите код от сейфа:");
+    if(code === "4599301" || code === "9930145") { 
+      showInfo("Сейф открыт! Внутри лежит <b>Ключ</b> (🔑) и <b>Флешка</b> (💾).");
+      addItem("🔑"); addItem("💾"); roomState.safeOpened = true; sfx("win");
+    } else { showInfo("Неверный код. Сейф заблокирован."); sfx("err"); }
+  } else {
+    if(!roomState.safeBackOpened) {
+       if(activeSlot && inv[activeSlot] === "🪛") {
+          showInfo("Вы открутили заднюю стенку сейфа! За ней спрятана <b>Золотая сфера</b> (награда).");
+          addItem("🟡"); inv[activeSlot] = null; updateInv(); roomState.safeBackOpened = true; sfx("win");
+       } else { showInfo("Сейф пуст. Но кажется, задняя стенка шатается... Нужна отвертка."); }
+    } else { showInfo("Сейф полностью обыскан."); }
+  }
+};
+
+document.getElementById("obj_door").onclick = () => {
+  if(activeSlot && inv[activeSlot] === "🔑") {
+    document.getElementById("roomMsg").className = "msg success";
+    document.getElementById("roomMsg").textContent = "ДВЕРЬ ОТКРЫТА. ПЕРЕХОД В КОМАНДНЫЙ ЦЕНТР...";
+    sfx("win");
+  } else {
+    document.getElementById("roomMsg").className = "msg error";
+    document.getElementById("roomMsg").textContent = "ДВЕРЬ ЗАПЕРТА. НУЖЕН КЛЮЧ.";
+    sfx("err");
+  }
+};
 
 /* Восстановление прогресса */
 (function(){
