@@ -1,431 +1,338 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090a10">
-  <title>Unknown Transmission | Ball Ricoshet</title>
-  <style>
-    * { box-sizing: border-box; }
-    :root { --bg: #090a10; --panel: #11131d; --purple: #9b7bff; --blue: #5c8dff; --text: #f0efff; --muted: #777d96; }
-    body { margin: 0; min-height: 100vh; padding: 24px 16px; display: flex; justify-content: center; align-items: center; background: radial-gradient(ellipse at 50% 0%, #222044 0%, transparent 55%), var(--bg); color: var(--text); font-family: Arial, sans-serif; }
-    .container { width: 100%; max-width: 520px; }
-    .topline { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 10px; letter-spacing: 2px; margin-bottom: 22px; }
-    .status { color: #8be0b5; user-select: none; cursor: default; }
-    .status.secret-ready { cursor: pointer; }
-    .status.secret-ready:hover { color: #c6b8ff; }
-    .panel { position: relative; padding: 34px 28px; background: rgba(17, 19, 29, 0.96); border: 1px solid #292b42; border-radius: 14px; box-shadow: 0 20px 70px #0008; overflow: hidden; }
-    .panel::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--purple)); }
-    .symbol { width: 58px; height: 58px; display: grid; place-items: center; margin-bottom: 27px; border: 1px solid #514477; border-radius: 12px; color: var(--purple); font-size: 28px; background: #201a35; }
-    .eyebrow { color: var(--purple); font-size: 10px; font-weight: bold; letter-spacing: 3px; margin-bottom: 12px; }
-    h1 { margin: 0 0 16px; font-size: clamp(28px, 7vw, 40px); line-height: 1.1; letter-spacing: -1px; }
-    .description { color: #a6aac0; font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
-    .description strong { color: #d9d7ef; letter-spacing: 1px; }
-    .separator { height: 1px; background: #292b3d; margin: 26px 0; }
-    label { display: block; margin-bottom: 10px; color: #d9d7ef; font-size: 12px; font-weight: bold; letter-spacing: 1px; }
-    .input-row { display: flex; gap: 9px; }
-    input { width: 100%; padding: 15px 13px; color: white; background: #090b13; border: 1px solid #34364d; border-radius: 7px; outline: none; font-size: 14px; text-transform: uppercase; }
-    input:focus { border-color: var(--purple); }
-    button { padding: 0 18px; border: 0; border-radius: 7px; color: white; font-size: 12px; font-weight: bold; cursor: pointer; background: linear-gradient(120deg, #6550c8, #426dd4); }
-    button:hover { filter: brightness(1.2); }
-    .mirror { display: inline-block; transform: scaleX(-1); }
-    .message { display: none; margin-top: 18px; padding: 15px; border-radius: 7px; font-size: 13px; line-height: 1.7; }
-    .message.error { display: block; color: #ff9aab; background: #3a1925; border: 1px solid #6c293d; }
-    .message.success { display: block; color: #c6b8ff; background: #211a37; border: 1px solid #59468b; }
-    .numbers { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 22px; margin: 22px 0 30px; padding: 20px 10px; background: #0c0e17; border: 1px solid #23253a; border-radius: 10px; }
-    .num-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-    .num-color { font-size: 11px; color: #f0efff; font-family: monospace; }
-    .num-value { font-size: 22px; font-weight: bold; color: #f0efff; }
-    .nav-footer { display: flex; justify-content: space-between; margin-top: 25px; gap: 10px; }
-    .nav-btn { flex: 1; padding: 12px; background: #23253a; color: #a6aac0; border-radius: 7px; text-align: center; cursor: pointer; font-size: 12px; font-weight: bold; border: 1px solid #34364d; transition: 0.2s; }
-    .nav-btn:hover { background: #2f324a; color: white; }
-    .nav-btn.hidden { visibility: hidden; }
-    .bottom-footer { display: flex; justify-content: space-between; margin-top: 20px; color: #555a70; font-size: 9px; }
-    .screen { display: none; }
-    .screen.active { display: block; }
-    .sudoku-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 2px; background: #23253a; border: 2px solid #5c8dff; padding: 2px; max-width: 360px; margin: 0 auto 20px; }
-    .sudoku-cell { background: #090b13; color: #f0efff; display: flex; justify-content: center; align-items: center; aspect-ratio: 1; font-size: 14px; }
-    .sudoku-cell:nth-child(3n) { border-right: 1px solid #5c8dff; }
-    .sudoku-cell:nth-child(9n) { border-right: none; }
-    .sudoku-cell:nth-child(n+19):nth-child(-n+27), .sudoku-cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 1px solid #5c8dff; }
-    .sudoku-cell.empty { color: #8be0b5; }
-    .assembly-row { display: flex; justify-content: space-between; background: #0c0e17; padding: 10px; border-radius: 7px; border: 1px solid #23253a; margin-bottom: 10px; }
-    .assembly-row select { background: #090b13; color: white; padding: 8px; border-radius: 5px; }
-    @media (max-width: 420px) { .input-row { flex-direction: column; } button { min-height: 46px; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#05060a">
+<title>Unknown Transmission | Ball Ricoshet</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#05060a;--purple:#9b7bff;--blue:#5c8dff;--text:#f0efff;--muted:#777d96;--green:#8be0b5}
+html,body{margin:0}
+body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;align-items:center;background:radial-gradient(ellipse at 50% 20%,#1b1a36,var(--bg) 70%);color:var(--text);font-family:Arial,sans-serif}
+.rig{width:100%;max-width:640px}
+.monitor{background:linear-gradient(145deg,#2b2d3a,#14151d);border-radius:20px 20px 10px 10px;padding:16px 16px 22px;box-shadow:0 25px 60px #000a,inset 0 2px 0 #4a4d63;position:relative}
+.monitor::after{content:"BALL RICOSHET";position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:4px;color:#555a70}
+.glass{position:relative;border-radius:8px;overflow:hidden;background:#090a10;border:2px solid #000;box-shadow:inset 0 0 40px #5c8dff22,0 0 25px #5c8dff22}
+.glass::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#0000 0 2px,#0003 3px),radial-gradient(ellipse,#0000 60%,#0007)}
+.osbar{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;background:#11131d;border-bottom:1px solid #292b42;color:var(--muted);font-size:10px;letter-spacing:2px}
+.status{color:var(--green);user-select:none}
+.view{height:min(66vh,540px);overflow-y:auto;padding:24px 22px}
+.stand{width:90px;height:22px;margin:0 auto;background:linear-gradient(#1b1c26,#2b2d3a)}
+.base{width:200px;height:8px;margin:0 auto;border-radius:6px;background:#2b2d3a}
+.pc{margin-top:12px;display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(#2a2c38,#171821);border-radius:10px;box-shadow:inset 0 1px 0 #4a4d63,0 10px 30px #0008}
+.leds{display:flex;gap:6px}
+.led{width:9px;height:9px;border-radius:50%;background:#2a2d3d}
+.led.on{background:#3ddc84;box-shadow:0 0 8px #3ddc84}
+.led.hdd.on{background:#ffb74d;box-shadow:0 0 8px #ffb74d}
+.key{flex:1;padding:12px 6px;font:bold 11px Arial;letter-spacing:1px;color:#c9ccdf;background:linear-gradient(#3a3d50,#242634);border:1px solid #11121a;border-radius:6px;box-shadow:0 3px 0 #0c0d14;cursor:pointer}
+.key:active{transform:translateY(3px);box-shadow:none}
+.key:disabled{opacity:.35;cursor:default}
+.lcd{min-width:92px;padding:7px 6px;text-align:center;font:bold 12px monospace;color:#7cf0b0;background:#07110d;border:1px solid #000;border-radius:4px;box-shadow:inset 0 0 8px #000}
+.vents{display:none;gap:3px}.vents i{width:3px;height:22px;background:#0b0c12;border-radius:2px}
+@media(min-width:520px){.vents{display:flex}}
+.scr{display:none}.scr.active{display:block}
+.symbol{width:46px;height:46px;display:grid;place-items:center;margin-bottom:16px;border:1px solid #514477;border-radius:10px;color:var(--purple);font-size:24px;background:#201a35}
+.eyebrow{color:var(--purple);font-size:10px;font-weight:bold;letter-spacing:3px;margin-bottom:10px}
+h1{margin:0 0 12px;font-size:clamp(24px,6vw,34px);line-height:1.1}
+.description{color:#a6aac0;font-size:14px;line-height:1.7;margin:0 0 18px}
+.description strong{color:#d9d7ef}
+.sep{height:1px;background:#292b3d;margin:18px 0}
+label{display:block;margin-bottom:8px;color:#d9d7ef;font-size:12px;font-weight:bold;letter-spacing:1px}
+.row{display:flex;gap:8px}
+input.txt{width:100%;padding:13px;color:#fff;background:#090b13;border:1px solid #34364d;border-radius:6px;outline:none;font-size:14px;text-transform:uppercase}
+input.txt:focus{border-color:var(--purple)}
+.scr button.go{padding:0 16px;min-height:44px;border:0;border-radius:6px;color:#fff;font-size:12px;font-weight:bold;cursor:pointer;background:linear-gradient(120deg,#6550c8,#426dd4)}
+.scr button.go:disabled{filter:grayscale(1);opacity:.5}
+.msg{display:none;margin-top:14px;padding:12px;border-radius:6px;font-size:13px}
+.msg.error{display:block;color:#ff9aab;background:#3a1925;border:1px solid #6c293d}
+.msg.success{display:block;color:#c6b8ff;background:#211a37;border:1px solid #59468b}
+.box{padding:14px;background:#0c0e17;border:1px solid #23253a;border-radius:7px;margin-bottom:16px;font-family:monospace;font-size:12px}
+.numbers{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 20px;padding:18px 10px;background:#0c0e17;border:1px solid #23253a;border-radius:10px;margin-bottom:20px}
+.nb{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:monospace}.nb b{font-size:20px}.nb span{font-size:11px}
+.frag{display:flex;gap:10px;align-items:center;margin:6px 0;color:var(--purple);font-size:16px;letter-spacing:2px}
+.frag small{color:var(--muted);font-size:11px;letter-spacing:1px}
+.sg{display:grid;grid-template-columns:repeat(9,1fr);max-width:340px;margin:0 auto 12px;border:2px solid var(--blue);background:var(--blue);gap:1px}
+.sg input{width:100%;aspect-ratio:1;min-width:0;padding:0;text-align:center;font-size:15px;color:var(--green);background:#090b13;border:0;border-radius:0;outline:none}
+.sg input[readonly]{color:#f0efff}
+.sg input.mk{background:#2a1f4d;color:#ffd36b;font-weight:bold}
+.sg input:focus{background:#1b2040}
+.sg .br{border-right:2px solid var(--blue)}.sg .bb{border-bottom:2px solid var(--blue)}
+.ar{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#0c0e17;padding:8px 10px;border-radius:6px;border:1px solid #23253a;margin-bottom:8px;font-size:12px}
+.ar select{max-width:62%;background:#090b13;color:#fff;padding:8px;border-radius:5px;border:1px solid #34364d}
+#gameArea{position:relative;height:260px;background:#090b13;border:1px solid #23253a;border-radius:7px;overflow:hidden;cursor:crosshair}
+#gameArea .cs{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:.5}
+</style>
 </head>
 <body>
-  <main class="container">
-    <div class="topline">
-      <span>BR // ARCHIVE</span>
-      <span id="statusText" class="status">● SIGNAL ACTIVE</span>
-    </div>
-    
-    <section class="panel">
-      <div class="symbol">⌁</div>
+<main class="rig">
+<div class="monitor"><div class="glass">
+<div class="osbar"><span>BR // ARCHIVE</span><span id="statusText" class="status">● SIGNAL ACTIVE</span></div>
+<div class="view" id="view">
 
-      <!-- Экран 1 -->
-      <div id="screen1" class="screen active">
-        <div class="eyebrow">UNKNOWN TRANSMISSION</div>
-        <h1>Ты нашёл нас.</h1>
-        <p class="description">Эта передача не должна была попасть в открытый доступ. Если ты здесь, значит, ты обнаружил то, что другие пропустили.<br><br>У тебя есть код. Введи его, чтобы узнать, что скрывается дальше.</p>
-        <div class="separator"></div>
-        <form id="form1">
-          <label for="code1">ACCESS CODE</label>
-          <div class="input-row"><input id="code1" type="text" placeholder="Введи код..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-        </form>
-        <div id="message1" class="message"></div>
-      </div>
+<section class="scr active">
+<div class="symbol">⌁</div><div class="eyebrow">UNKNOWN TRANSMISSION</div><h1>Ты нашёл нас.</h1>
+<p class="description">Эта передача не для чужих глаз. Кто ищет, тот найдёт; кто нашёл, тот знает ключ.<br><br>Назови его, и дверь отворится.</p>
+<div class="sep"></div>
+<form id="f0"><label for="i0">ACCESS CODE</label><div class="row"><input class="txt" id="i0" placeholder="Введи код..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m0"></div>
+</section>
 
-      <!-- Экран 2 -->
-      <div id="screen2" class="screen">
-        <div class="eyebrow">TRANSMISSION 002</div>
-        <h1>Семь осколков.</h1>
-        <p class="description">Целостность передачи нарушена. Каждый несёт метку спектра. Спектр указывает на класс. Класс — на операцию.</p>
-        <div class="separator"></div>
-        <div class="numbers">
-          <div class="num-block"><span class="num-color">c94444</span><span class="num-value">7072</span></div>
-          <div class="num-block"><span class="num-color">55aa55</span><span class="num-value">3</span></div>
-          <div class="num-block"><span class="num-color">e05555</span><span class="num-value">5081</span></div>
-          <div class="num-block"><span class="num-color">5577cc</span><span class="num-value">6202</span></div>
-          <div class="num-block"><span class="num-color">449944</span><span class="num-value">1</span></div>
-          <div class="num-block"><span class="num-color">ff88aa</span><span class="num-value">2113</span></div>
-          <div class="num-block"><span class="num-color">4466bb</span><span class="num-value">7202</span></div>
-        </div>
-        <form id="form2">
-          <label for="code2">ACCESS CODE</label>
-          <div class="input-row"><input id="code2" type="text" placeholder="Введи ответ..." required><button type="submit"><span class="mirror">ПРОВЕРИТЬ</span></button></div>
-        </form>
-        <div id="message2" class="message"></div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 002</div><h1>Семь осколков.</h1>
+<p class="description">Не всё то золото, что блестит: у каждого осколка два лица. Метка — цвет, цвет — класс, класс — действие.</p>
+<div class="numbers">
+<div class="nb"><span>c94444</span><b>7072</b></div><div class="nb"><span>55aa55</span><b>3</b></div><div class="nb"><span>e05555</span><b>5081</b></div><div class="nb"><span>5577cc</span><b>6202</b></div><div class="nb"><span>449944</span><b>1</b></div><div class="nb"><span>ff88aa</span><b>2113</b></div><div class="nb"><span>4466bb</span><b>7202</b></div>
+</div>
+<form id="f1"><label for="i1">ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m1"></div>
+</section>
 
-      <!-- Экран 3 -->
-      <div id="screen3" class="screen">
-        <div class="eyebrow">TRANSMISSION 003</div>
-        <h1>Редукция.</h1>
-        <p class="description">Результат предыдущего уровня не является конечным значением.<br><br><strong style="font-size:20px;">67000903</strong><br><br>Сверни компоненты в единую скалярную величину.</p>
-        <div class="separator"></div>
-        <form id="form3">
-          <label for="code3">ACCESS CODE</label>
-          <div class="input-row"><input id="code3" type="text" placeholder="Введи ответ..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-        </form>
-        <div id="message3" class="message"></div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 003</div><h1>Редукция.</h1>
+<p class="description">Из песчинок вырастает пустыня, из капель — река.<br><br><strong style="font-size:20px">67000903</strong><br><br>Рассыпь целое на части и сложи заново, не обронив ни одной.</p>
+<div class="sep"></div>
+<form id="f2"><label for="i2">ACCESS CODE</label><div class="row"><input class="txt" id="i2" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m2"></div>
+</section>
 
-      <!-- Экран 4 -->
-      <div id="screen4" class="screen">
-        <div class="eyebrow">TRANSMISSION 004</div>
-        <h1>Индекс.</h1>
-        <p class="description">Полученная величина — не ответ, а адрес.<br><br>Архив имеет имя. Имя имеет структуру. Позиция в структуре — ключ.<br><br><strong>BLR SECRET ARCHIVES PROTOCOL B</strong><br><br>Определи элемент, соответствующий адресу.</p>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 004</div><h1>Индекс.</h1>
+<p class="description">Число — не ответ, а адрес: не пеняй на дорогу, считай шаги.<br><br><strong>BLR SECRET ARCHIVES PROTOCOL B</strong><br><br>Иной ответ не вводят, а касаются. Кто ждёт, тот дождётся.</p>
+</section>
 
-      <!-- Экран 5 -->
-      <div id="screen5" class="screen">
-        <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div>
-        <h1>Протокол Ares.</h1>
-        <p class="description">Система защиты активирована. Расшифруй название протокола.</p>
-        <div class="separator"></div>
-        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; text-align:center; font-family:monospace; font-size:12px; color:#5c8dff;">
-          01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001
-        </div>
-        <form id="form5">
-          <label for="code5">ACCESS CODE</label>
-          <div class="input-row"><input id="code5" type="text" placeholder="Введи название..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-        </form>
-        <div id="message5" class="message"></div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 005 // STAGE 2</div><h1>Протокол Ares.</h1>
+<p class="description">Два знака правят миром: ноль да единица. Восемь птиц в стае — одна буква. Прочти стаю и назови зверя по имени.</p>
+<div class="box" style="text-align:center;color:var(--blue)">01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001</div>
+<form id="f4"><label for="i4">ACCESS CODE</label><div class="row"><input class="txt" id="i4" placeholder="Введи название..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m4"></div>
+</section>
 
-      <!-- Экран 6 -->
-      <div id="screen6" class="screen">
-        <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div>
-        <h1>Спектр.</h1>
-        <p class="description">Калибровка. Переведи фрагменты, сложи значения и найди резонанс. Введи три значения через запятую.</p>
-        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; font-family:monospace; font-size:12px;">
-          #006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a
-        </div>
-        <form id="form6">
-          <label for="code6">РЕЗОНАНС (X,X,X)</label>
-          <div class="input-row"><input id="code6" type="text" placeholder="100,200,300" required><button type="submit">ПРОВЕРИТЬ</button></div>
-        </form>
-        <div id="message6" class="message"></div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div><h1>Спектр.</h1>
+<p class="description">Цвет — не один голос, а хор. Сложи одноимённые голоса всех, а круг мерь градусами: что осталось за полным кругом, то и есть эхо.</p>
+<div class="box">#006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a</div>
+<form id="f5"><label for="i5">РЕЗОНАНС</label><div class="row"><input class="txt" id="i5" placeholder="..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m5"></div>
+</section>
 
-      <!-- Экран 7 -->
-      <div id="screen7" class="screen">
-        <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div>
-        <h1>Перехват.</h1>
-        <p class="description">Врата откроются тому, кто узрит суть в отражении. Прочти послание, глядя в зеркало.</p>
-        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin:20px 0; text-align:center; font-family:monospace; font-size:16px; color:#9b7bff;">
-          ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
-        </div>
-        <form id="form7">
-          <label for="code7">ACCESS CODE</label>
-          <div class="input-row"><input id="code7" type="text" placeholder="Расшифровка..." required><button type="submit">ПРОВЕРИТЬ</button></div>
-        </form>
-        <div id="message7" class="message"></div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div><h1>Перехват.</h1>
+<p class="description">Что дважды отражено, то прямым не кажется. Зеркало видит начало концом, а шаг вперёд равен месту в строю. Не по эфиру суди, а по числу в скобках. Семь раз отмерь, один раз введи.</p>
+<div class="box">
+<div class="frag"><small>[3]</small>OQYWC</div>
+<div class="frag"><small>[1]</small>AJWI</div>
+<div class="frag"><small>[2]</small>JUTXQY</div>
+</div>
+<form id="f6"><label for="i6">КЛЮЧ</label><div class="row"><input class="txt" id="i6" placeholder="Расшифровка..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m6"></div>
+</section>
 
-      <!-- Экран 8 -->
-      <div id="screen8" class="screen">
-        <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div>
-        <h1>Сбой ядра.</h1>
-        <p class="description">Восстанови утраченную координату. Найди единственный пустой слот в матрице.</p>
-        <div class="sudoku-grid">
-          <div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">8</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div><div class="sudoku-cell">2</div>
-          <div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div>
-          <div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">8</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div>
-          <div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">9</div><div class="sudoku-cell">7</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">3</div>
-          <div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div>
-          <div class="sudoku-cell">7</div><div class="sudoku-cell">1</div><div class="sudoku-cell">3</div><div class="sudoku-cell">9</div><div class="sudoku-cell">2</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div>
-          <div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">4</div>
-          <div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">7</div><div class="sudoku-cell">4</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">3</div><div class="sudoku-cell">5</div>
-          <div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">5</div><div class="sudoku-cell empty">?</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div>
-        </div>
-        <form id="form8">
-          <label for="code8">ПРОПУЩЕННАЯ ЦИФРА</label>
-          <div class="input-row"><input id="code8" type="text" placeholder="Число..." required><button type="submit">ВОССТАНОВИТЬ</button></div>
-        </form>
-        <div id="message8" class="message"></div>
-        <div id="panelNext8" style="display:none; margin-top:20px; text-align:center;">
-          <button onclick="showScreen(8)" style="padding:12px; width:100%;">СБОРКА РОБОТОВ</button>
-        </div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div><h1>Сбой ядра.</h1>
+<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Четыре метки хранят ключ: читай их так — третья, первая, четвёртая, вторая.</p>
+<div class="sg" id="sg"></div>
+<form id="f7"><label for="i7">КЛЮЧ</label><div class="row"><input class="txt" id="i7" inputmode="numeric" placeholder="..." required><button type="button" class="go">ВОССТАНОВИТЬ</button></div></form><div class="msg" id="m7"></div>
+</section>
 
-      <!-- Экран 9 -->
-      <div id="screen9" class="screen">
-        <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div>
-        <h1>Сборка шаблона.</h1>
-        <div style="background:#0c0e17; padding:10px; border:1px solid #ff4444; border-radius:7px; font-family:monospace; font-size:11px; color:#ff9aab; margin:15px 0;">
-          > ЛОГ 1: Корпус — только металл.<br>> ЛОГ 2: Руки — полимеры не подходят.<br>> ЛОГ 3: Провод — строго 5 Ом.<br>> ЛОГ 4: Ноги — никакого пластика.
-        </div>
-        <div class="assembly-row"><span>КОРПУС:</span><select id="part_body"><option value="wrong1">Пластиковый</option><option value="right">Титановый</option></select></div>
-        <div class="assembly-row"><span>РУКИ:</span><select id="part_arms"><option value="wrong1">Полимерные</option><option value="right">Стальные</option></select></div>
-        <div class="assembly-row"><span>НОГИ:</span><select id="part_legs"><option value="right">Металлические</option><option value="wrong1">Пластиковые</option></select></div>
-        <div class="assembly-row"><span>ПРОВОД:</span><select id="part_wire"><option value="wrong1">Медный (3 Ом)</option><option value="right">Серебряный (5 Ом)</option></select></div>
-        <div class="separator"></div>
-        <button id="btnAssemble" style="width:100%; padding:15px;">ЗАПУСТИТЬ СИНТЕЗ</button>
-        <div id="message9" class="message"></div>
-        <div id="panelNext9" style="display:none; margin-top:20px; text-align:center;">
-          <button onclick="showScreen(9)" style="padding:12px; width:100%; background:#ff0000;">ЗАЩИТИТЬ БУНКЕР</button>
-        </div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div><h1>Сборка шаблона.</h1>
+<p class="description">Не боги горшки обжигают: собери героя по уликам.</p>
+<div class="box" style="border-color:#ff4444;color:#ff9aab;line-height:1.6">
+> ЛОГ 1: Мягкому не место в костях: ни полимер, ни пластик, ни волокно.<br>
+> ЛОГ 2: В одной связке двух одинаковых не держат: корпус, руки и ноги из разного.<br>
+> ЛОГ 3: Сталь тяжелее титана, титан тяжелее алюминия. Дом легче рук.<br>
+> ЛОГ 4: Кто ходит, тот тяжелее дома, но не стальной.<br>
+> ЛОГ 5: Сколько букв в имени дома, столько ом в жиле.<br>
+> ЛОГ 6: Сердце сильнее, чем жила сопротивляется, но не больше вдвое длины слова «СТАЛЬ».
+</div>
+<div class="ar"><span>КОРПУС</span><select id="p0"><option value="">— выбрать —</option><option value="CF">Углеволокно</option><option value="TI">Титан</option><option value="PL">Пластик</option><option value="AL">Алюминий</option></select></div>
+<div class="ar"><span>РУКИ</span><select id="p1"><option value="">— выбрать —</option><option value="AL">Алюминий</option><option value="PM">Полимер</option><option value="ST">Сталь</option><option value="TI">Титан</option></select></div>
+<div class="ar"><span>НОГИ</span><select id="p2"><option value="">— выбрать —</option><option value="PL">Пластик</option><option value="TI">Титан</option><option value="AL">Алюминий</option><option value="ST">Сталь</option></select></div>
+<div class="ar"><span>ПРОВОД</span><select id="p3"><option value="">— выбрать —</option><option value="AG">Серебро, 5 Ом</option><option value="CU">Медь, 3 Ом</option><option value="AU">Золото, 8 Ом</option><option value="NI">Никель, 4 Ом</option></select></div>
+<div class="ar"><span>ЯДРО</span><select id="p4"><option value="">— выбрать —</option><option value="G">Γ — 7 ГВт</option><option value="A">Α — 2 ГВт</option><option value="D">Δ — 9 ГВт</option><option value="B">Β — 5 ГВт</option></select></div>
+<button class="go" id="btnAsm" style="width:100%;margin-top:6px">ЗАПУСТИТЬ СИНТЕЗ</button><div class="msg" id="m8"></div>
+</section>
 
-      <!-- Экран 10 -->
-      <div id="screen10" class="screen">
-        <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div>
-        <h1>Защита.</h1>
-        <div id="defenseHUD" style="display:none; margin-bottom: 15px;">
-          <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
-            <span>HP: <span id="hpDisplay">100</span></span><span>ВРЕМЯ: <span id="timeDisplay">120</span>с</span>
-          </div>
-          <div style="height:10px; background:#3a1925; border-radius:5px;"><div id="hpBar" style="width:100%; height:100%; background:#8be0b5;"></div></div>
-        </div>
-        <div id="gameArea" style="position:relative; width:100%; height:300px; background:#090b13; border:1px solid #23253a; border-radius:7px; overflow:hidden; cursor:crosshair;">
-          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>
-          <div id="messageGame" class="message" style="position:absolute; top:10px; left:10px; right:10px;"></div>
-        </div>
-        <button id="btnStartDefense" style="width:100%; margin-top:15px; padding:15px;">НАЧАТЬ ЗАЩИТУ</button>
-        <div id="panelNext10" style="display:none; margin-top:20px; text-align:center;">
-          <button onclick="alert('КОНЕЦ 2 ЭТАПА')" style="padding:15px; width:100%; background:#8be0b5; color:#000;">ПЕРЕЙТИ К ЭТАПУ 3</button>
-        </div>
-      </div>
-      
-      <!-- Кнопки навигации -->
-      <div class="nav-footer">
-        <div id="btnBack" class="nav-btn hidden" onclick="goBack()">← НАЗАД</div>
-        <div id="btnForward" class="nav-btn hidden" onclick="goForward()">ВПЕРЕД →</div>
-      </div>
+<section class="scr">
+<div class="eyebrow">TRANSMISSION 010 // DEFENSE</div><h1>Защита.</h1>
+<p class="description">Бункер держится на тех, кто не зевает. Что не поймано за два вздоха, то бьёт прямо в сердце.</p>
+<div id="hud" style="display:none;margin-bottom:12px">
+<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span>HP: <span id="hpD">100</span></span><span>ВРЕМЯ: <span id="tmD">120</span>с</span></div>
+<div style="height:10px;background:#3a1925;border-radius:5px"><div id="hpBar" style="width:100%;height:100%;background:var(--green)"></div></div></div>
+<div id="gameArea"><div class="cs">🏰</div></div>
+<div class="msg" id="mG"></div>
+<button class="go" id="btnDef" style="width:100%;margin-top:12px;padding:14px">НАЧАТЬ ЗАЩИТУ</button>
+<div class="msg success" id="mEnd" style="display:none">КОНЕЦ 2 ЭТАПА. ЭТАП 3 СКОРО.</div>
+</section>
 
-    </section>
-    
-    <div class="bottom-footer">
-      <span>BALL RICOSHet</span>
-      <span>ARCHIVE 001</span>
-    </div>
-  </main>
+</div></div>
+<div class="pc">
+<div class="leds"><i class="led on"></i><i class="led hdd" id="hdd"></i></div>
+<button class="key" id="btnBack">◀ НАЗАД</button>
+<div class="lcd" id="lcd">STEP 01/10</div>
+<button class="key" id="btnFwd">ВПЕРЁД ▶</button>
+<div class="vents"><i></i><i></i><i></i><i></i></div>
+</div>
+</div>
+<div class="stand"></div><div class="base"></div>
+</main>
 
-  <script>
-    // Хеши
-    const HASH_1 = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a";
-    const HASH_2 = "2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435";
-    const HASH_3 = "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569";
-    const HASH_5 = "e19d974cff7d169a5afd16e2535a6009e076ceb30d3cacd2d9cde4f02d8f3777";
-    const HASH_7 = "1c1d67f3c3d0e90984c4a6e499c317a68ab83d0729dbe32a866aa76137a59175"; // AREX_PROTECTION_CODE_ACTIVE_BLIR
+<script>
+window.onerror=(m,u,l)=>{const o=document.querySelector(".osbar");if(o)o.insertAdjacentHTML("beforeend","<span style='color:#ff9aab'>JS ERR: "+m+" @"+l+"</span>")};
+const $=id=>document.getElementById(id);
+function sha256js(str){
+ const m=unescape(encodeURIComponent(str)),K=[],h=[];let p=0,c=2;
+ const r=(x,n)=>(x>>>n)|(x<<(32-n));
+ for(;p<64;c++){let ok=1;for(let i=2;i*i<=c;i++)if(c%i==0){ok=0;break}
+  if(ok){h[p]=(Math.pow(c,.5)%1)*4294967296|0;K[p++]=(Math.pow(c,1/3)%1)*4294967296|0}}
+ const hh=h.slice(0,8),w=[],l=m.length*8;let b=m+"\x80";
+ while(b.length%64-56)b+="\0";
+ for(let i=0;i<b.length;i++){const j=i>>2;w[j]=(w[j]||0)|b.charCodeAt(i)<<((3-i%4)*8)}
+ w[w.length]=(l/4294967296)|0;w[w.length]=l|0;
+ for(let o=0;o<w.length;){
+  const x=w.slice(o,o+=16),o0=hh.slice(0);
+  for(let i=0;i<64;i++){
+   if(i>=16){const a=x[i-15],d=x[i-2];x[i]=(x[i-16]+(r(a,7)^r(a,18)^(a>>>3))+x[i-7]+(r(d,17)^r(d,19)^(d>>>10)))|0}
+   const e=hh[4],a=hh[0];
+   const t1=(hh[7]+(r(e,6)^r(e,11)^r(e,25))+((e&hh[5])^(~e&hh[6]))+K[i]+x[i])|0;
+   const t2=((r(a,2)^r(a,13)^r(a,22))+((a&hh[1])^(a&hh[2])^(hh[1]&hh[2])))|0;
+   hh.unshift((t1+t2)|0);hh[4]=(hh[4]+t1)|0;hh.pop();
+  }
+  for(let i=0;i<8;i++)hh[i]=(hh[i]+o0[i])|0;
+ }
+ return hh.map(v=>(v>>>0).toString(16).padStart(8,"0")).join("");
+}
+const H=async t=>{
+ try{if(window.crypto&&crypto.subtle){
+  return [...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)))].map(x=>x.toString(16).padStart(2,"0")).join("")}}catch(e){}
+ return sha256js(t);
+};
+const HS={
+0:"fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a",
+1:"2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435",
+2:"b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569",
+4:"e19d974cff7d169a5afd16e2535a6009e076ceb30d3cacd2d9cde4f02d8f3777",
+5:"3bf85e3a647f4bb7b1b173edb828f9424916493d85c214063e9f3b6bc1ad7862",
+6:"5c195c099ffe27c005dd4054aeb4a62864f2ec74e75b76e3efca0c635d96b9e1",
+7:"3d8dbd98077ee9635cc55e3911d6832c2d47b310f0101d56b5c12cd519ac2bf9",
+8:"dcdb7b092f68ab6ffd373a8e8c036afbd43543f9e58594070ed5171f2fff0bd2"};
+const LK={"А":"A","В":"B","Е":"E","К":"K","М":"M","Н":"H","О":"O","Р":"P","С":"C","Т":"T","Х":"X"};
+const LY={"Й":"Q","Ц":"W","У":"E","К":"R","Е":"T","Н":"Y","Г":"U","Ш":"I","Щ":"O","З":"P","Ф":"A","Ы":"S","В":"D","А":"F","П":"G","Р":"H","О":"J","Л":"K","Д":"L","Я":"Z","Ч":"X","С":"C","М":"V","И":"B","Т":"N","Ь":"M"};
+const fixD=v=>v.replace(/[\u2010-\u2015\u2212]/g,"-");
+const mp=(v,m)=>v.toUpperCase().replace(/[А-ЯЁ]/g,c=>m[c]||c);
+const NORM={
+up:v=>fixD(v).trim().toUpperCase(),
+an:v=>v.toUpperCase().replace(/[^A-Z0-9]/g,""),
+ns:v=>v.replace(/\s/g,"")};
+const scr=[...document.querySelectorAll(".scr")];
+let cur=0,maxS=0,secT=null,secOn=false;
+const st=$("statusText");
 
-    async function makeHash(text) {
-      const data = new TextEncoder().encode(text);
-      const buffer = await crypto.subtle.digest("SHA-256", data);
-      return [...new Uint8Array(buffer)].map(x => x.toString(16).padStart(2, "0")).join("");
-    }
-    
-    const screens = ["screen1", "screen2", "screen3", "screen4", "screen5", "screen6", "screen7", "screen8", "screen9", "screen10"];
-    let currentScreen = 0;
-    let secretTimer = null;
+function show(i,save=true){
+ if(i<0||i>=scr.length)return;
+ cur=i;if(i>maxS)maxS=i;
+ scr.forEach((s,k)=>s.classList.toggle("active",k===i));
+ $("view").scrollTop=0;
+ clearTimeout(secT);secOn=false;
+ if(i===3)secT=setTimeout(()=>{secOn=true},10000);
+ $("btnBack").disabled=i===0;
+ $("btnFwd").disabled=i>=maxS||i===3&&maxS<4;
+ $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/10";
+ if(save){try{localStorage.setItem("blr_screen",i);localStorage.setItem("blr_max",maxS)}catch(e){}}
+}
+$("btnBack").onclick=()=>show(cur-1);
+$("btnFwd").onclick=()=>{if(cur<maxS)show(cur+1)};
+st.onclick=()=>{if(cur===3&&secOn)show(4)};
 
-    function showScreen(index, save = true) {
-      if (index >= screens.length) return;
-      
-      screens.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if(el) el.classList.toggle("active", i === index);
-      });
-      currentScreen = index;
+function blink(){const l=$("hdd");l.classList.add("on");setTimeout(()=>l.classList.remove("on"),400)}
+function msg(id,type,text){const m=$(id);m.className="msg "+type;m.textContent=text}
 
-      // Секретная кнопка на экране 4 (индекс 3)
-      if (secretTimer) { clearTimeout(secretTimer); secretTimer = null; }
-      const status = document.getElementById("statusText");
-      status.classList.remove("secret-ready");
-      if (index === 3) {
-        secretTimer = setTimeout(() => status.classList.add("secret-ready"), 10000);
-      }
+function bind(i,norm,err){
+ const f=$("f"+i),b=f.querySelector("button");
+ const run=async()=>{
+  blink();msg("m"+i,"success","ПРОВЕРКА...");
+  const raw=$("i"+i).value;
+  let ok=false;
+  try{for(const t of [raw,mp(raw,LK),mp(raw,LY)]){if(await H(norm(t))===HS[i]){ok=true;break}}}
+  catch(x){msg("m"+i,"error","СБОЙ: "+x.message);return}
+  if(ok){msg("m"+i,"success","ДОСТУП РАЗРЕШЁН");setTimeout(()=>{$("m"+i).className="msg";show(i+1)},700)}
+  else{msg("m"+i,"error",err);b.disabled=true;setTimeout(()=>b.disabled=false,2500)}
+ };
+ f.addEventListener("submit",e=>{e.preventDefault();run()});
+ b.addEventListener("click",run);
+}
+bind(0,NORM.up,"НЕВЕРНО");
+bind(1,NORM.up,"НЕВЕРНО");
+bind(2,NORM.up,"НЕВЕРНО");
+bind(4,NORM.an,"ОШИБКА");
+bind(5,v=>(v.match(/\d+/g)||[]).join(","),"НЕ СОВПАЛО");
+bind(6,NORM.an,"НЕ РАСШИФРОВАНО");
 
-      // Кнопки навигации
-      document.getElementById("btnBack").classList.toggle("hidden", index === 0);
-      document.getElementById("btnForward").classList.toggle("hidden", index === 0 || index === 4 || index === 9);
+/* Судоку: 0 = пусто. Метки A,B,C,D */
+const PZ="53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
+const MK={2:"A",18:"B",40:"C",72:"D"};
+(function(){
+ const g=$("sg");
+ for(let k=0;k<81;k++){
+  const r=Math.floor(k/9),c=k%9,el=document.createElement("input");
+  const ch=PZ[k];
+  el.maxLength=1;el.inputMode="numeric";
+  if(ch!=="."){el.value=ch;el.readOnly=true}
+  else{el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
+   if(MK[k]){el.className="mk";el.placeholder=MK[k]}}
+  if(c%3===2&&c<8)el.classList.add("br");
+  if(r%3===2&&r<8)el.classList.add("bb");
+  g.appendChild(el);
+ }
+})();
+bind(7,NORM.an,"ОШИБКА");
 
-      if (save) localStorage.setItem("blr_screen", index);
-    }
+/* Сборка */
+$("btnAsm").onclick=async()=>{
+ blink();
+ const v=[0,1,2,3,4].map(k=>$("p"+k).value).join("|");
+ const b=$("btnAsm");
+ if(await H(v)===HS[8]){msg("m8","success","СИНТЕЗ УСПЕШЕН");setTimeout(()=>{$("m8").className="msg";show(9)},900)}
+ else{msg("m8","error","КОНФЛИКТ КОМПОНЕНТОВ");b.disabled=true;setTimeout(()=>b.disabled=false,2500)}
+};
 
-    function goBack() { if (currentScreen > 0) showScreen(currentScreen - 1); }
-    function goForward() { if (currentScreen > 0 && currentScreen < 9) showScreen(currentScreen + 1); }
+/* Защита */
+let spI,tmI,hp=100,tl=120,on=false;
+const area=$("gameArea"),bd=$("btnDef"),CS='<div class="cs">🏰</div>';
+bd.onclick=()=>{
+ if(on)return;on=true;hp=100;tl=120;hud();
+ bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";area.innerHTML=CS;
+ tmI=setInterval(()=>{tl--;hud();if(tl<=0)end(true)},1000);
+ spI=setInterval(spawn,700);
+};
+function spawn(){
+ if(!on)return;
+ const e=document.createElement("div"),god=Math.random()>.4;
+ e.style.cssText="position:absolute;font-size:30px;cursor:pointer;left:"+(Math.random()*80+5)+"%;top:"+(Math.random()*75+5)+"%";
+ e.textContent=god?"👹":"☄️";
+ const t=setTimeout(()=>{if(e.parentNode){e.remove();hurt(god?10:5)}},2000);
+ e.onclick=ev=>{ev.stopPropagation();clearTimeout(t);e.remove();if(god){hp=Math.min(100,hp+2);hud()}};
+ area.appendChild(e);
+}
+function hurt(a){
+ if(!on)return;hp=Math.max(0,hp-a);hud();msg("mG","error","УРОН!");
+ setTimeout(()=>{if(on)$("mG").className="msg"},800);
+ if(hp<=0)end(false);
+}
+function hud(){
+ $("hpD").textContent=hp;$("tmD").textContent=tl;
+ const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
+}
+function end(win){
+ on=false;clearInterval(spI);clearInterval(tmI);area.innerHTML=CS;
+ $("hud").style.display="none";bd.style.display="block";
+ if(win){msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";$("mEnd").style.display="block"}
+ else{msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
+}
 
-    // Восстановление прогресса
-    const saved = localStorage.getItem("blr_screen");
-    if (saved !== null) {
-      const idx = parseInt(saved, 10);
-      if (idx >= 0 && idx < screens.length) showScreen(idx, false);
-    } else {
-      showScreen(0, false);
-    }
-
-    // Секретная кнопка
-    document.getElementById("statusText").addEventListener("click", function() {
-      if (currentScreen === 3 && this.classList.contains("secret-ready")) showScreen(4); 
-    });
-
-    // Формы
-    document.getElementById("form1").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code1").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_1) showScreen(1); 
-      else { const m = document.getElementById("message1"); m.className = "message error"; m.textContent = "НЕВЕРНО"; }
-    });
-
-    document.getElementById("form2").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code2").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_2) showScreen(2); 
-      else { const m = document.getElementById("message2"); m.className = "message error"; m.textContent = "НЕВЕРНО"; }
-    });
-
-    document.getElementById("form3").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code3").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_3) showScreen(3); 
-      else { const m = document.getElementById("message3"); m.className = "message error"; m.textContent = "НЕВЕРНО"; }
-    });
-
-    document.getElementById("form5").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code5").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_5) showScreen(5); 
-      else { const m = document.getElementById("message5"); m.className = "message error"; m.textContent = "ОШИБКА"; }
-    });
-
-    document.getElementById("form6").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code6").value.trim().replace(/\s/g, '');
-      if (val === "338,330,140") showScreen(6); 
-      else { const m = document.getElementById("message6"); m.className = "message error"; m.textContent = "НЕ СОВПАЛО"; }
-    });
-
-    document.getElementById("form7").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code7").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_7) showScreen(7); 
-      else { const m = document.getElementById("message7"); m.className = "message error"; m.textContent = "НЕ РАСШИФРОВАНО"; }
-    });
-
-    document.getElementById("form8").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code8").value.trim();
-      if (val === "8") {
-        const m = document.getElementById("message8"); m.className = "message success"; m.textContent = "УСПЕШНО";
-        document.getElementById("form8").style.display = "none"; document.getElementById("panelNext8").style.display = "block";
-      } else { const m = document.getElementById("message8"); m.className = "message error"; m.textContent = "ОШИБКА"; }
-    });
-
-    document.getElementById("btnAssemble").addEventListener("click", function() {
-      const b = document.getElementById("part_body").value;
-      const a = document.getElementById("part_arms").value;
-      const l = document.getElementById("part_legs").value;
-      const w = document.getElementById("part_wire").value;
-      if (b === "right" && a === "right" && l === "right" && w === "right") {
-        const m = document.getElementById("message9"); m.className = "message success"; m.textContent = "СИНТЕЗ УСПЕШЕН";
-        document.getElementById("btnAssemble").style.display = "none"; document.getElementById("panelNext9").style.display = "block";
-      } else { const m = document.getElementById("message9"); m.className = "message error"; m.textContent = "ОШИБКА"; }
-    });
-
-    let spawnInterval, timerInterval, hp = 100, timeLeft = 120, isGameActive = false;
-    const btnStartDefense = document.getElementById("btnStartDefense");
-    btnStartDefense.addEventListener("click", startGame);
-
-    function startGame() {
-      if (isGameActive) return;
-      isGameActive = true; hp = 100; timeLeft = 120; updateHUD();
-      btnStartDefense.style.display = "none"; document.getElementById("defenseHUD").style.display = "block";
-      document.getElementById("messageGame").style.display = "none";
-      document.getElementById("gameArea").innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>';
-      
-      timerInterval = setInterval(() => { timeLeft--; updateHUD(); if (timeLeft <= 0) endGame(true); }, 1000);
-      spawnInterval = setInterval(spawnEnemy, 700);
-    }
-
-    function spawnEnemy() {
-      if (!isGameActive) return;
-      const enemy = document.createElement("div");
-      const isGod = Math.random() > 0.4;
-      enemy.style.position = "absolute"; enemy.style.left = (Math.random() * 80 + 10) + "%"; enemy.style.top = (Math.random() * 80 + 10) + "%";
-      enemy.style.fontSize = "30px"; enemy.style.cursor = "pointer"; enemy.textContent = isGod ? "👹" : "☄️";
-      
-      enemy.addEventListener("click", (e) => { e.stopPropagation(); enemy.remove(); if (isGod) { hp = Math.min(100, hp + 2); updateHUD(); } });
-      const timeout = setTimeout(() => { if (enemy.parentNode) { enemy.remove(); takeDamage(isGod ? 10 : 5); } }, 2000);
-      enemy.addEventListener("click", () => clearTimeout(timeout));
-      
-      document.getElementById("gameArea").appendChild(enemy);
-      setTimeout(() => { if (enemy.parentNode) enemy.remove(); }, 3000);
-    }
-
-    function takeDamage(a) {
-      if (!isGameActive) return;
-      hp -= a; if (hp < 0) hp = 0; updateHUD();
-      const msg = document.getElementById("messageGame");
-      msg.style.display = "block"; msg.className = "message error"; msg.textContent = "УРОН!";
-      setTimeout(() => { if (isGameActive) msg.style.display = "none"; }, 1000);
-      if (hp <= 0) endGame(false);
-    }
-
-    function updateHUD() {
-      document.getElementById("hpDisplay").textContent = hp;
-      document.getElementById("timeDisplay").textContent = timeLeft;
-      document.getElementById("hpBar").style.width = hp + "%";
-      document.getElementById("hpBar").style.background = hp > 50 ? "#8be0b5" : (hp > 20 ? "#ffa500" : "#ff4444");
-    }
-
-    function endGame(win) {
-      isGameActive = false; clearInterval(spawnInterval); clearInterval(timerInterval);
-      document.getElementById("gameArea").innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>';
-      document.getElementById("defenseHUD").style.display = "none"; btnStartDefense.style.display = "block";
-      const msg = document.getElementById("messageGame");
-      msg.style.display = "block";
-      if (win) {
-        msg.className = "message success"; msg.textContent = "ПОБЕДА! БУНКЕР ВЫСТОЯЛ.";
-        btnStartDefense.style.display = "none"; document.getElementById("panelNext10").style.display = "block";
-      } else {
-        msg.className = "message error"; msg.textContent = "БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.";
-        btnStartDefense.textContent = "ПОПРОБОВАТЬ СНОВА";
-      }
-    }
-  </script>
+/* Восстановление прогресса */
+(function(){
+ let s=0,m=0;
+ try{s=parseInt(localStorage.getItem("blr_screen"),10)||0;m=parseInt(localStorage.getItem("blr_max"),10)||0}catch(e){}
+ maxS=Math.min(Math.max(m,s),scr.length-1);
+ show(Math.min(s,maxS),false);
+})();
+</script>
 </body>
 </html>
