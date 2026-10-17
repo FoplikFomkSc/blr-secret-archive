@@ -401,18 +401,19 @@ function act(k,el){
  if(st2===13)addChip("chip","💾 ЧИП");
  msg("mA","success","Шаг "+(st2+1)+"/15");
 }
-
 /* Защита */
 const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
 const TY={imp:{e:"👹",hp:1,v:65,d:6,s:26},thu:{e:"⚡",hp:2,v:85,d:8,s:26},tit:{e:"👺",hp:5,v:35,d:20,s:40},boss:{e:"🐲",hp:25,v:20,d:45,s:64}};
 const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.random()*1.5+.5]);
 let G=null,raf=0;
-bd.onclick=()=>{
+
+if(bd) bd.onclick=()=>{
  if(G)return;
  G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
  bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";
  show(9,false);hud();raf=requestAnimationFrame(loop);
 };
+
 function spawn(t){
  if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.15+p*.15?"tit":r<.5?"thu":"imp"}
  const y=TY[t];G.en.push({t,x:30+Math.random()*300,y:-20,hp:y.hp,ph:Math.random()*6});
@@ -423,10 +424,11 @@ function fire(x,y,fromX,own){
  G.fx.push({k:"l",x1:fromX,y1:262,x2:best?best.x:x,y2:best?best.y:y,a:1,c:own?"#ffd36b":"#5c8dff"});sfx("laser");
  if(best&&--best.hp<=0){G.en.splice(G.en.indexOf(best),1);sfx("boom");for(let i=0;i<10;i++)G.fx.push({k:"p",x:best.x,y:best.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,a:1})}
 }
-cv.onpointerdown=e=>{
+if(cv) cv.onpointerdown=e=>{
  if(!G)return;const r=cv.getBoundingClientRect();
  fire((e.clientX-r.left)*360/r.width,(e.clientY-r.top)*300/r.height,180,true);
 };
+
 function loop(ts){
  if(!G)return;
  const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
@@ -444,6 +446,7 @@ function loop(ts){
  if(G.t<=0)return endG(true);
  raf=requestAnimationFrame(loop);
 }
+
 function draw(){
  const sx=(Math.random()-.5)*G.sh,sy=(Math.random()-.5)*G.sh;
  cx.save();cx.translate(sx,sy);
@@ -462,32 +465,37 @@ function draw(){
   else{f.x+=f.vx*.016;f.y+=f.vy*.016;cx.fillStyle="#ffa500";cx.fillRect(f.x,f.y,4,4)}}
  cx.globalAlpha=1;cx.restore();
 }
+
 function hud(){
  const hp=Math.max(0,Math.round(G?G.hp:100)),t=G?Math.max(0,Math.ceil(G.t)):120;
  $("hpD").textContent=hp;$("tmD").textContent=t;
  const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
 }
-function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
+
+function stopGame(){cancelAnimationFrame(raf);G=null;if($("hud"))$("hud").style.display="none";if(bd)bd.style.display="block";}
+
 function endG(win){
  stopGame();
  if(win){
    sfx("win");
-   msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");
-   bd.style.display="none";
-   // Даем 2 секунды прочитать, а потом сами перекидываем в комнату (11 экран)
+   if($("mG")) msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");
+   if(bd) bd.style.display="none";
+   if($("btnFwd")) $("btnFwd").disabled = false;
+   
+   // Автоматический переход в комнату через 2 секунды
    setTimeout(() => {
-       msg("mG","success","ПЕРЕХОД В ОТСЕК 3...");
+       if($("mG")) $("mG").className = "msg";
        show(10); 
    }, 2000);
  } else {
-   show(9,false); // Остаемся на экране 9 при поражении
+   show(9,false);
    sfx("err");
-   msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");
-   bd.textContent="ПОПРОБОВАТЬ СНОВА";
+   if($("mG")) msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");
+   if(bd) bd.textContent="ПОПРОБОВАТЬ СНОВА";
  }
 }
 
-/* ЭТАП 3: КОМНАТА */
+/* ЭТАП 3: КОМНАТА (Логика с сохранением) */
 let inv = { slot1: null, slot2: null, slot3: null };
 let activeSlot = null;
 let roomState = { nightstand: false, closetMoved: false, hatchOpen: false, capsulesBroken: false, safeOpened: false, safeBackOpened: false };
