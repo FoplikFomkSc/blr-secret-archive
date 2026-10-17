@@ -17,7 +17,7 @@ body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;alig
 .glass::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#0000 0 2px,#0003 3px),radial-gradient(ellipse,#0000 60%,#0007)}
 .osbar{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;background:#11131d;border-bottom:1px solid #292b42;color:var(--muted);font-size:10px;letter-spacing:2px}
 .status{color:var(--green);user-select:none}
-.view{height:min(70vh,580px);overflow-y:auto;padding:24px 22px}
+.view{height:min(66vh,540px);overflow-y:auto;padding:24px 22px}
 .stand{width:90px;height:22px;margin:0 auto;background:linear-gradient(#1b1c26,#2b2d3a)}
 .base{width:200px;height:8px;margin:0 auto;border-radius:6px;background:#2b2d3a}
 .pc{margin-top:12px;display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(#2a2c38,#171821);border-radius:10px;box-shadow:inset 0 1px 0 #4a4d63,0 10px 30px #0008}
@@ -37,11 +37,40 @@ body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;alig
 .mir{display:inline-block;transform:scaleX(-1)}
 .sg input.al{background:#0e1119}
 #tray{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;margin-bottom:12px}
-.chip{padding:8px 10px;background:#1b1d2c;border:1px solid #5c8dff;border-radius:8px;font-size:12px;cursor:grab;touch-action:none;user-select:none;position:relative}
+.chip{padding:6px 8px;font-size:11px!important;background:#1b1d2c;border:1px solid #5c8dff;border-radius:8px;font-size:12px;cursor:grab;touch-action:none;user-select:none;position:relative}
 #bot{position:relative;width:240px;height:210px;margin:0 auto 12px}
 .sl{position:absolute;display:grid;place-items:center;border:1px dashed #514477;border-radius:6px;font-size:8px;color:#777d96;text-align:center;background:#0c0e17;user-select:none}
 .sl.f{border:1px solid var(--blue);font-size:20px;background:#15183a}
 .sl.w{box-shadow:0 0 10px #ffd36b;border-color:#ffd36b}
+#pcs{padding:12px;text-align:center;border:1px dashed #514477;border-radius:8px;font-size:13px;color:#a6aac0}
+#rbox svg,#room{width:100%;display:block}
+#rob{max-width:235px;margin:0 auto;border-radius:10px;border:1px solid #23253a}
+.pt{opacity:0;transform:translateY(-16px);transition:opacity .5s,transform .5s}.pt.on{opacity:1;transform:none}
+.sl2{fill:rgba(92,141,255,.07);stroke:#5c8dff;stroke-dasharray:3 3;stroke-opacity:.7;animation:dd 1s linear infinite}
+.sl2.ok{stroke-opacity:0;fill:transparent;animation:none}.sl2.w{stroke:#ffd36b;stroke-opacity:1;stroke-width:2}
+@keyframes dd{to{stroke-dashoffset:-12}}
+.lb{font:6.5px Arial;fill:#8fa6ff;pointer-events:none}
+.scn{animation:sc 3s linear infinite}@keyframes sc{from{transform:translateY(0)}to{transform:translateY(300px)}}
+.sp{pointer-events:none;fill:#ffd36b;transform-box:fill-box;transform-origin:center;animation:spk .6s forwards}@keyframes spk{from{transform:scale(.3);opacity:1}to{transform:scale(4);opacity:0}}
+.wire{stroke:#ffd36b;stroke-width:2.5;fill:none;stroke-dasharray:6 4;animation:dd .5s linear infinite;filter:drop-shadow(0 0 3px #ffd36b)}
+.pls{animation:pl 1.2s ease-in-out infinite}@keyframes pl{50%{opacity:.55}}
+.mus{stroke-dasharray:5 3;animation:dd 1s linear infinite}
+[data-a]{cursor:pointer}
+.lamp{animation:fl 4s infinite}@keyframes fl{0%,100%{opacity:1}44%{opacity:.55}48%{opacity:1}52%{opacity:.7}}
+#ward{transition:transform .9s}#ward.mv{transform:translateX(70px)}
+#safeg{transition:transform 1s,opacity 1s}#safeg.fell{transform:translateY(92px)}
+#hdoor{transition:transform .8s,opacity .8s;transform-box:fill-box;transform-origin:left}#hdoor.op{transform:scaleX(.15);opacity:.4}
+.cap .cp,.cap .crk{opacity:0;transition:opacity .6s}.cap.br .cp,.cap.br .crk{opacity:1}.cap.br .fog{opacity:0}.fog{transition:opacity .6s;pointer-events:none}.cap.br [data-a^="cap"]{pointer-events:none}
+#sdoor{transition:opacity .6s}#sdoor.op{opacity:0;pointer-events:none}
+.off{opacity:0;pointer-events:none}.hid{display:none}
+#s3{position:relative}
+.mod{position:absolute;inset:0;background:#000b;display:none;place-items:center;z-index:5}.mod.on{display:grid}
+.mod>div{background:#11131d;border:1px solid #514477;border-radius:10px;padding:18px;width:min(300px,90%);text-align:center;font-size:13px;line-height:1.6}
+#inv{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:34px}
+.it{padding:8px 12px;border:1px solid #514477;border-radius:6px;font-size:12px;background:#15163a;cursor:pointer;user-select:none}
+.it.sel{border-color:#ffd36b;box-shadow:0 0 8px #ffd36b88}
+#rmsg{margin-top:10px;min-height:40px;padding:10px 12px;background:#0c0e17;border:1px solid #23253a;border-radius:6px;font-size:13px;color:#cfd2e6;line-height:1.5}
+#notes{margin-top:8px;font-size:11px;color:#8fa6ff;line-height:1.6}
 .scr{display:none}.scr.active{display:block}
 .symbol{width:46px;height:46px;display:grid;place-items:center;margin-bottom:16px;border:1px solid #514477;border-radius:10px;color:var(--purple);font-size:24px;background:#201a35}
 .eyebrow{color:var(--purple);font-size:10px;font-weight:bold;letter-spacing:3px;margin-bottom:10px}
@@ -61,15 +90,18 @@ input.txt:focus{border-color:var(--purple)}
 .box{padding:14px;background:#0c0e17;border:1px solid #23253a;border-radius:7px;margin-bottom:16px;font-family:monospace;font-size:12px}
 .numbers{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 20px;padding:18px 10px;background:#0c0e17;border:1px solid #23253a;border-radius:10px;margin-bottom:20px}
 .nb{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:monospace}.nb b{font-size:20px}.nb span{font-size:11px}
+.frag{display:flex;gap:10px;align-items:center;margin:6px 0;color:var(--purple);font-size:16px;letter-spacing:2px}
+.frag small{color:var(--muted);font-size:11px;letter-spacing:1px}
 .sg{display:grid;grid-template-columns:repeat(9,1fr);max-width:340px;margin:0 auto 12px;border:2px solid var(--blue);background:var(--blue);gap:1px}
 .sg input{width:100%;aspect-ratio:1;min-width:0;padding:0;text-align:center;font-size:15px;color:var(--green);background:#090b13;border:0;border-radius:0;outline:none}
 .sg input[readonly]{color:#f0efff}
+.sg input.mk{background:#2a1f4d;color:#ffd36b;font-weight:bold}
 .sg input:focus{background:#1b2040}
 .sg .br{border-right:2px solid var(--blue)}.sg .bb{border-bottom:2px solid var(--blue)}
 .ar{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#0c0e17;padding:8px 10px;border-radius:6px;border:1px solid #23253a;margin-bottom:8px;font-size:12px}
 .ar select{max-width:62%;background:#090b13;color:#fff;padding:8px;border-radius:5px;border:1px solid #34364d}
-.room-tool { display:inline-block; padding:5px 10px; background:#23253a; border:1px solid #555a70; border-radius:5px; cursor:pointer; font-size:14px; margin:2px; }
-.room-tool.active { border-color:#8be0b5; background:#15183a; box-shadow:0 0 8px #8be0b5; }
+#gameArea{position:relative;height:260px;background:#090b13;border:1px solid #23253a;border-radius:7px;overflow:hidden;cursor:crosshair}
+#gameArea .cs{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:.5}
 </style>
 </head>
 <body>
@@ -78,77 +110,63 @@ input.txt:focus{border-color:var(--purple)}
 <div class="osbar"><span>BLR SecArh</span><span id="statusText" class="status">● SIGNAL ACTIVE</span></div>
 <div class="view" id="view">
 
-<!-- ЭКРАН 0 -->
 <section class="scr active">
 <div class="symbol">⌁</div><div class="eyebrow">UNKNOWN TRANSMISSION</div><h1>Ты нашёл нас.</h1>
 <p class="description">Эта передача не для чужих глаз. Кто ищет, тот найдёт; кто нашёл, тот знает ключ.<br><br>Назови его, и дверь отворится.</p>
 <div class="sep"></div>
-<form id="f0"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i0" placeholder="Введи код..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m0"></div>
+<form id="f0"><label for="i0">ACCESS CODE</label><div class="row"><input class="txt" id="i0" placeholder="Введи код..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m0"></div>
 </section>
 
-<!-- ЭКРАН 1 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 002</div><h1>Семь осколков.</h1>
 <p class="description">Не всё то золото, что блестит: у каждого осколка два лица. Метка — цвет, цвет — класс, класс — действие.</p>
 <div class="numbers">
 <div class="nb"><span>c94444</span><b>7072</b></div><div class="nb"><span>55aa55</span><b>3</b></div><div class="nb"><span>e05555</span><b>5081</b></div><div class="nb"><span>5577cc</span><b>6202</b></div><div class="nb"><span>449944</span><b>1</b></div><div class="nb"><span>ff88aa</span><b>2113</b></div><div class="nb"><span>4466bb</span><b>7202</b></div>
 </div>
-<form id="f1"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go"><span class="mir">ПРОВЕРИТЬ</span></button></div></form><div class="msg" id="m1"></div>
+<form id="f1"><label for="i1">ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go"><span class="mir">ПРОВЕРИТЬ</span></button></div></form><div class="msg" id="m1"></div>
 </section>
 
-<!-- ЭКРАН 2 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 003</div><h1>Редукция.</h1>
 <p class="description">Из песчинок вырастает пустыня, из капель — река.<br><br><strong style="font-size:20px">67000903</strong><br><br>Рассыпь целое на части и сложи заново, не обронив ни одной.</p>
 <div class="sep"></div>
-<form id="f2"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i2" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m2"></div>
+<form id="f2"><label for="i2">ACCESS CODE</label><div class="row"><input class="txt" id="i2" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m2"></div>
 </section>
 
-<!-- ЭКРАН 3 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 004</div><h1>Индекс.</h1>
 <p class="description">Число — не ответ, а адрес: не пеняй на дорогу, считай шаги.<br><br><strong>BLR SECRET ARCHIVES PROTOCOL B</strong><br><br>Иной ответ не вводят, а касаются. Кто ждёт, тот дождётся.</p>
 </section>
 
-<!-- ЭКРАН 4 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div><h1>Протокол Ares.</h1>
 <p class="description">Два знака правят миром: ноль да единица. Восемь птиц в стае — одна буква. Прочти стаю и назови зверя по имени.</p>
 <div class="box" style="text-align:center;color:var(--blue)">01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001</div>
-<form id="f4"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i4" placeholder="Введи название..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m4"></div>
+<form id="f4"><label for="i4">ACCESS CODE</label><div class="row"><input class="txt" id="i4" placeholder="Введи название..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m4"></div>
 </section>
 
-<!-- ЭКРАН 5 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div><h1>Спектр.</h1>
 <p class="description">Цвет — не один голос, а хор. Сложи одноимённые голоса всех, а круг мерь градусами: что осталось за полным кругом, то и есть эхо.</p>
-<div style="text-align:center; margin-bottom:15px;">
-  <div style="width:100px; height:100px; border-radius:50%; margin:0 auto; background:conic-gradient(red, yellow, lime, cyan, blue, magenta, red); border:2px solid #fff; box-shadow:0 0 10px #000;"></div>
-  <div style="font-size:10px; color:var(--muted); margin-top:5px;">Круг градусов (0-360)</div>
-</div>
+<div style="width:110px;height:110px;margin:0 auto 16px;border-radius:50%;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);position:relative;box-shadow:0 0 25px #5c8dff44"><div style="position:absolute;inset:30%;border-radius:50%;background:#090a10"></div></div>
 <div class="box">#006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a</div>
-<form id="f5"><label>РЕЗОНАНС</label><div class="row"><input class="txt" id="i5" placeholder="..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m5"></div>
+<form id="f5"><label for="i5">РЕЗОНАНС</label><div class="row"><input class="txt" id="i5" placeholder="..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m5"></div>
 </section>
 
-<!-- ЭКРАН 6 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div><h1>Перехват.</h1>
-<p class="description">Спектр активирован. Система зафиксировала сигнал с орбиты.<br><br>Врата откроются тому, кто узрит суть в отражении. То, что впереди, станет позади, а свет обернётся тьмой. Прочти послание богов, глядя в зеркало.</p>
-<div class="box" style="text-align:center;color:var(--purple);font-size:16px;letter-spacing:2px;word-break:break-all;">
-ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
-</div>
-<form id="f6"><label>КЛЮЧ</label><div class="row"><input class="txt" id="i6" placeholder="Расшифровка..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m6"></div>
+<p class="description">Врата откроются тому, кто узрит суть в отражении. Прочти послание, глядя в зеркало.</p>
+<div class="box" style="text-align:center;font-size:16px;color:var(--purple)">ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI</div>
+<form id="f6"><label for="i6">ACCESS CODE</label><div class="row"><input class="txt" id="i6" placeholder="Расшифровка..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m6"></div>
 </section>
 
-<!-- ЭКРАН 7 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div><h1>Сбой ядра.</h1>
-<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Заполни пропуски, чтобы восстановить систему.</p>
+<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Каждая клетка хранит цифру: верни всех домой.</p>
 <div class="sg" id="sg"></div>
 <button type="button" class="go" id="btnSud" style="width:100%">ВОССТАНОВИТЬ</button><div class="msg" id="m7"></div>
 </section>
 
-<!-- ЭКРАН 8 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div><h1>Сборка шаблона.</h1>
 <div id="asm1">
@@ -171,53 +189,35 @@ ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
 </div>
 <div id="asm2" style="display:none">
 <p class="description" style="margin-bottom:10px">Тяни детали на места. Порядок — в послании ниже.</p>
-<div id="tray"></div><div id="bot"></div><div class="msg" id="mA"></div>
-<p class="description" style="margin-top:14px">Порядок прост: сперва кость, затем ходули, потом руки; в грудь — сердце, в жилы — кровь, на кость — плоть; в череп — мысль, в мысль — глаз, в руку — гнев. Когда всё стоит, протяни жилу. Чип — сперва железному, затем разуму машины.</p>
+<div id="tray"></div><div id="rbox"></div><div class="msg" id="mA"></div>
+<p class="description" style="margin-top:14px">Порядок прост, как жизнь: сперва кость, затем ходули, потом руки; в грудь — сердце, в жилы — кровь, на кость — плоть; в череп — мысль, в мысль — глаз, в руку — гнев; после — катушка с жилой, что ложится на сердце. Тогда протяни жилу: от сердца к мысли, от мысли к глазу, от глаза к гневу — касайся по очереди. Чип — сперва железному, затем разуму машины.</p>
 </div>
 </section>
 
-<!-- ЭКРАН 9 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div><h1>Защита.</h1>
-<p class="description">Бункер держится на тех, кто не зевает. Железные братья стоят рядом, но и твой выстрел весит. Богов много, а бункер один.</p>
+<p class="description">Бункер держится на тех, кто не зевает. Железные братья стоят рядом, но стреляют редко. Щит гаснет лишь на миг, а красный круг не прощает промедления.</p>
 <div id="hud" style="display:none;margin-bottom:12px">
 <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span>HP: <span id="hpD">100</span></span><span>ВРЕМЯ: <span id="tmD">120</span>с</span></div>
 <div style="height:10px;background:#3a1925;border-radius:5px"><div id="hpBar" style="width:100%;height:100%;background:var(--green)"></div></div></div>
-<canvas id="cv" width="360" height="300" style="width:100%;border-radius:7px;border:1px solid #23253a;touch-action:none;cursor:crosshair;display:block"></canvas>
+<canvas id="cv" width="360" height="300" style="width:100%;max-width:380px;margin:0 auto;border-radius:7px;border:1px solid #23253a;touch-action:none;cursor:crosshair;display:block"></canvas>
 <div class="msg" id="mG"></div>
 <button type="button" class="go" id="btnDef" style="width:100%;margin-top:12px;padding:14px">НАЧАТЬ ЗАЩИТУ</button>
+<button type="button" class="go" id="btnSkip" style="display:none;width:100%;margin-top:10px;padding:12px;background:#2a2d44">ПРОПУСТИТЬ ЗАЩИТУ</button>
+<div id="mEnd" style="display:none"><div class="msg success" style="display:block">БУНКЕР ВЫСТОЯЛ. ЭТАП 2 ПРОЙДЕН.</div><button type="button" class="go" id="btnS3" style="width:100%;margin-top:12px;padding:14px">ПЕРЕЙТИ К ЭТАПУ 3</button></div>
 </section>
 
-<!-- ЭКРАН 10 -->
-<section class="scr">
-<div class="eyebrow">TRANSMISSION 011 // STAGE 3</div><h1>Бункер. Отсек 3.</h1>
-<p class="description">Связь с внешним миром потеряна. Вам нужно найти ключ доступа, чтобы открыть дверь в командный центр. Оглядитесь.</p>
-<div id="inv" style="display:flex; gap:10px; padding:10px; background:#0c0e17; border:1px solid #34364d; border-radius:6px; margin-bottom:10px; min-height:50px; justify-content:center;">
-  <div class="room-tool" id="slot1" style="width:40px; height:40px; display:grid; place-items:center;"></div>
-  <div class="room-tool" id="slot2" style="width:40px; height:40px; display:grid; place-items:center;"></div>
-  <div class="room-tool" id="slot3" style="width:40px; height:40px; display:grid; place-items:center;"></div>
-</div>
-<div id="roomView" style="position:relative; width:100%; height:280px; background:linear-gradient(to bottom, #151725 60%, #090a10 60%); border:1px solid #5c8dff; border-radius:8px; overflow:hidden;">
-  <div id="obj_door" style="position:absolute; right:5%; bottom:40%; font-size:60px; cursor:pointer; line-height:1;">🚪</div>
-  <div id="obj_closet" style="position:absolute; left:15%; bottom:40%; font-size:60px; cursor:pointer; line-height:1; transition: transform 0.5s;">🚪</div>
-  <div id="obj_hatch" style="position:absolute; left:18%; bottom:40%; font-size:40px; cursor:pointer; line-height:1; display:none;">🪜</div>
-  <div id="obj_capsules" style="position:absolute; left:40%; bottom:40%; font-size:50px; cursor:pointer; line-height:1;">🧪</div>
-  <div id="obj_table" style="position:absolute; left:70%; bottom:40%; font-size:40px; cursor:pointer; line-height:1;">🪑</div>
-  <div id="obj_nightstand" style="position:absolute; left:85%; bottom:40%; font-size:40px; cursor:pointer; line-height:1;">🗄️</div>
-  <div id="obj_safe" style="position:absolute; left:55%; bottom:40%; font-size:40px; cursor:pointer; line-height:1;">🧰</div>
-  <div style="position:absolute; bottom:0; width:100%; height:40%; background:#0c0e17; border-top:2px solid #23253a;"></div>
-  <div id="infoPanel" style="display:none; position:absolute; bottom:0; left:0; right:0; background:#090b13ee; padding:15px; border-top:1px solid #5c8dff; font-size:13px; color:#fff; z-index:10;">
-     <span id="infoText"></span><button id="closeInfo" style="margin-left:10px; padding:4px 8px; cursor:pointer;">X</button>
-  </div>
-</div>
-<div id="roomMsg" class="msg"></div>
+<section class="scr" id="s3">
+<div id="room"></div>
+<div id="inv"></div><div id="rmsg">Тишина. Гудит вентиляция.</div><div id="notes"></div>
+<div class="mod" id="kp"><div><div style="color:#ffd36b;margin-bottom:10px">ЗАМОК СЕЙФА</div><input class="txt" id="kpI" inputmode="numeric" placeholder="_ _ _ _ _ _ _" style="text-align:center;letter-spacing:4px"><div class="row" style="margin-top:12px"><button type="button" class="go" id="kpOk" style="flex:1">ОТКРЫТЬ</button><button type="button" class="go" id="kpX" style="flex:1;background:#2a2d44">ЗАКРЫТЬ</button></div></div></div>
+<div class="mod" id="rw"><div><div style="color:#8be0b5;margin-bottom:8px">ТАЙНИК ЗА СЕЙФОМ</div>НАГРАДА ДЛЯ ИГРЫ:<br><strong id="rwC" style="font-size:18px;letter-spacing:2px"></strong><br><button type="button" class="go" id="rwX" style="margin-top:12px;padding:10px 18px">ЗАКРЫТЬ</button></div></div>
 </section>
-
 </div></div>
 <div class="pc">
 <div class="leds"><i class="led on" id="pwr"></i><i class="led hdd" id="hdd"></i><i class="led err" id="errL"></i></div>
 <button class="key" id="btnBack">◀ НАЗАД</button>
-<div class="lcd" id="lcd">STEP 01/11</div>
+<div class="lcd" id="lcd">STEP 01/10</div>
 <button class="key" id="btnFwd">ВПЕРЁД ▶</button>
 <button class="key" id="btnSnd" style="flex:0 0 auto">🔊</button><div class="vents"><i></i><i></i><i></i><i></i></div>
 </div>
@@ -259,14 +259,20 @@ const HS={
 0:"fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a",
 1:"2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435",
 2:"b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569",
-4:"7d7fa5865a2bb65d219ee11319a07b36339c0f7275552e39a246c074fe5e9694", 
-5:"c6be512eb57a1b0dc7d938b84b5c87185448d3a7c7e5f10b2a2c33c1c4b2c4c1", 
-6:"72dfcfb0c470ac255cde83fb8fe38de8a128188e03ea5ba5b2a93adbea1062fa"};
+4:"e19d974cff7d169a5afd16e2535a6009e076ceb30d3cacd2d9cde4f02d8f3777",
+5:"3bf85e3a647f4bb7b1b173edb828f9424916493d85c214063e9f3b6bc1ad7862",
+6:"76e415328ea87dd0218b8553d45b8b8043a7b599a86720846ce8a907e4b8a205",
+7:"4c5e72057519c48e1a2430cbedb7cff3a4a1d244eb28b8d865f85141f643017d",
+10:"aee6b3dacaab2d52fbc1675244a6ffd504234f9b9da786fc0ee7e26c5753f33e",
+8:"84903ba3c96eef4e0351e6e0e11f897873a40c026413be1f2cd381ebd8e3e341"};
 const LK={"А":"A","В":"B","Е":"E","К":"K","М":"M","Н":"H","О":"O","Р":"P","С":"C","Т":"T","Х":"X"};
 const LY={"Й":"Q","Ц":"W","У":"E","К":"R","Е":"T","Н":"Y","Г":"U","Ш":"I","Щ":"O","З":"P","Ф":"A","Ы":"S","В":"D","А":"F","П":"G","Р":"H","О":"J","Л":"K","Д":"L","Я":"Z","Ч":"X","С":"C","М":"V","И":"B","Т":"N","Ь":"M"};
 const fixD=v=>v.replace(/[\u2010-\u2015\u2212]/g,"-");
 const mp=(v,m)=>v.toUpperCase().replace(/[А-ЯЁ]/g,c=>m[c]||c);
-const NORM={up:v=>fixD(v).trim().toUpperCase(),an:v=>v.toUpperCase().replace(/[^A-Z0-9]/g,""),ns:v=>v.replace(/\s/g,"")};
+const NORM={
+up:v=>fixD(v).trim().toUpperCase(),
+an:v=>v.toUpperCase().replace(/[^A-Z0-9]/g,""),
+ns:v=>v.replace(/\s/g,"")};
 const scr=[...document.querySelectorAll(".scr")];
 let cur=0,maxS=0,secT=null,secOn=false;
 const st=$("statusText");
@@ -281,7 +287,7 @@ function show(i,save=true){
  if(i===3)secT=setTimeout(()=>{secOn=true;$("pwr").classList.add("warn")},10000);
  $("btnBack").disabled=i===0||!!G;
  $("btnFwd").disabled=!!G||i>=maxS||i===3&&maxS<4;
- $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/"+(scr.length);
+ $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/"+scr.length;
  if(save){try{localStorage.setItem("blr_screen",i);localStorage.setItem("blr_max",maxS)}catch(e){}}
 }
 $("btnBack").onclick=()=>show(cur-1);
@@ -325,17 +331,15 @@ bind(5,v=>(v.match(/\d+/g)||[]).join(","),"НЕ СОВПАЛО");
 bind(6,NORM.an,"НЕ РАСШИФРОВАНО");
 
 /* Судоку */
+const PZ="53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
 const SG=[];
 (function(){
  const g=$("sg");
- const sol=[5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,6,1,7,9,8];
- // Оставляем 9 пустых клеток для игрока
- const empty = [2, 12, 20, 30, 40, 50, 60, 70, 78];
  for(let k=0;k<81;k++){
-  const r=Math.floor(k/9),c=k%9,el=document.createElement("input");
+  const r=Math.floor(k/9),c=k%9,el=document.createElement("input"),ch=PZ[k];
   el.maxLength=1;el.inputMode="numeric";
-  if(empty.includes(k)) el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
-  else { el.value=sol[k]; el.readOnly=true; }
+  if(ch!=="."){el.value=ch;el.readOnly=true}
+  else el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
   if((Math.floor(r/3)+Math.floor(c/3))%2)el.classList.add("al");
   if(c%3===2&&c<8)el.classList.add("br");
   if(r%3===2&&r<8)el.classList.add("bb");
@@ -344,10 +348,7 @@ const SG=[];
 })();
 $("btnSud").onclick=async()=>{
  blink();
- const sol=[5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,6,1,7,9,8];
- let ok=true;
- for(let k=0; k<81; k++) { if(SG[k].value === "" || parseInt(SG[k].value) !== sol[k]) { ok=false; break; } }
- if(ok){msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");sfx("ok");setTimeout(()=>{$("m7").className="msg";show(7)},900)}
+ if(await H(SG.map(e=>e.value||"0").join(""))===HS[7]){msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");sfx("ok");setTimeout(()=>{$("m7").className="msg";show(8)},900)}
  else bad();
 };
 
@@ -357,258 +358,247 @@ $("sel").innerHTML=PT.map((p,k)=>`<div class="ar"><span>${p[0]}</span><select id
 $("btnAsm").onclick=async()=>{
  blink();
  const v=PT.map((_,k)=>$("p"+k).value).join("|");
- if(v === "TI|ST|AL|AG|A|IR|EF|LS|NP|HE"){sfx("ok");$("asm1").style.display="none";$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
+ if(await H(v)===HS[8]){sfx("ok");$("asm1").style.display="none";$("asm1").parentElement.querySelectorAll(".eyebrow,h1").forEach(e=>e.style.display="none");$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
  else bad();
 };
 
 /* Сборка: перетаскивание */
-const SL={brain:[95,0,50,38,"РАЗУМ"],lens:[150,6,40,30,"ГЛАЗ"],body:[80,44,80,86,"КОСТЬ"],core:[92,50,26,26,"СЕРДЦЕ"],fuel:[122,50,26,26,"ЖИЛЫ"],arms:[30,50,44,70,"РУКИ"],muscles:[166,50,44,70,"ПЛОТЬ"],weapon:[30,126,44,40,"ГНЕВ"],chip:[166,126,44,40,"ЧИП"],legs:[80,136,80,70,"НОГИ"],pc:[0,172,72,36,"🖥 ПК"]};
-const IT=[["body","🧱"],["legs","🦿"],["arms","🦾"],["core","💠"],["fuel","🩸"],["muscles","💪"],["brain","🧠"],["lens","👁"],["weapon","🔫"]];
-const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","w_core","w_brain","w_lens","w_weapon","chip","pc"];
-let st2=0;
+const RS={body:[95,15,70,150,"КОСТЬ"],legs:[100,168,60,108,"НОГИ"],arms:[64,76,34,98,"РУКИ"],muscles:[162,76,34,98,"ПЛОТЬ"],core:[116,86,28,28,"СЕРДЦЕ"],fuel:[112,118,36,30,"КРОВЬ"],brain:[110,18,40,18,"РАЗУМ"],lens:[106,38,48,14,"ГЛАЗ"],weapon:[38,150,30,24,"ГНЕВ"],chip:[170,176,30,18,"ПОРТ"],pc:[200,236,54,42,"ПК"]};
+const PG={
+body:'<polygon points="95,75 165,75 155,150 105,150" fill="url(#mt2)" stroke="#9aa3b8"/><path d="M100,92H160M102,108H158M104,124H156M106,138H154" stroke="#1b1f2c" stroke-width="2"/><rect x="127" y="62" width="6" height="90" fill="#aab2c6"/><rect x="100" y="15" width="60" height="52" rx="14" fill="url(#mt)" stroke="#9aa3b8"/><rect x="122" y="66" width="16" height="10" fill="#4a5167"/><rect x="105" y="150" width="50" height="14" rx="3" fill="url(#mt2)" stroke="#9aa3b8"/><g fill="#d6dbea"><circle cx="104" cy="22" r="1.6"/><circle cx="156" cy="22" r="1.6"/><circle cx="100" cy="82" r="1.6"/><circle cx="160" cy="82" r="1.6"/></g>',
+legs:'<g fill="url(#mt)" stroke="#9aa3b8"><rect x="106" y="166" width="20" height="50" rx="5"/><rect x="134" y="166" width="20" height="50" rx="5"/><rect x="108" y="220" width="16" height="48" rx="4"/><rect x="136" y="220" width="16" height="48" rx="4"/><rect x="100" y="268" width="30" height="9" rx="3"/><rect x="130" y="268" width="30" height="9" rx="3"/></g><g fill="#222736" stroke="#9aa3b8"><circle cx="116" cy="218" r="6"/><circle cx="144" cy="218" r="6"/></g>',
+arms:'<g fill="url(#mt)" stroke="#9aa3b8"><rect x="72" y="90" width="20" height="36" rx="5"/><rect x="74" y="134" width="16" height="40" rx="4"/><rect x="168" y="90" width="20" height="36" rx="5"/><rect x="170" y="134" width="16" height="40" rx="4"/></g><g fill="#222736" stroke="#9aa3b8"><circle cx="82" cy="84" r="10"/><circle cx="82" cy="130" r="6"/><circle cx="178" cy="84" r="10"/><circle cx="178" cy="130" r="6"/></g>',
+muscles:'<path class="mus" d="M76 94V124M82 92V126M88 94V124M76 138V170M82 136V172M88 138V170M172 94V124M178 92V126M184 94V124M172 138V170M178 136V172M184 138V170M112 170V212M120 170V212M140 170V212M148 170V212M114 224V264M146 224V264" stroke="#e0524f" stroke-width="2.5" fill="none"/>',
+core:'<circle class="pls" cx="130" cy="100" r="17" fill="#5c8dff" filter="url(#gw)" opacity=".8"/><circle cx="130" cy="100" r="11" fill="#bcd4ff" stroke="#fff"/><circle cx="130" cy="100" r="5" fill="#fff"/>',
+fuel:'<rect x="114" y="120" width="8" height="26" rx="3" fill="#7be8ff" opacity=".85"/><rect x="138" y="120" width="8" height="26" rx="3" fill="#7be8ff" opacity=".85"/><path class="mus" d="M118 120V116M142 120V116" stroke="#7be8ff" stroke-width="2"/>',
+brain:'<rect class="pls" x="112" y="20" width="36" height="14" rx="6" fill="#7a4dd8"/><path d="M116 27q4-6 8 0t8 0t8 0" stroke="#e6d9ff" fill="none"/>',
+lens:'<rect x="108" y="38" width="44" height="12" rx="6" fill="#05060a" stroke="#9aa3b8"/><circle class="pls" cx="130" cy="44" r="9" fill="#ff3b3b" opacity=".4" filter="url(#gw)"/><circle cx="130" cy="44" r="5" fill="#ff3b3b"/>',
+weapon:'<rect x="44" y="154" width="26" height="14" rx="3" fill="url(#mt)" stroke="#9aa3b8"/><rect x="34" y="158" width="12" height="6" fill="#222736"/><circle class="pls" cx="34" cy="161" r="3" fill="#ff8a4d" filter="url(#gw)"/>',
+reel:'<circle cx="130" cy="100" r="20" fill="none" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 3"/>',
+chip:'<rect x="172" y="178" width="26" height="14" rx="2" fill="#0d3a2a" stroke="#8be0b5"/><path d="M176 182h18M176 188h18" stroke="#8be0b5"/>'};
+const NODE={core:[130,100],brain:[130,27],lens:[130,44],weapon:[46,161]};
+function robSVG(){
+ let o='<svg id="rob" viewBox="0 0 260 300"><defs><linearGradient id="mt" x1="0" x2="1"><stop offset="0" stop-color="#b4bccf"/><stop offset=".5" stop-color="#586079"/><stop offset="1" stop-color="#2a2f40"/></linearGradient><linearGradient id="mt2" x1="0" x2="1"><stop offset="0" stop-color="#7d86a0"/><stop offset="1" stop-color="#262a39"/></linearGradient><radialGradient id="bg"><stop offset="0" stop-color="#16213f"/><stop offset="1" stop-color="#070810"/></radialGradient><filter id="gw"><feGaussianBlur stdDeviation="3"/></filter></defs><rect width="260" height="300" fill="url(#bg)"/><path d="M0 280H260M0 20H260M20 0V300M240 0V300" stroke="#1a2036"/><rect class="scn" y="-3" width="260" height="3" fill="#5c8dff" opacity=".4"/>';
+ o+='<g fill="none" stroke="#5c8dff" stroke-dasharray="3 3" opacity=".4"><rect x="100" y="15" width="60" height="52" rx="14"/><polygon points="95,75 165,75 155,150 105,150"/><rect x="72" y="90" width="20" height="84"/><rect x="168" y="90" width="20" height="84"/><rect x="106" y="166" width="48" height="108"/></g>';
+ for(const k in PG)o+='<g class="pt" id="g-'+k+'">'+PG[k]+'</g>';
+ o+='<g id="wl"></g><rect x="204" y="238" width="46" height="30" rx="3" fill="#05060a" stroke="#5c8dff"/><rect id="pcs2" x="208" y="242" width="38" height="22" fill="#0a1020"/><path d="M220 270h14M227 268v-2" stroke="#5c8dff"/>';
+ for(const k in RS){const r=RS[k];o+='<rect class="sl2" data-slot="'+k+'" x="'+r[0]+'" y="'+r[1]+'" width="'+r[2]+'" height="'+r[3]+'" rx="4"/><text class="lb" id="lb-'+k+'" x="'+(r[0]+2)+'" y="'+(r[1]+8)+'">'+r[4]+'</text>'}
+ return o+'</svg>';
+}
+const IT=[["body","КОСТЬ",0],["legs","НОГИ",2],["arms","РУКИ",1],["core","СЕРДЦЕ",4],["fuel","КРОВЬ",9],["muscles","ПЛОТЬ",6],["brain","РАЗУМ",8],["lens","ГЛАЗ",5],["weapon","ГНЕВ",7],["reel","ЖИЛА",3]];
+const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","reel","w_core","w_brain","w_lens","w_weapon","chip","pc"];
+let st2=0,wp=null;
 function buildAsm(){
- const bot=$("bot"),tray=$("tray");bot.innerHTML="";tray.innerHTML="";st2=0;
- for(const k in SL){const d=document.createElement("div"),p=SL[k];d.className="sl";d.dataset.slot=k;d.textContent=p[4];
-  d.style.cssText=`left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px`;
-  d.onclick=()=>{if(String(STEPS[st2]).startsWith("w_"))act("w_"+k)};bot.appendChild(d)}
- IT.map(([k,e])=>({k,t:e})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
- msg("mA","success","Шаг 1/15");
+ $("rbox").innerHTML=robSVG();$("tray").innerHTML="";st2=0;wp=null;
+ document.querySelectorAll("#rob [data-slot]").forEach(d=>d.onclick=()=>{if(String(STEPS[st2]).startsWith("w_"))act("w_"+d.dataset.slot)});
+ IT.map(([k,r,n])=>({k,t:r+" · "+$("p"+n).selectedOptions[0].text})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
+ msg("mA","success","Шаг 1/"+STEPS.length);
 }
 function addChip(k,t){
  const el=document.createElement("div");el.className="chip";el.textContent=t;
  el.onpointerdown=e=>{
   e.preventDefault();el.setPointerCapture(e.pointerId);const sx=e.clientX,sy=e.clientY;el.style.zIndex=9;
-  el.onpointermove=m=>{el.style.transform=`translate(${m.clientX-sx}px,${m.clientY-sy}px)`};
+  el.onpointermove=m=>{el.style.transform="translate("+(m.clientX-sx)+"px,"+(m.clientY-sy)+"px)"};
   el.onpointerup=u=>{el.onpointermove=el.onpointerup=null;el.style.pointerEvents="none";
    const x=document.elementFromPoint(u.clientX,u.clientY);el.style.pointerEvents="";el.style.transform="";el.style.zIndex="";
-   const sl=x&&x.closest("[data-slot]"),tk=sl&&sl.dataset.slot;
-   if(tk&&(tk===k||k==="chip"&&tk==="pc"))act(tk,el);else bad()}};
+   const sl=x&&x.closest&&x.closest("[data-slot]"),tk=sl&&sl.dataset.slot;
+   if(tk&&(tk===k||k==="reel"&&tk==="core"||k==="chip"&&tk==="pc"))act(k==="reel"?"reel":tk,el);else bad()}};
  $("tray").appendChild(el);
 }
 function act(k,el){
  if(k!==STEPS[st2]){bad();return}
  st2++;sfx("snap");
- const sl=document.querySelector('#bot [data-slot="'+k.replace("w_","")+'"]');
- if(k.startsWith("w_")){sl.classList.add("w");}
- else if(k==="pc"){
-   sfx("win");msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");
-   setTimeout(()=>{$("mA").className="msg";show(9)},1300);return
+ const key=k.replace("w_",""),sl=document.querySelector('#rob [data-slot="'+(key==="reel"?"core":key)+'"]'),bb=sl.getBBox();
+ const c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("class","sp");c.setAttribute("cx",bb.x+bb.width/2);c.setAttribute("cy",bb.y+bb.height/2);c.setAttribute("r",8);$("rob").appendChild(c);setTimeout(()=>c.remove(),700);
+ if(k.startsWith("w_")){
+  const n=NODE[key];sl.classList.add("w");
+  if(wp){const p=document.createElementNS("http://www.w3.org/2000/svg","path");p.setAttribute("class","wire");p.setAttribute("d","M"+wp[0]+" "+wp[1]+"L"+n[0]+" "+n[1]);$("wl").appendChild(p)}
+  wp=n;
+ }else if(k==="pc"){
+  sfx("win");$("pcs2").setAttribute("fill","#0d5a3a");$("rob").insertAdjacentHTML("beforeend",'<text x="227" y="256" fill="#8be0b5" font-size="7" text-anchor="middle">BOOT OK</text>');
+  msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");el.remove();setTimeout(()=>{$("mA").className="msg";show(9)},1500);return;
+ }else{
+  $("g-"+k).classList.add("on");
+  if(k!=="reel"&&k!=="chip"){sl.classList.add("ok");$("lb-"+k).style.display="none"}
+  if(k==="chip")sl.classList.add("ok");else el.remove();
  }
- else{
-   sl.classList.add("f");sl.textContent=k==="chip"?"💾":IT.find(i=>i[0]===k)[1];
-   if(k!=="chip")el.remove()
- }
- if(st2===13)addChip("chip","💾 ЧИП");
- msg("mA","success","Шаг "+(st2+1)+"/15");
+ if(STEPS[st2]==="chip")addChip("chip","ЧИП · данные героя");
+ msg("mA","success","Шаг "+(st2+1)+"/"+STEPS.length);
 }
+
 /* Защита */
 const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
-const TY={imp:{e:"👹",hp:1,v:65,d:6,s:26},thu:{e:"⚡",hp:2,v:85,d:8,s:26},tit:{e:"👺",hp:5,v:35,d:20,s:40},boss:{e:"🐲",hp:25,v:20,d:45,s:64}};
-const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.random()*1.5+.5]);
+const TY={imp:{hp:1,v:72,d:7,s:24},thu:{hp:2,v:88,d:9,s:24},tit:{hp:6,v:34,d:20,s:42},boss:{hp:30,v:20,d:45,s:64}};
+const SK=[0,268,0,236,30,236,30,214,60,214,60,244,95,244,95,200,125,200,125,230,170,230,170,190,200,190,200,238,240,238,240,212,280,212,280,246,320,246,320,205,360,205,360,268];
+const STR=Array.from({length:50},()=>[Math.random()*360,Math.random()*160,Math.random()*1.4+.4]);
 let G=null,raf=0;
-
-if(bd) bd.onclick=()=>{
+bd.onclick=()=>{
  if(G)return;
- G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
- bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";
- show(9,false);hud();raf=requestAnimationFrame(loop);
+ G={hp:100,t:120,en:[],fx:[],st:[],sh:0,sp:0,sk:4,cd:0,fl:0,boss:0,last:0,bots:[{x:92,c:2.5,a:-1.57},{x:268,c:3.6,a:-1.57}]};
+ bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";$("mEnd").style.display="none";
+ show(9,false);hud();cv.scrollIntoView({block:"center"});raf=requestAnimationFrame(loop);
 };
-
+const shielded=e=>{const y=TY[e.t];if(!y.sh&&e.t!=="tit"&&e.t!=="boss")return false;const b=e.t==="boss";return((G.t+e.ph)%(b?3:2.2))>(b?1.3:.9)};
 function spawn(t){
- if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.15+p*.15?"tit":r<.5?"thu":"imp"}
- const y=TY[t];G.en.push({t,x:30+Math.random()*300,y:-20,hp:y.hp,ph:Math.random()*6});
+ if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.12+p*.18?"tit":r<.5?"thu":"imp"}
+ G.en.push({t,x:30+Math.random()*300,y:-30,hp:TY[t].hp,ph:Math.random()*6});
 }
-function fire(x,y,fromX,own){
- let best=null,bd2=1e9;
- for(const e of G.en){const d=Math.hypot(e.x-x,e.y-y);if(d<TY[e.t].s&&d<bd2){best=e;bd2=d}}
- G.fx.push({k:"l",x1:fromX,y1:262,x2:best?best.x:x,y2:best?best.y:y,a:1,c:own?"#ffd36b":"#5c8dff"});sfx("laser");
- if(best&&--best.hp<=0){G.en.splice(G.en.indexOf(best),1);sfx("boom");for(let i=0;i<10;i++)G.fx.push({k:"p",x:best.x,y:best.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,a:1})}
+function burst(x,y,n,c){for(let i=0;i<n;i++)G.fx.push({k:"p",x,y,vx:(Math.random()-.5)*200,vy:(Math.random()-.5)*200,a:1,c})}
+function fire(x,y,fx,fy,own){
+ let best=null,m=1e9;
+ for(const e of G.en){const d=Math.hypot(e.x-x,e.y-y);if(d<TY[e.t].s&&d<m){best=e;m=d}}
+ G.fx.push({k:"l",x1:fx,y1:fy,x2:best?best.x:x,y2:best?best.y:y,a:1,c:own?"#ffd36b":"#5c8dff"});sfx("laser");
+ if(!best)return;
+ if(shielded(best)){burst(best.x,best.y,5,"#7be8ff");return}
+ if(--best.hp<=0){G.en.splice(G.en.indexOf(best),1);sfx("boom");burst(best.x,best.y,best.t==="boss"?40:14,"#ffa500")}
 }
-if(cv) cv.onpointerdown=e=>{
- if(!G)return;const r=cv.getBoundingClientRect();
- fire((e.clientX-r.left)*360/r.width,(e.clientY-r.top)*300/r.height,180,true);
+cv.onpointerdown=e=>{
+ if(!G||G.cd>0)return;G.cd=.14;
+ const r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*360/r.width,y=(e.clientY-r.top)*300/r.height;
+ const k=G.st.find(s=>Math.hypot(s.x-x,s.y-258)<30);
+ if(k){G.st.splice(G.st.indexOf(k),1);burst(k.x,258,12,"#ff4d6d");sfx("boom");return}
+ fire(x,y,180,262,true);
 };
-
 function loop(ts){
  if(!G)return;
  const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
- G.t-=dt;G.sp-=dt;G.sh=Math.max(0,G.sh-dt*20);
- if(G.sp<=0){spawn();G.sp=Math.max(.35,1.0-(120-G.t)/120*.8)}
+ G.t-=dt;G.sp-=dt;G.sk-=dt;G.cd-=dt;G.sh=Math.max(0,G.sh-dt*20);G.fl=Math.max(0,G.fl-dt*3);
+ const p=(120-G.t)/120;
+ if(G.sp<=0){spawn();G.sp=Math.max(.35,1-p*.65)}
+ if(G.sk<=0){G.st.push({x:90+Math.random()*180,t:1.3});G.sk=Math.max(2.6,5-p*3)}
  if(!G.boss&&G.t<60){G.boss=1;spawn("boss")}
  for(const e of G.en.slice()){
   const y=TY[e.t],dx=180-e.x,dy=250-e.y,d=Math.hypot(dx,dy);
-  e.x+=dx/d*y.v*dt+(e.t==="thu"?Math.sin(G.t*6+e.ph)*60*dt:0);e.y+=dy/d*y.v*dt;
-  if(d<34){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=8;sfx("hit")}
+  e.x+=dx/d*y.v*dt+(e.t==="imp"?Math.sin(G.t*5+e.ph)*55*dt:e.t==="thu"?Math.sin(G.t*8+e.ph)*90*dt:0);e.y+=dy/d*y.v*dt;
+  if(d<36){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=9;G.fl=.6;sfx("hit")}
  }
- for(const b of G.bots){b.c-=dt;if(b.c<=0&&G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);fire(e.x,e.y,b.x,false);b.c=3.0}}
+ for(const s of G.st.slice()){s.t-=dt;if(s.t<=0){G.st.splice(G.st.indexOf(s),1);G.hp-=12;G.sh=12;G.fl=1;sfx("hit");burst(s.x,258,16,"#fff")}}
+ for(const b of G.bots){b.c-=dt;
+  if(G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);b.a=Math.atan2(e.y-250,e.x-b.x);if(b.c<=0){fire(e.x,e.y,b.x,250,false);b.c=3.8}}}
  draw();hud();
  if(G.hp<=0)return endG(false);
  if(G.t<=0)return endG(true);
  raf=requestAnimationFrame(loop);
 }
-
-function draw(){
- const sx=(Math.random()-.5)*G.sh,sy=(Math.random()-.5)*G.sh;
- cx.save();cx.translate(sx,sy);
- const g=cx.createLinearGradient(0,0,0,300);g.addColorStop(0,"#07081a");g.addColorStop(1,"#3a1a4a");cx.fillStyle=g;cx.fillRect(-10,-10,380,320);
- cx.fillStyle="#fff";STR.forEach(s=>{cx.globalAlpha=.4+.4*Math.sin(G.t*2+s[0]);cx.fillRect(s[0],s[1],s[2],s[2])});cx.globalAlpha=1;
- cx.fillStyle="#14121f";cx.fillRect(-10,268,380,40);
- cx.fillStyle="#2a2d44";cx.fillRect(140,248,80,30);cx.beginPath();cx.arc(180,248,40,Math.PI,0);cx.fill();
- cx.fillStyle="#5c8dff";cx.fillRect(170,252,20,26);
- cx.font="26px serif";cx.textAlign="center";
- G.bots.forEach(b=>cx.fillText("🤖",b.x,276));
- for(const e of G.en){const y=TY[e.t];cx.font=y.s+"px serif";cx.fillText(y.e,e.x,e.y+y.s/3);
-  if(y.hp>1){cx.fillStyle="#3a1925";cx.fillRect(e.x-15,e.y-y.s/2-6,30,4);cx.fillStyle="#ff4444";cx.fillRect(e.x-15,e.y-y.s/2-6,30*e.hp/y.hp,4)}}
- for(const f of G.fx.slice()){f.a-=.06;if(f.a<=0){G.fx.splice(G.fx.indexOf(f),1);continue}
-  cx.globalAlpha=f.a;
-  if(f.k==="l"){cx.strokeStyle=f.c;cx.lineWidth=3;cx.beginPath();cx.moveTo(f.x1,f.y1);cx.lineTo(f.x2,f.y2);cx.stroke()}
-  else{f.x+=f.vx*.016;f.y+=f.vy*.016;cx.fillStyle="#ffa500";cx.fillRect(f.x,f.y,4,4)}}
- cx.globalAlpha=1;cx.restore();
+function drawE(e){
+ const y=TY[e.t],t=G.t*8+e.ph;cx.save();cx.translate(e.x,e.y);
+ if(e.t==="imp"){
+  cx.fillStyle="#1a0f24";cx.beginPath();cx.ellipse(0,0,8,11,0,0,7);cx.fill();const w=Math.sin(t)*9;
+  cx.beginPath();cx.moveTo(-6,-4);cx.lineTo(-26,-12+w);cx.lineTo(-14,7);cx.moveTo(6,-4);cx.lineTo(26,-12+w);cx.lineTo(14,7);cx.fill();
+  cx.fillStyle="#ff3b3b";cx.fillRect(-5,-5,3,3);cx.fillRect(2,-5,3,3);
+ }else if(e.t==="thu"){
+  const g=cx.createRadialGradient(0,0,2,0,0,24);g.addColorStop(0,"#fff");g.addColorStop(.4,"#7be8ff");g.addColorStop(1,"rgba(123,232,255,0)");
+  cx.fillStyle=g;cx.beginPath();cx.arc(0,0,24,0,7);cx.fill();cx.strokeStyle="#e8fbff";cx.lineWidth=2;cx.beginPath();
+  for(let i=0;i<5;i++){const a=t+i*1.26;cx.moveTo(0,0);cx.lineTo(Math.cos(a)*10,Math.sin(a)*10);cx.lineTo(Math.cos(a+.4)*22,Math.sin(a+.4)*22)}cx.stroke();
+ }else{
+  const b=e.t==="boss",s=y.s,col=b?"#ff4d6d":"#9aa3b8";
+  cx.fillStyle=b?"#2a0f1f":"#20222e";cx.fillRect(-s/2,-s/2,s,s);cx.fillStyle=col;
+  cx.beginPath();cx.moveTo(-s/2,-s/2);cx.lineTo(-s/2-6,-s/2-14);cx.lineTo(-s/4,-s/2);cx.moveTo(s/2,-s/2);cx.lineTo(s/2+6,-s/2-14);cx.lineTo(s/4,-s/2);cx.fill();
+  cx.fillRect(-s/4,-s/6,s/6,4);cx.fillRect(s/12,-s/6,s/6,4);
+  const sh=shielded(e);cx.lineWidth=3;cx.strokeStyle=sh?"#7be8ff":"#ffd36b";cx.globalAlpha=sh?.85:.5;cx.beginPath();cx.arc(0,0,s*.78,0,7);cx.stroke();cx.globalAlpha=1;
+  cx.fillStyle="#3a1925";cx.fillRect(-18,-s/2-20,36,4);cx.fillStyle="#ff4444";cx.fillRect(-18,-s/2-20,36*e.hp/y.hp,4);
+ }
+ cx.restore();
 }
-
+function draw(){
+ const sx=(Math.random()-.5)*G.sh,sy=(Math.random()-.5)*G.sh;cx.save();cx.translate(sx,sy);
+ const g=cx.createLinearGradient(0,0,0,270);g.addColorStop(0,"#05061a");g.addColorStop(1,"#4a1f3a");cx.fillStyle=g;cx.fillRect(-10,-10,380,320);
+ cx.fillStyle="#fff";STR.forEach(q=>{cx.globalAlpha=.3+.4*Math.sin(G.t*2+q[0]);cx.fillRect(q[0],q[1],q[2],q[2])});cx.globalAlpha=1;
+ const m=cx.createRadialGradient(300,50,2,300,50,40);m.addColorStop(0,"#fff6d8");m.addColorStop(.3,"#c9c2ff");m.addColorStop(1,"rgba(150,140,255,0)");cx.fillStyle=m;cx.beginPath();cx.arc(300,50,40,0,7);cx.fill();
+ cx.fillStyle="rgba(20,14,34,.7)";for(let i=0;i<4;i++){cx.beginPath();cx.ellipse(40+i*100+Math.sin(G.t/3+i)*14,60+i%2*30,70,16,0,0,7);cx.fill()}
+ cx.fillStyle="#0c0a16";cx.beginPath();SK.forEach((v,i)=>i%2?0:(i?cx.lineTo(v,SK[i+1]):cx.moveTo(v,SK[i+1])));cx.fill();
+ cx.fillStyle="#ff7a3a";for(let i=0;i<5;i++)if(Math.sin(G.t*9+i*3)>-.2)cx.fillRect(100+i*52,236-i%3*10,2,3);
+ cx.fillStyle="#14121f";cx.fillRect(-10,268,380,40);cx.strokeStyle="#241d33";cx.beginPath();cx.moveTo(20,280);cx.lineTo(70,292);cx.lineTo(120,284);cx.moveTo(240,282);cx.lineTo(300,296);cx.stroke();
+ const bg=cx.createLinearGradient(0,208,0,268);bg.addColorStop(0,"#5b6075");bg.addColorStop(1,"#252837");cx.fillStyle=bg;cx.beginPath();cx.moveTo(128,268);cx.lineTo(128,244);cx.quadraticCurveTo(180,196,232,244);cx.lineTo(232,268);cx.fill();
+ cx.fillStyle="#12141d";cx.fillRect(166,240,28,28);cx.fillStyle="#ffd36b";cx.fillRect(140,240,10,5);cx.fillRect(210,240,10,5);cx.fillStyle="#5c8dff";cx.fillRect(176,246,8,22);
+ cx.strokeStyle="#9aa3b8";cx.beginPath();cx.moveTo(180,214);cx.lineTo(180,196);cx.stroke();cx.fillStyle="#ff3b3b";cx.fillRect(178,194,4,4);
+ for(const b of G.bots){cx.save();cx.translate(b.x,266);cx.fillStyle="#454c60";cx.fillRect(-10,-18,20,18);cx.fillStyle="#9aa3b8";cx.fillRect(-7,-30,14,11);cx.fillStyle="#5c8dff";cx.fillRect(-4,-26,8,3);
+  cx.translate(0,-14);cx.rotate(b.a);cx.fillStyle="#2a2f40";cx.fillRect(0,-3,18,6);cx.restore()}
+ for(const e of G.en)drawE(e);
+ for(const s of G.st){const k=s.t/1.3;cx.strokeStyle="#ff4d6d";cx.lineWidth=2;cx.globalAlpha=.5+.5*Math.sin(G.t*20);cx.beginPath();cx.arc(s.x,258,10+22*k,0,7);cx.stroke();cx.beginPath();cx.moveTo(s.x,0);cx.lineTo(s.x,258);cx.globalAlpha=.15;cx.stroke();cx.globalAlpha=1}
+ for(const f of G.fx.slice()){f.a-=.06;if(f.a<=0){G.fx.splice(G.fx.indexOf(f),1);continue}cx.globalAlpha=f.a;
+  if(f.k==="l"){cx.strokeStyle=f.c;cx.lineWidth=3;cx.beginPath();cx.moveTo(f.x1,f.y1);cx.lineTo(f.x2,f.y2);cx.stroke()}
+  else{f.x+=f.vx*.016;f.y+=f.vy*.016;cx.fillStyle=f.c||"#ffa500";cx.fillRect(f.x,f.y,3,3)}}
+ cx.globalAlpha=1;if(G.fl>0){cx.fillStyle="rgba(255,60,80,"+G.fl*.25+")";cx.fillRect(-10,-10,380,320)}cx.restore();
+}
 function hud(){
  const hp=Math.max(0,Math.round(G?G.hp:100)),t=G?Math.max(0,Math.ceil(G.t)):120;
  $("hpD").textContent=hp;$("tmD").textContent=t;
  const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
 }
-
-function stopGame(){cancelAnimationFrame(raf);G=null;if($("hud"))$("hud").style.display="none";if(bd)bd.style.display="block";}
-
+function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
 function endG(win){
- stopGame();
- if(win){
-   sfx("win");
-   if($("mG")) msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");
-   if(bd) bd.style.display="none";
-   if($("btnFwd")) $("btnFwd").disabled = false;
-   
-   // Автоматический переход в комнату через 2 секунды
-   setTimeout(() => {
-       if($("mG")) $("mG").className = "msg";
-       show(10); 
-   }, 2000);
- } else {
-   show(9,false);
-   sfx("err");
-   if($("mG")) msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");
-   if(bd) bd.textContent="ПОПРОБОВАТЬ СНОВА";
- }
+ stopGame();show(9,false);
+ if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";$("mEnd").style.display="block"}
+ else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА";$("btnSkip").style.display="block"}
 }
+$("btnS3").onclick=()=>show(10);
+$("btnSkip").onclick=()=>show(10);
+if(location.hash==="#dev")$("btnSkip").style.display="block";
 
-/* ЭТАП 3: КОМНАТА (Логика с сохранением) */
-let inv = { slot1: null, slot2: null, slot3: null };
-let activeSlot = null;
-let roomState = { nightstand: false, closetMoved: false, hatchOpen: false, capsulesBroken: false, safeOpened: false, safeBackOpened: false };
-
-function updateInv() {
-  ['slot1','slot2','slot3'].forEach((s) => {
-    const el = document.getElementById(s);
-    if(el) {
-        el.textContent = inv[s] || "";
-        el.className = activeSlot === s ? "room-tool active" : "room-tool";
-    }
-  });
+/* Этап 3: комната */
+const REWARD="BLR-ARES-7Q2K-91XM";
+const R={inv:[],sel:null,moved:0,hatch:0,safe:0,fell:0,notes:[]};
+const NM={sd:"Отвёртка",hm:"Молоток",key:"Ключ"};
+const cap=(n,x)=>`<g class="cap" id="c${n}"><rect x="${x-4}" y="232" width="50" height="8" fill="#20232f"/><rect x="${x}" y="105" width="42" height="130" rx="14" fill="url(#m3)" stroke="#5a6178"/><rect x="${x+6}" y="116" width="30" height="100" rx="10" fill="#071218"/><g class="cp"><circle cx="${x+21}" cy="140" r="7" fill="#d9c3b0"/><rect x="${x+13}" y="149" width="16" height="36" rx="3" fill="#8a96a8"/><rect x="${x+14}" y="185" width="14" height="26" fill="#6e7a8c"/><rect data-a="body${n}" x="${x+15}" y="158" width="12" height="14" fill="#f3efe0" stroke="#999"/></g><rect class="fog" x="${x+6}" y="116" width="30" height="100" rx="10" fill="#b8f0ff" opacity=".3"/><rect data-a="cap${n}" x="${x+6}" y="116" width="30" height="100" rx="10" fill="url(#gl2)"/><path class="crk" d="M${x+10} 130L${x+22} 160L${x+12} 190M${x+34} 128L${x+22} 158L${x+32} 200" stroke="#e8fbff" fill="none" pointer-events="none"/><circle cx="${x+21}" cy="110" r="3" fill="#ff3b3b"/></g>`;
+$("room").innerHTML=`<svg viewBox="0 0 480 300" style="display:block;width:100%;border-radius:8px;border:1px solid #23253a"><defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e3243"/><stop offset="1" stop-color="#171923"/></linearGradient><linearGradient id="m3" x1="0" x2="1"><stop offset="0" stop-color="#8a93a8"/><stop offset=".5" stop-color="#454c60"/><stop offset="1" stop-color="#262b3a"/></linearGradient><linearGradient id="gl2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ff3ff" stop-opacity=".45"/><stop offset="1" stop-color="#2a6a8a" stop-opacity=".2"/></linearGradient><radialGradient id="lg"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".5"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient></defs>
+<rect width="480" height="240" fill="url(#wl)"/><path d="M120 16V240M240 16V240M360 16V240" stroke="#0d0e14" stroke-width="2" opacity=".6"/><rect y="240" width="480" height="60" fill="#10111a"/><path d="M0 254H480M0 270H480M0 288H480" stroke="#1d2030" stroke-width="2"/><rect width="480" height="16" fill="#1a1c28"/><path d="M0 8H480" stroke="#3a3f55" stroke-width="3"/>
+<g class="lamp"><ellipse cx="240" cy="50" rx="170" ry="90" fill="url(#lg)"/><rect x="215" y="14" width="50" height="7" rx="3" fill="#ffe9a8"/></g>
+<g id="hatch" data-a="hatch"><circle cx="38" cy="200" r="24" fill="#20232f" stroke="#5a6178" stroke-width="3"/><g id="hdoor"><circle cx="38" cy="200" r="19" fill="url(#m3)" stroke="#8a93a8"/><path d="M26 200H50M38 188V212" stroke="#1b1f2c" stroke-width="3"/><g fill="#d6dbea"><circle cx="24" cy="186" r="2.2"/><circle cx="52" cy="186" r="2.2"/><circle cx="24" cy="214" r="2.2"/><circle cx="52" cy="214" r="2.2"/></g></g><g id="hmo" class="off"><rect x="34" y="204" width="5" height="22" rx="2" fill="#7a4a2a" transform="rotate(-20 36 214)"/><rect x="26" y="192" width="22" height="9" rx="2" fill="#9aa3b8" transform="rotate(-20 36 196)"/><rect data-a="hm" x="20" y="186" width="36" height="44" fill="transparent"/></g></g>
+<g id="ward"><rect x="8" y="100" width="62" height="132" fill="#3a3f52" stroke="#1b1e2a" stroke-width="2" data-a="ward"/><path d="M39 100V232" stroke="#1b1e2a" stroke-width="2"/><rect x="33" y="160" width="4" height="16" fill="#aab2c6"/><rect x="41" y="160" width="4" height="16" fill="#aab2c6"/><rect x="8" y="100" width="62" height="6" fill="#4b5168"/><g data-a="legs"><rect x="10" y="232" width="9" height="12" fill="#262a39"/><rect x="59" y="232" width="9" height="12" fill="#262a39"/><rect x="6" y="230" width="66" height="18" fill="transparent"/></g></g>
+${cap(1,150)}${cap(2,200)}
+<g id="niche" class="off"><rect x="251" y="84" width="63" height="58" fill="#05060a" stroke="#3a3f55"/><rect data-a="niche" x="260" y="94" width="45" height="38" rx="3" fill="#0d3a2a" stroke="#8be0b5"/><text x="282" y="117" fill="#8be0b5" font-size="9" text-anchor="middle" pointer-events="none">DATA</text></g>
+<g id="safeg"><rect data-a="safe" x="255" y="88" width="55" height="52" rx="3" fill="url(#m3)" stroke="#6a728a" stroke-width="2"/><g id="keyg" class="off"><rect x="262" y="96" width="41" height="36" fill="#05060a"/><circle cx="274" cy="114" r="5" fill="none" stroke="#ffd36b" stroke-width="2.5"/><path d="M279 114H296M290 114V120M295 114V119" stroke="#ffd36b" stroke-width="2.5"/><rect data-a="key" x="262" y="96" width="41" height="36" fill="transparent"/></g><g id="sdoor"><rect x="262" y="96" width="41" height="36" rx="2" fill="#383e52" stroke="#8a93a8"/><circle cx="276" cy="114" r="8" fill="#1b1f2c" stroke="#aab2c6"/><path d="M276 114L280 109" stroke="#fff"/><rect x="288" y="104" width="11" height="14" fill="#0b0d14"/><g fill="#6bf0a0"><rect x="290" y="106" width="2" height="2"/><rect x="294" y="106" width="2" height="2"/><rect x="290" y="111" width="2" height="2"/><rect x="294" y="111" width="2" height="2"/></g><rect data-a="safe" x="255" y="88" width="55" height="52" fill="transparent"/></g><g fill="#d6dbea"><circle cx="259" cy="92" r="2.2"/><circle cx="306" cy="92" r="2.2"/><circle cx="259" cy="136" r="2.2"/><circle cx="306" cy="136" r="2.2"/></g></g>
+<g data-a="table"><rect x="320" y="178" width="66" height="62" fill="transparent"/><rect x="322" y="190" width="62" height="7" fill="#4a3f33"/><rect x="326" y="197" width="6" height="43" fill="#2e2620"/><rect x="374" y="197" width="6" height="43" fill="#2e2620"/><rect x="340" y="182" width="24" height="8" fill="#f3efe0" transform="rotate(-4 352 186)"/></g>
+<g data-a="nst"><rect x="390" y="202" width="42" height="40" fill="transparent"/><rect x="392" y="204" width="38" height="36" fill="#363b4d" stroke="#1b1e2a"/><rect x="396" y="212" width="30" height="12" fill="#0b0d14"/><rect id="sdo" x="400" y="216" width="22" height="4" rx="1" fill="#e05555"/><rect x="396" y="226" width="30" height="10" fill="#2c3040"/><rect x="408" y="229" width="6" height="3" fill="#aab2c6"/></g>
+<g data-a="door"><rect x="436" y="110" width="40" height="130" fill="#10111a" stroke="#5a6178" stroke-width="3"/><rect id="dr" x="438" y="112" width="36" height="126" fill="url(#m3)"/><circle cx="456" cy="176" r="9" fill="none" stroke="#1b1f2c" stroke-width="3"/><rect x="446" y="150" width="20" height="8" fill="#0b0d14"/><circle id="dl" cx="456" cy="132" r="4" fill="#ff3b3b"/></g></svg>`;
+function say(t){$("rmsg").textContent=t}
+function inv(){
+ $("inv").innerHTML=R.inv.map(i=>'<span class="it'+(R.sel===i?" sel":"")+'" data-i="'+i+'">'+NM[i]+'</span>').join("");
+ $("notes").innerHTML=R.notes.length?"ЗАПИСИ:<br>"+R.notes.join("<br>"):"";
 }
-function addItem(item) {
-  if(!inv.slot1) inv.slot1 = item;
-  else if(!inv.slot2) inv.slot2 = item;
-  else if(!inv.slot3) inv.slot3 = item;
-  updateInv(); sfx("snap");
-}
-function showInfo(text) {
-  const el = document.getElementById("infoText");
-  if(el) el.innerHTML = text;
-  const p = document.getElementById("infoPanel");
-  if(p) p.style.display = "block";
-}
-const closeBtn = document.getElementById("closeInfo");
-if(closeBtn) closeBtn.onclick = () => document.getElementById("infoPanel").style.display = "none";
-
-['slot1','slot2','slot3'].forEach(s => {
-  const el = document.getElementById(s);
-  if(el) {
-      el.onclick = () => {
-        if(!inv[s]) return;
-        activeSlot = (activeSlot === s) ? null : s;
-        updateInv(); sfx("click");
-      };
-  }
-});
-
-const nightstand = document.getElementById("obj_nightstand");
-if(nightstand) nightstand.onclick = () => {
-  if(!roomState.nightstand) {
-    showInfo("Вы открыли тумбочку. Внутри лежит <b>Отвертка</b>.");
-    addItem("🪛"); roomState.nightstand = true;
-  } else { showInfo("Больше ничего нет."); }
+$("inv").onclick=e=>{const t=e.target.closest("[data-i]");if(t){R.sel=R.sel===t.dataset.i?null:t.dataset.i;inv()}};
+function note(t){say(t);if(!R.notes.includes(t)){R.notes.push(t);inv()}}
+function take(i,id){R.inv.push(i);$(id).classList.add("off");sfx("ok");inv()}
+function use(i){if(R.sel===i){R.sel=null;inv()}}
+const N=(id)=>document.getElementById(id);
+$("room").onclick=e=>{
+ const t=e.target.closest("[data-a]");if(!t)return;
+ const a=t.dataset.a,sel=R.sel;
+ if(a==="legs"){if(!R.moved){R.moved=1;N("ward").classList.add("mv");sfx("snap");say("Шкаф тяжело скользнул вправо. За ним что-то есть.")}else say("Шкаф стоит у стены.")}
+ else if(a==="ward")say("Дверцы заперты наглухо.");
+ else if(a==="nst"){if(!R.inv.includes("sd")&&!R.sdt){R.sdt=1;take("sd","sdo");say("В открытой тумбочке лежала отвёртка.")}else say("Больше ничего нет.")}
+ else if(a==="hatch"){
+  if(!R.moved)say("На стене что-то есть, но шкаф мешает.");
+  else if(R.hatch)say("Люк открыт.");
+  else if(sel==="sd"){R.hatch=1;N("hdoor").classList.add("op");N("hmo").classList.remove("off");sfx("snap");say("Болты поддались. Внутри — что-то тяжёлое.");use("sd")}
+  else say("Люк закреплён болтами.")}
+ else if(a==="hm"){if(R.hatch&&!R.inv.includes("hm")&&!R.hmt){R.hmt=1;take("hm","hmo");say("Молоток.")}}
+ else if(a==="cap1"||a==="cap2"){const c=N("c"+a[3]);
+  if(c.classList.contains("br"))say("Стекло уже разбито.");
+  else if(sel==="hm"){c.classList.add("br");sfx("boom");say("Стекло разлетелось. Внутри тело и бумажка на груди.");use("hm")}
+  else say("Стекло не поддаётся. Нужно что-то тяжёлое.")}
+ else if(a==="body1")note("Бумажка (левая капсула): «ПЕРВАЯ ЧАСТЬ КОДА: 301»");
+ else if(a==="body2")note("Бумажка (правая капсула): «ВТОРАЯ ЧАСТЬ КОДА: 4599»");
+ else if(a==="table")note("Записка на столе: «Они, возможно, врут. Что, если переставить местами?»");
+ else if(a==="safe"){
+  if(sel==="sd"){if(!R.fell){R.fell=1;N("safeg").classList.add("fell");N("niche").classList.remove("off");sfx("boom");say("Сейф отвинчен и съехал на пол. За ним — тайник.");use("sd")}else say("Сейф уже снят со стены.")}
+  else if(R.safe)say("Сейф открыт.");
+  else{$("kp").classList.add("on");$("kpI").value="";$("kpI").focus()}}
+ else if(a==="key"){if(R.safe&&!R.kt){R.kt=1;take("key","keyg");say("Ключ от двери.")}}
+ else if(a==="niche"){$("rwC").textContent=REWARD;$("rw").classList.add("on");sfx("win")}
+ else if(a==="door"){
+  if(sel==="key"){N("dr").setAttribute("fill","#05060a");N("dl").setAttribute("fill","#6bf0a0");sfx("win");say("Замок щёлкнул. Дверь открыта. Задание пройдено. Следующее задание скоро.");use("key")}
+  else say("Тяжёлая дверь. Замок на месте, ключа нет.")}
 };
-
-const table = document.getElementById("obj_table");
-if(table) table.onclick = () => {
-  showInfo("<b>Записка на столе:</b><br><br>«Они возможно врут. Что если переставить местами?»");
+$("kpX").onclick=()=>$("kp").classList.remove("on");
+$("rwX").onclick=()=>$("rw").classList.remove("on");
+$("kpOk").onclick=async()=>{
+ blink();
+ if(await H($("kpI").value.replace(/\D/g,""))===HS[10]){R.safe=1;$("kp").classList.remove("on");N("sdoor").classList.add("op");N("keyg").classList.remove("off");sfx("ok");say("Сейф открыт. Внутри лежит ключ.")}
+ else bad();
 };
-
-const closet = document.getElementById("obj_closet");
-if(closet) closet.onclick = () => {
-  if(!roomState.closetMoved) {
-    showInfo("Вы толкнули шкаф, он сдвинулся вправо, открыв <b>Люк</b> в полу.");
-    closet.style.transform = "translateX(80px)";
-    const hatch = document.getElementById("obj_hatch");
-    if(hatch) hatch.style.display = "block";
-    roomState.closetMoved = true;
-  } else { showInfo("Шкаф уже сдвинут."); }
-};
-
-const hatch = document.getElementById("obj_hatch");
-if(hatch) hatch.onclick = () => {
-  if(!roomState.hatchOpen) {
-    if(activeSlot && inv[activeSlot] === "🪛") {
-      showInfo("Вы открутили люк отверткой. Внутри лежит <b>Молоток</b>.");
-      addItem("🔨"); inv[activeSlot] = null; activeSlot = null; updateInv(); roomState.hatchOpen = true;
-    } else { showInfo("Люк прикручен болтами. Нужен инструмент."); }
-  } else { showInfo("Люк пуст."); }
-};
-
-const capsules = document.getElementById("obj_capsules");
-if(capsules) capsules.onclick = () => {
-  if(!roomState.capsulesBroken) {
-    if(activeSlot && inv[activeSlot] === "🔨") {
-      showInfo("Вы разбили капсулы молотком. Внутри два тела. У одного на груди выцарапано: <b>45</b>. У другого: <b>99301</b>.");
-      capsules.textContent = "💀"; roomState.capsulesBroken = true;
-    } else { showInfo("Капсулы из прочного стекла. Нужен тяжелый предмет."); }
-  } else { showInfo("Осколки и два трупа. Код на них: 45 и 99301."); }
-};
-
-const safe = document.getElementById("obj_safe");
-if(safe) safe.onclick = () => {
-  if(!roomState.safeOpened) {
-    const code = prompt("Введите код от сейфа:");
-    if(code === "4599301" || code === "9930145") { 
-      showInfo("Сейф открыт! Внутри лежит <b>Ключ</b> (🔑) и <b>Флешка</b> (💾).");
-      addItem("🔑"); addItem("💾"); roomState.safeOpened = true; sfx("win");
-    } else { showInfo("Неверный код. Сейф заблокирован."); sfx("err"); }
-  } else {
-    if(!roomState.safeBackOpened) {
-       if(activeSlot && inv[activeSlot] === "🪛") {
-          showInfo("Вы открутили заднюю стенку сейфа! За ней спрятана <b>Золотая сфера</b> (награда).");
-          addItem("🟡"); inv[activeSlot] = null; updateInv(); roomState.safeBackOpened = true; sfx("win");
-       } else { showInfo("Сейф пуст. Но кажется, задняя стенка шатается... Нужна отвертка."); }
-    } else { showInfo("Сейф полностью обыскан."); }
-  }
-};
-
-const door = document.getElementById("obj_door");
-if(door) door.onclick = () => {
-  if(activeSlot && inv[activeSlot] === "🔑") {
-    const rm = document.getElementById("roomMsg");
-    if(rm){ rm.className = "msg success"; rm.textContent = "ДВЕРЬ ОТКРЫТА. ПЕРЕХОД В КОМАНДНЫЙ ЦЕНТР..."; }
-    sfx("win");
-  } else {
-    const rm = document.getElementById("roomMsg");
-    if(rm){ rm.className = "msg error"; rm.textContent = "ДВЕРЬ ЗАПЕРТА. НУЖЕН КЛЮЧ."; }
-    sfx("err");
-  }
-};
+inv();
 
 /* Восстановление прогресса */
 (function(){
