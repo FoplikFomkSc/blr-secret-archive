@@ -243,7 +243,9 @@
       <span>ARCHIVE 001</span>
     </div>
   </main>
-    <script>
+
+  <script>
+    // Хеши
     const HASH_1 = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a";
     const HASH_2 = "2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435";
     const HASH_3 = "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569";
@@ -269,7 +271,7 @@
       });
       currentScreen = index;
 
-      // Логика секретной кнопки
+      // Секретная кнопка на экране 4 (индекс 3)
       if (secretTimer) { clearTimeout(secretTimer); secretTimer = null; }
       const status = document.getElementById("statusText");
       status.classList.remove("secret-ready");
@@ -277,21 +279,15 @@
         secretTimer = setTimeout(() => status.classList.add("secret-ready"), 10000);
       }
 
-      // Логика кнопок навигации
+      // Кнопки навигации
       document.getElementById("btnBack").classList.toggle("hidden", index === 0);
       document.getElementById("btnForward").classList.toggle("hidden", index === 0 || index === 4 || index === 9);
 
       if (save) localStorage.setItem("blr_screen", index);
     }
 
-    function goBack() {
-      if (currentScreen > 0) showScreen(currentScreen - 1);
-    }
-
-    function goForward() {
-      // Кнопка вперед работает только если мы не на 1, не на 5(индекс 4) и не на 10(индекс 9)
-      if (currentScreen > 0 && currentScreen < 9) showScreen(currentScreen + 1);
-    }
+    function goBack() { if (currentScreen > 0) showScreen(currentScreen - 1); }
+    function goForward() { if (currentScreen > 0 && currentScreen < 9) showScreen(currentScreen + 1); }
 
     // Восстановление прогресса
     const saved = localStorage.getItem("blr_screen");
@@ -302,11 +298,12 @@
       showScreen(0, false);
     }
 
+    // Секретная кнопка
     document.getElementById("statusText").addEventListener("click", function() {
       if (currentScreen === 3 && this.classList.contains("secret-ready")) showScreen(4); 
     });
 
-    // ФОРМЫ
+    // Формы
     document.getElementById("form1").addEventListener("submit", async function(e) {
       e.preventDefault();
       const val = document.getElementById("code1").value.trim().toUpperCase();
