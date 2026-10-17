@@ -190,6 +190,13 @@
       border: 1px solid #6c293d;
     }
 
+    .message.success {
+      display: block;
+      color: #c6b8ff;
+      background: #211a37;
+      border: 1px solid #59468b;
+    }
+
     .numbers {
       display: flex;
       flex-wrap: wrap;
@@ -246,6 +253,67 @@
 
     .screen { display: none; }
     .screen.active { display: block; }
+
+    /* Стили для Судоку */
+    .sudoku-grid {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 2px;
+      background: #23253a;
+      border: 2px solid #5c8dff;
+      padding: 2px;
+      max-width: 360px;
+      margin: 0 auto 20px;
+    }
+    
+    .sudoku-cell {
+      background: #090b13;
+      color: #f0efff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      aspect-ratio: 1;
+      font-size: 14px;
+      font-family: Consolas, monospace;
+    }
+
+    .sudoku-cell:nth-child(3n) { border-right: 1px solid #5c8dff; }
+    .sudoku-cell:nth-child(9n) { border-right: none; }
+    .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+    .sudoku-cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 1px solid #5c8dff; }
+
+    .sudoku-cell.empty {
+      color: #8be0b5;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Стили для Сборки */
+    .assembly-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0c0e17;
+      padding: 10px;
+      border-radius: 7px;
+      border: 1px solid #23253a;
+    }
+
+    .assembly-row span { font-size: 12px; color: #d9d7ef; }
+
+    .assembly-row select {
+      background: #090b13;
+      color: white;
+      border: 1px solid #34364d;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      outline: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
 
     @media (max-width: 420px) {
       .panel { padding: 27px 19px; }
@@ -343,7 +411,7 @@
         <div id="message3" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 4 -->
+      <!-- ЭКРАН 4 (Индекс / Секретная кнопка) -->
       <div id="screen4" class="screen">
         <div class="eyebrow">TRANSMISSION 004</div>
         <h1>Индекс.</h1>
@@ -360,124 +428,134 @@
         </p>
       </div>
 
-      <!-- ЭКРАН 5 -->
+      <!-- ЭКРАН 5 (Второй этап - Двоичный код) -->
       <div id="screen5" class="screen">
-        <div class="eyebrow">TRANSMISSION 005</div>
-        <h1>Следующий уровень.</h1>
+        <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div>
+        <h1>Протокол Ares.</h1>
         <p class="description">
-          Сигнал принят. Архив реагирует.
-          <br><br>
-          Продолжение следует.
+          Второй барьер. Система защиты активирована.
+          Земля под угрозой. Расшифруй название протокола, чтобы получить доступ к терминалу бункера.
         </p>
         <div class="separator"></div>
-        <div style="margin-top:22px;color:#85809f;font-size:11px;letter-spacing:2px;text-align:center;">
-          STAGE 001 // COMPLETE
+        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; text-align:center; font-family:Consolas, monospace; font-size:12px; color:#5c8dff; word-break:break-all;">
+          01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001
+        </div>
+        <form id="form5">
+          <label for="code5">ACCESS CODE / КОД ДОСТУПА</label>
+          <div class="input-row">
+            <input id="code5" type="text" placeholder="Введи название..." maxlength="60" autocomplete="off" spellcheck="false" required>
+            <button type="submit">ПРОВЕРИТЬ</button>
+          </div>
+        </form>
+        <div id="message5" class="message"></div>
+      </div>
+
+      <!-- ЭКРАН 6 (Цвета) -->
+      <div id="screen6" class="screen">
+        <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div>
+        <h1>Спектр.</h1>
+        <p class="description">
+          Терминал бункера требует калибровки. Переведи фрагменты в спектр, 
+          сложи значения и найди резонанс. Введи три значения через запятую.
+        </p>
+        <div class="separator"></div>
+        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; font-family:Consolas, monospace; font-size:12px; line-height:1.8; color:#d9d7ef;">
+          #006400<br>
+          #800000<br>
+          #ffa500<br>
+          #000000<br>
+          #ffc0cb<br>
+          #00bfff<br>
+          #ff0000<br>
+          #a52a2a
+        </div>
+        <form id="form6">
+          <label for="code6">ВВЕДИ РЕЗОНАНС (X,X,X)</label>
+          <div class="input-row">
+            <input id="code6" type="text" placeholder="Например: 100,200,300" maxlength="20" autocomplete="off" spellcheck="false" required>
+            <button type="submit">ПРОВЕРИТЬ</button>
+          </div>
+        </form>
+        <div id="message6" class="message"></div>
+      </div>
+
+      <!-- ЭКРАН 7 (Шифр Атбаш) -->
+      <div id="screen7" class="screen">
+        <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div>
+        <h1>Перехват.</h1>
+        <p class="description">
+          Спектр активирован. Система зафиксировала сигнал с орбиты.
+          <br><br>
+          Врата откроются тому, кто узрит суть в отражении.
+          То, что впереди, станет позади, а свет обернётся тьмой.
+          Прочти послание богов, глядя в зеркало.
+        </p>
+        <div class="separator"></div>
+        <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; text-align:center; font-family:Consolas, monospace; font-size:16px; letter-spacing:2px; color:#9b7bff; word-break:break-all;">
+          ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
+        </div>
+        <form id="form7">
+          <label for="code7">ACCESS CODE / КОД ДОСТУПА</label>
+          <div class="input-row">
+            <input id="code7" type="text" placeholder="Введи расшифровку..." maxlength="60" autocomplete="off" spellcheck="false" required>
+            <button type="submit">ПРОВЕРИТЬ</button>
+          </div>
+        </form>
+        <div id="message7" class="message"></div>
+      </div>
+
+      <!-- ЭКРАН 8 (Судоку) -->
+      <div id="screen8" class="screen">
+        <div class="eyebrow">TRANSMISSION 008 // SYSTEM CORRUPTED</div>
+        <h1>Сбой ядра.</h1>
+        <p class="description">
+          Критический сбой сектора защиты. Алгоритм ядра утратил целостность.
+          Восстанови утраченную координату, чтобы синхронизировать систему.
+          Найди единственный пустой слот в матрице.
+        </p>
+        <div class="separator"></div>
+
+        <div class="sudoku-grid">
+          <div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">8</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div><div class="sudoku-cell">2</div>
+          <div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div>
+          <div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">8</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div>
+          <div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">9</div><div class="sudoku-cell">7</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">3</div>
+          <div class="sudoku-cell">4</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div>
+          <div class="sudoku-cell">7</div><div class="sudoku-cell">1</div><div class="sudoku-cell">3</div><div class="sudoku-cell">9</div><div class="sudoku-cell">2</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div><div class="sudoku-cell">5</div><div class="sudoku-cell">6</div>
+          <div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">4</div>
+          <div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">7</div><div class="sudoku-cell">4</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">3</div><div class="sudoku-cell">5</div>
+          <div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">5</div><div class="sudoku-cell empty">?</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div>
+        </div>
+
+        <form id="form8">
+          <label for="code8">ВВЕДИ ПРОПУЩЕННУЮ ЦИФРУ</label>
+          <div class="input-row">
+            <input id="code8" type="text" placeholder="Введи число..." maxlength="5" autocomplete="off" spellcheck="false" required>
+            <button type="submit">ВОССТАНОВИТЬ</button>
+          </div>
+        </form>
+        <div id="message8" class="message"></div>
+        <div id="panelNext8" style="display:none; margin-top:20px; text-align:center;">
+          <button onclick="showScreen(8)" style="padding:12px 24px; font-size:14px;">ЗАПУСТИТЬ СБОРКУ РОБОТОВ</button>
         </div>
       </div>
 
-    </section>
+      <!-- ЭКРАН 9 (Сборка робота) -->
+      <div id="screen9" class="screen">
+        <div class="eyebrow">TRANSMISSION 009 // ROBOT ASSEMBLY</div>
+        <h1>Сборка шаблона.</h1>
+        <p class="description">
+          Конвейер поврежден. Шаблон утерян. Система выдает список деталей, но часть из них — брак.
+          Прочитай логи ошибок и собери идеального робота, чтобы запустить производство.
+        </p>
+        
+        <div style="background:#0c0e17; padding:10px; border:1px solid #ff4444; border-radius:7px; font-family:monospace; font-size:11px; color:#ff9aab; margin-bottom:15px;">
+          > СИСТЕМА: Шаблон сброшен.<br>
+          > ЛОГ 1: Корпус должен выдерживать вакуум. Только металл.<br>
+          > ЛОГ 2: Руки должны быть способны к точному ремонту. Полимеры не подходят.<br>
+          > ЛОГ 3: Для зарядки от ядра бункера нужен провод с сопротивлением строго 5 Ом.<br>
+          > ЛОГ 4: Ноги должны быть адаптированы к гравитации. Никакого пластика.
+        </div>
 
-    <div class="footer">
-      <span>BALL RICOSHet</span>
-      <span id="backLink" class="back-link">← НАЗАД</span>
-      <span>ARCHIVE 001</span>
-    </div>
-  </main>
-
-  <script>
-    const HASH_1 = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a";
-    const HASH_2 = "2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435";
-    const HASH_3 = "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569";
-
-    async function makeHash(text) {
-      const data = new TextEncoder().encode(text);
-      const buffer = await crypto.subtle.digest("SHA-256", data);
-      return [...new Uint8Array(buffer)]
-        .map(x => x.toString(16).padStart(2, "0"))
-        .join("");
-    }
-
-    const screens = ["screen1", "screen2", "screen3", "screen4", "screen5"];
-    let currentScreen = 0;
-    let secretTimer = null;
-
-    function showScreen(index, save = true) {
-      screens.forEach((id, i) => {
-        document.getElementById(id).classList.toggle("active", i === index);
-      });
-      currentScreen = index;
-
-      if (secretTimer) {
-        clearTimeout(secretTimer);
-        secretTimer = null;
-      }
-      const status = document.getElementById("statusText");
-      status.classList.remove("secret-ready");
-
-      if (index === 3) {
-        secretTimer = setTimeout(function() {
-          status.classList.add("secret-ready");
-        }, 10000);
-      }
-
-      if (save) {
-        localStorage.setItem("blr_screen", index);
-      }
-    }
-
-    const saved = localStorage.getItem("blr_screen");
-    if (saved !== null) {
-      const idx = parseInt(saved, 10);
-      if (idx >= 0 && idx < screens.length) {
-        showScreen(idx, false);
-      }
-    }
-
-    document.getElementById("statusText").addEventListener("click", function() {
-      if (currentScreen === 3 && this.classList.contains("secret-ready")) {
-        showScreen(4);
-      }
-    });
-
-    document.getElementById("backLink").addEventListener("click", function() {
-      if (currentScreen > 0) showScreen(currentScreen - 1);
-    });
-
-    document.getElementById("form1").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code1").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_1) {
-        showScreen(1);
-      } else {
-        const m = document.getElementById("message1");
-        m.className = "message error";
-        m.textContent = "ДОСТУП ОТКЛОНЁН. Код неверный.";
-      }
-    });
-
-    document.getElementById("form2").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code2").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_2) {
-        showScreen(2);
-      } else {
-        const m = document.getElementById("message2");
-        m.className = "message error";
-        m.textContent = "ДОСТУП ОТКЛОНЁН. Ответ неверный.";
-      }
-    });
-
-    document.getElementById("form3").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const val = document.getElementById("code3").value.trim().toUpperCase();
-      if (await makeHash(val) === HASH_3) {
-        showScreen(3);
-      } else {
-        const m = document.getElementById("message3");
-        m.className = "message error";
-        m.textContent = "ДОСТУП ОТКЛОНЁН. Ответ неверный.";
-      }
-    });
-  </script>
-</body>
-</html>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+    
