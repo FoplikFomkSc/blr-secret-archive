@@ -474,6 +474,109 @@ function draw(){
  cx.save();cx.translate(sx,sy);
  const g=cx.createLinearGradient(0,0,0,300);g.addColorStop(0,"#07081a");g.addColorStop(1,"#3a1a4a");cx.fillStyle=g;cx.fillRect(-10,-10,380,320);
  cx.fillStyle="#fff";STR.forEach(s=>{cx.globalAlpha=.4+.4*Math.sin(G.t*2+s[0]);cx.fillRect(s[0],s[1],s[2],s[2])});cx.globalAlpha=1;
+/* Сборка: выбор */
+const PT=[["КОРПУС","CF:Углеволокно,TI:Титан,PL:Пластик,AL:Алюминий"],["РУКИ","AL:Алюминий,PM:Полимер,ST:Сталь,TI:Титан"],["НОГИ","PL:Пластик,TI:Титан,AL:Алюминий,ST:Сталь"],["ПРОВОД","AG:Серебро 5 Ом,CU:Медь 3 Ом,AU:Золото 8 Ом,NI:Никель 4 Ом"],["ЯДРО","G:Γ 7 ГВт,A:Α 2 ГВт,D:Δ 9 ГВт,B:Β 5 ГВт"],["ЛИНЗА","GL:Обычное стекло,IR:Инфракрасная,MR:Зеркальная,QZ:Мутный кварц"],["МЫШЦЫ","CT:Хлопковые жгуты,RB:Резина,EF:Электроволокна,LT:Кожаные ремни"],["ОРУЖИЕ","SG:Дробовик,LS:Лазер,SP:Копьё,CL:Дубина"],["МОЗГ","RL:Релейная схема,NP:Нейропроцессор,AR:Арифмометр,PC:Перфокарта"],["КРОВЬ","WT:Вода,OL:Машинное масло,HE:Жидкий гелий,GS:Бензин"]];
+$("sel").innerHTML=PT.map((p,k)=>`<div class="ar"><span>${p[0]}</span><select id="p${k}"><option value="">— выбрать —</option>${p[1].split(",").map(o=>`<option value="${o.split(":")[0]}">${o.split(":")[1]}</option>`).join("")}</select></div>`).join("");
+$("btnAsm").onclick=async()=>{
+ blink();
+ const v=PT.map((_,k)=>$("p"+k).value).join("|");
+ if(v === "TI|ST|AL|AG|A|IR|EF|LS|NP|HE"){sfx("ok");$("asm1").style.display="none";$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
+ else bad();
+};
+
+/* Сборка: перетаскивание */
+const SL={brain:[95,0,50,38,"РАЗУМ"],lens:[150,6,40,30,"ГЛАЗ"],body:[80,44,80,86,"КОСТЬ"],core:[92,50,26,26,"СЕРДЦЕ"],fuel:[122,50,26,26,"ЖИЛЫ"],arms:[30,50,44,70,"РУКИ"],muscles:[166,50,44,70,"ПЛОТЬ"],weapon:[30,126,44,40,"ГНЕВ"],chip:[166,126,44,40,"ЧИП"],legs:[80,136,80,70,"НОГИ"],pc:[0,172,72,36,"🖥 ПК"]};
+const IT=[["body","🧱"],["legs","🦿"],["arms","🦾"],["core","💠"],["fuel","🩸"],["muscles","💪"],["brain","🧠"],["lens","👁"],["weapon","🔫"]];
+// ВАЖНО: теперь ровно 13 шагов, чтобы дойти до ПК
+const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","w_core","w_brain","w_lens","w_weapon","chip","pc"];
+let st2=0;
+function buildAsm(){
+ const bot=$("bot"),tray=$("tray");bot.innerHTML="";tray.innerHTML="";st2=0;
+ for(const k in SL){const d=document.createElement("div"),p=SL[k];d.className="sl";d.dataset.slot=k;d.textContent=p[4];
+  d.style.cssText=`left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px`;
+  d.onclick=()=>{if(String(STEPS[st2]).startsWith("w_"))act("w_"+k)};bot.appendChild(d)}
+ IT.map(([k,e])=>({k,t:e})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
+ msg("mA","success","Шаг 1/15");
+}
+function addChip(k,t){
+ const el=document.createElement("div");el.className="chip";el.textContent=t;
+ el.onpointerdown=e=>{
+  e.preventDefault();el.setPointerCapture(e.pointerId);const sx=e.clientX,sy=e.clientY;el.style.zIndex=9;
+  el.onpointermove=m=>{el.style.transform=`translate(${m.clientX-sx}px,${m.clientY-sy}px)`};
+  el.onpointerup=u=>{el.onpointermove=el.onpointerup=null;el.style.pointerEvents="none";
+   const x=document.elementFromPoint(u.clientX,u.clientY);el.style.pointerEvents="";el.style.transform="";el.style.zIndex="";
+   const sl=x&&x.closest("[data-slot]"),tk=sl&&sl.dataset.slot;
+   if(tk&&(tk===k||k==="chip"&&tk==="pc"))act(tk,el);else bad()}};
+ $("tray").appendChild(el);
+}
+function act(k,el){
+ if(k!==STEPS[st2]){bad();return}
+ st2++;sfx("snap");
+ const sl=document.querySelector('#bot [data-slot="'+k.replace("w_","")+'"]');
+ if(k.startsWith("w_")){sl.classList.add("w");}
+ else if(k==="pc"){
+   sfx("win");msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");
+   setTimeout(()=>{$("mA").className="msg";show(9)},1300);return
+ }
+ else{
+   sl.classList.add("f");sl.textContent=k==="chip"?"💾":IT.find(i=>i[0]===k)[1];
+   if(k!=="chip")el.remove()
+ }
+ if(st2===13)addChip("chip","💾 ЧИП");
+ msg("mA","success","Шаг "+(st2+1)+"/15");
+}
+
+/* Защита */
+const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
+const TY={imp:{e:"👹",hp:1,v:65,d:6,s:26},thu:{e:"⚡",hp:2,v:85,d:8,s:26},tit:{e:"👺",hp:5,v:35,d:20,s:40},boss:{e:"🐲",hp:25,v:20,d:45,s:64}};
+const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.random()*1.5+.5]);
+let G=null,raf=0;
+bd.onclick=()=>{
+ if(G)return;
+ // Инициализация игры
+ G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
+ bd.style.display="none";
+ $("hud").style.display="block"; 
+ $("mG").className="msg"; 
+ if($("mEnd")) $("mEnd").style.display="none";
+ show(9,false);hud();raf=requestAnimationFrame(loop);
+};
+function spawn(t){
+ if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.15+p*.15?"tit":r<.5?"thu":"imp"}
+ const y=TY[t];G.en.push({t,x:30+Math.random()*300,y:-20,hp:y.hp,ph:Math.random()*6});
+}
+function fire(x,y,fromX,own){
+ let best=null,bd2=1e9;
+ for(const e of G.en){const d=Math.hypot(e.x-x,e.y-y);if(d<TY[e.t].s&&d<bd2){best=e;bd2=d}}
+ G.fx.push({k:"l",x1:fromX,y1:262,x2:best?best.x:x,y2:best?best.y:y,a:1,c:own?"#ffd36b":"#5c8dff"});sfx("laser");
+ if(best&&--best.hp<=0){G.en.splice(G.en.indexOf(best),1);sfx("boom");for(let i=0;i<10;i++)G.fx.push({k:"p",x:best.x,y:best.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,a:1})}
+}
+cv.onpointerdown=e=>{
+ if(!G)return;const r=cv.getBoundingClientRect();
+ fire((e.clientX-r.left)*360/r.width,(e.clientY-r.top)*300/r.height,180,true);
+};
+function loop(ts){
+ if(!G)return;
+ const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
+ G.t-=dt;G.sp-=dt;G.sh=Math.max(0,G.sh-dt*20);
+ if(G.sp<=0){spawn();G.sp=Math.max(.35,1.0-(120-G.t)/120*.8)}
+ if(!G.boss&&G.t<60){G.boss=1;spawn("boss")}
+ for(const e of G.en.slice()){
+  const y=TY[e.t],dx=180-e.x,dy=250-e.y,d=Math.hypot(dx,dy);
+  e.x+=dx/d*y.v*dt+(e.t==="thu"?Math.sin(G.t*6+e.ph)*60*dt:0);e.y+=dy/d*y.v*dt;
+  if(d<34){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=8;sfx("hit")}
+ }
+ for(const b of G.bots){b.c-=dt;if(b.c<=0&&G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);fire(e.x,e.y,b.x,false);b.c=3.0}}
+ draw();hud();
+ if(G.hp<=0)return endG(false);
+ if(G.t<=0)return endG(true);
+ raf=requestAnimationFrame(loop);
+}
+function draw(){
+ const sx=(Math.random()-.5)*G.sh,sy=(Math.random()-.5)*G.sh;
+ cx.save();cx.translate(sx,sy);
+ const g=cx.createLinearGradient(0,0,0,300);g.addColorStop(0,"#07081a");g.addColorStop(1,"#3a1a4a");cx.fillStyle=g;cx.fillRect(-10,-10,380,320);
+ cx.fillStyle="#fff";STR.forEach(s=>{cx.globalAlpha=.4+.4*Math.sin(G.t*2+s[0]);cx.fillRect(s[0],s[1],s[2],s[2])});cx.globalAlpha=1;
  cx.fillStyle="#14121f";cx.fillRect(-10,268,380,40);
  cx.fillStyle="#2a2d44";cx.fillRect(140,248,80,30);cx.beginPath();cx.arc(180,248,40,Math.PI,0);cx.fill();
  cx.fillStyle="#5c8dff";cx.fillRect(170,252,20,26);
@@ -492,11 +595,15 @@ function hud(){
  $("hpD").textContent=hp;$("tmD").textContent=t;
  const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
 }
-function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
+function stopGame(){
+ cancelAnimationFrame(raf);G=null;
+ if($("hud")) $("hud").style.display="none";
+ if($("btnDef")) bd.style.display="block";
+}
 function endG(win){
- stopGame();show(8,false);
- if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";$("mEnd").style.display="block"}
- else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
+ stopGame();show(9,false);
+ if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");if($("btnDef"))bd.style.display="none";}
+ else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");if($("btnDef"))bd.textContent="ПОПРОБОВАТЬ СНОВА"}
 }
 
 /* ЭТАП 3: КОМНАТА */
@@ -507,8 +614,10 @@ let roomState = { nightstand: false, closetMoved: false, hatchOpen: false, capsu
 function updateInv() {
   ['slot1','slot2','slot3'].forEach((s) => {
     const el = document.getElementById(s);
-    el.textContent = inv[s] || "";
-    el.className = activeSlot === s ? "room-tool active" : "room-tool";
+    if(el) {
+        el.textContent = inv[s] || "";
+        el.className = activeSlot === s ? "room-tool active" : "room-tool";
+    }
   });
 }
 function addItem(item) {
@@ -518,40 +627,51 @@ function addItem(item) {
   updateInv(); sfx("snap");
 }
 function showInfo(text) {
-  document.getElementById("infoText").innerHTML = text;
-  document.getElementById("infoPanel").style.display = "block";
+  const el = document.getElementById("infoText");
+  if(el) el.innerHTML = text;
+  const p = document.getElementById("infoPanel");
+  if(p) p.style.display = "block";
 }
-document.getElementById("closeInfo").onclick = () => document.getElementById("infoPanel").style.display = "none";
+const closeBtn = document.getElementById("closeInfo");
+if(closeBtn) closeBtn.onclick = () => document.getElementById("infoPanel").style.display = "none";
 
 ['slot1','slot2','slot3'].forEach(s => {
-  document.getElementById(s).onclick = () => {
-    if(!inv[s]) return;
-    activeSlot = (activeSlot === s) ? null : s;
-    updateInv(); sfx("click");
-  };
+  const el = document.getElementById(s);
+  if(el) {
+      el.onclick = () => {
+        if(!inv[s]) return;
+        activeSlot = (activeSlot === s) ? null : s;
+        updateInv(); sfx("click");
+      };
+  }
 });
 
-document.getElementById("obj_nightstand").onclick = () => {
+const nightstand = document.getElementById("obj_nightstand");
+if(nightstand) nightstand.onclick = () => {
   if(!roomState.nightstand) {
     showInfo("Вы открыли тумбочку. Внутри лежит <b>Отвертка</b>.");
     addItem("🪛"); roomState.nightstand = true;
   } else { showInfo("Больше ничего нет."); }
 };
 
-document.getElementById("obj_table").onclick = () => {
+const table = document.getElementById("obj_table");
+if(table) table.onclick = () => {
   showInfo("<b>Записка на столе:</b><br><br>«Они возможно врут. Что если переставить местами?»");
 };
 
-document.getElementById("obj_closet").onclick = () => {
+const closet = document.getElementById("obj_closet");
+if(closet) closet.onclick = () => {
   if(!roomState.closetMoved) {
     showInfo("Вы толкнули шкаф, он сдвинулся вправо, открыв <b>Люк</b> в полу.");
-    document.getElementById("obj_closet").style.transform = "translateX(80px)";
-    document.getElementById("obj_hatch").style.display = "block";
+    closet.style.transform = "translateX(80px)";
+    const hatch = document.getElementById("obj_hatch");
+    if(hatch) hatch.style.display = "block";
     roomState.closetMoved = true;
   } else { showInfo("Шкаф уже сдвинут."); }
 };
 
-document.getElementById("obj_hatch").onclick = () => {
+const hatch = document.getElementById("obj_hatch");
+if(hatch) hatch.onclick = () => {
   if(!roomState.hatchOpen) {
     if(activeSlot && inv[activeSlot] === "🪛") {
       showInfo("Вы открутили люк отверткой. Внутри лежит <b>Молоток</b>.");
@@ -560,16 +680,18 @@ document.getElementById("obj_hatch").onclick = () => {
   } else { showInfo("Люк пуст."); }
 };
 
-document.getElementById("obj_capsules").onclick = () => {
+const capsules = document.getElementById("obj_capsules");
+if(capsules) capsules.onclick = () => {
   if(!roomState.capsulesBroken) {
     if(activeSlot && inv[activeSlot] === "🔨") {
       showInfo("Вы разбили капсулы молотком. Внутри два тела. У одного на груди выцарапано: <b>45</b>. У другого: <b>99301</b>.");
-      document.getElementById("obj_capsules").textContent = "💀"; roomState.capsulesBroken = true;
+      capsules.textContent = "💀"; roomState.capsulesBroken = true;
     } else { showInfo("Капсулы из прочного стекла. Нужен тяжелый предмет."); }
   } else { showInfo("Осколки и два трупа. Код на них: 45 и 99301."); }
 };
 
-document.getElementById("obj_safe").onclick = () => {
+const safe = document.getElementById("obj_safe");
+if(safe) safe.onclick = () => {
   if(!roomState.safeOpened) {
     const code = prompt("Введите код от сейфа:");
     if(code === "4599301" || code === "9930145") { 
@@ -586,25 +708,15 @@ document.getElementById("obj_safe").onclick = () => {
   }
 };
 
-document.getElementById("obj_door").onclick = () => {
+const door = document.getElementById("obj_door");
+if(door) door.onclick = () => {
   if(activeSlot && inv[activeSlot] === "🔑") {
-    document.getElementById("roomMsg").className = "msg success";
-    document.getElementById("roomMsg").textContent = "ДВЕРЬ ОТКРЫТА. ПЕРЕХОД В КОМАНДНЫЙ ЦЕНТР...";
+    const rm = document.getElementById("roomMsg");
+    if(rm){ rm.className = "msg success"; rm.textContent = "ДВЕРЬ ОТКРЫТА. ПЕРЕХОД В КОМАНДНЫЙ ЦЕНТР..."; }
     sfx("win");
   } else {
-    document.getElementById("roomMsg").className = "msg error";
-    document.getElementById("roomMsg").textContent = "ДВЕРЬ ЗАПЕРТА. НУЖЕН КЛЮЧ.";
+    const rm = document.getElementById("roomMsg");
+    if(rm){ rm.className = "msg error"; rm.textContent = "ДВЕРЬ ЗАПЕРТА. НУЖЕН КЛЮЧ."; }
     sfx("err");
   }
 };
-
-/* Восстановление прогресса */
-(function(){
- let s=0,m=0;
- try{s=parseInt(localStorage.getItem("blr_screen"),10)||0;m=parseInt(localStorage.getItem("blr_max"),10)||0}catch(e){}
- maxS=Math.min(Math.max(m,s),scr.length-1);
- show(Math.min(s,maxS),false);
-})();
-</script>
-</body>
-</html>
