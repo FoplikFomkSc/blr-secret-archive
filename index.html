@@ -31,6 +31,18 @@ body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;alig
 .lcd{min-width:92px;padding:7px 6px;text-align:center;font:bold 12px monospace;color:#7cf0b0;background:#07110d;border:1px solid #000;border-radius:4px;box-shadow:inset 0 0 8px #000}
 .vents{display:none;gap:3px}.vents i{width:3px;height:22px;background:#0b0c12;border-radius:2px}
 @media(min-width:520px){.vents{display:flex}}
+.led.err.on{background:#ff3b3b;box-shadow:0 0 8px #ff3b3b}
+@keyframes pb{50%{background:#ff3b3b;box-shadow:0 0 8px #ff3b3b}}
+.led.warn{animation:pb 1s infinite}
+.mir{display:inline-block;transform:scaleX(-1)}
+.sg input.al{background:#0e1119}
+#tray{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;margin-bottom:12px}
+.chip{padding:8px 10px;background:#1b1d2c;border:1px solid #5c8dff;border-radius:8px;font-size:12px;cursor:grab;touch-action:none;user-select:none;position:relative}
+#bot{position:relative;width:240px;height:210px;margin:0 auto 12px}
+.sl{position:absolute;display:grid;place-items:center;border:1px dashed #514477;border-radius:6px;font-size:8px;color:#777d96;text-align:center;background:#0c0e17;user-select:none}
+.sl.f{border:1px solid var(--blue);font-size:20px;background:#15183a}
+.sl.w{box-shadow:0 0 10px #ffd36b;border-color:#ffd36b}
+#pcs{padding:12px;text-align:center;border:1px dashed #514477;border-radius:8px;font-size:13px;color:#a6aac0}
 .scr{display:none}.scr.active{display:block}
 .symbol{width:46px;height:46px;display:grid;place-items:center;margin-bottom:16px;border:1px solid #514477;border-radius:10px;color:var(--purple);font-size:24px;background:#201a35}
 .eyebrow{color:var(--purple);font-size:10px;font-weight:bold;letter-spacing:3px;margin-bottom:10px}
@@ -67,7 +79,7 @@ input.txt:focus{border-color:var(--purple)}
 <body>
 <main class="rig">
 <div class="monitor"><div class="glass">
-<div class="osbar"><span>BR // ARCHIVE</span><span id="statusText" class="status">● SIGNAL ACTIVE</span></div>
+<div class="osbar"><span>BLR SecArh</span><span id="statusText" class="status">● SIGNAL ACTIVE</span></div>
 <div class="view" id="view">
 
 <section class="scr active">
@@ -83,7 +95,7 @@ input.txt:focus{border-color:var(--purple)}
 <div class="numbers">
 <div class="nb"><span>c94444</span><b>7072</b></div><div class="nb"><span>55aa55</span><b>3</b></div><div class="nb"><span>e05555</span><b>5081</b></div><div class="nb"><span>5577cc</span><b>6202</b></div><div class="nb"><span>449944</span><b>1</b></div><div class="nb"><span>ff88aa</span><b>2113</b></div><div class="nb"><span>4466bb</span><b>7202</b></div>
 </div>
-<form id="f1"><label for="i1">ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m1"></div>
+<form id="f1"><label for="i1">ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go"><span class="mir">ПРОВЕРИТЬ</span></button></div></form><div class="msg" id="m1"></div>
 </section>
 
 <section class="scr">
@@ -125,13 +137,14 @@ input.txt:focus{border-color:var(--purple)}
 
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div><h1>Сбой ядра.</h1>
-<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Четыре метки хранят ключ: читай их так — третья, первая, четвёртая, вторая.</p>
+<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Каждая клетка хранит цифру: верни всех домой.</p>
 <div class="sg" id="sg"></div>
-<form id="f7"><label for="i7">КЛЮЧ</label><div class="row"><input class="txt" id="i7" inputmode="numeric" placeholder="..." required><button type="button" class="go">ВОССТАНОВИТЬ</button></div></form><div class="msg" id="m7"></div>
+<button type="button" class="go" id="btnSud" style="width:100%">ВОССТАНОВИТЬ</button><div class="msg" id="m7"></div>
 </section>
 
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div><h1>Сборка шаблона.</h1>
+<div id="asm1">
 <p class="description">Не боги горшки обжигают: собери героя по уликам.</p>
 <div class="box" style="border-color:#ff4444;color:#ff9aab;line-height:1.6">
 > ЛОГ 1: Мягкому не место в костях: ни полимер, ни пластик, ни волокно.<br>
@@ -139,35 +152,42 @@ input.txt:focus{border-color:var(--purple)}
 > ЛОГ 3: Сталь тяжелее титана, титан тяжелее алюминия. Дом легче рук.<br>
 > ЛОГ 4: Кто ходит, тот тяжелее дома, но не стальной.<br>
 > ЛОГ 5: Сколько букв в имени дома, столько ом в жиле.<br>
-> ЛОГ 6: Сердце сильнее, чем жила сопротивляется, но не больше вдвое длины слова «СТАЛЬ».
+> ЛОГ 6: Сердце сильнее, чем жила сопротивляется, но не больше вдвое длины слова «СТАЛЬ».<br>
+> ЛОГ 7: Бог прячется во тьме, а тепло не спрячешь: глаз видит то, чего нет в свете.<br>
+> ЛОГ 8: Не кровь их гонит, а ток: сожмёшь — сами разожмутся.<br>
+> ЛОГ 9: Против небожителя дробь что горох о стену: бей светом по свету, без гильз и отдачи.<br>
+> ЛОГ 10: Кто на ошибках учится, тот умнее вчерашнего.<br>
+> ЛОГ 11: Сердцу в девять ГВт нужна кровь холоднее самого космоса.
 </div>
-<div class="ar"><span>КОРПУС</span><select id="p0"><option value="">— выбрать —</option><option value="CF">Углеволокно</option><option value="TI">Титан</option><option value="PL">Пластик</option><option value="AL">Алюминий</option></select></div>
-<div class="ar"><span>РУКИ</span><select id="p1"><option value="">— выбрать —</option><option value="AL">Алюминий</option><option value="PM">Полимер</option><option value="ST">Сталь</option><option value="TI">Титан</option></select></div>
-<div class="ar"><span>НОГИ</span><select id="p2"><option value="">— выбрать —</option><option value="PL">Пластик</option><option value="TI">Титан</option><option value="AL">Алюминий</option><option value="ST">Сталь</option></select></div>
-<div class="ar"><span>ПРОВОД</span><select id="p3"><option value="">— выбрать —</option><option value="AG">Серебро, 5 Ом</option><option value="CU">Медь, 3 Ом</option><option value="AU">Золото, 8 Ом</option><option value="NI">Никель, 4 Ом</option></select></div>
-<div class="ar"><span>ЯДРО</span><select id="p4"><option value="">— выбрать —</option><option value="G">Γ — 7 ГВт</option><option value="A">Α — 2 ГВт</option><option value="D">Δ — 9 ГВт</option><option value="B">Β — 5 ГВт</option></select></div>
-<button class="go" id="btnAsm" style="width:100%;margin-top:6px">ЗАПУСТИТЬ СИНТЕЗ</button><div class="msg" id="m8"></div>
+<div id="sel"></div>
+<button type="button" class="go" id="btnAsm" style="width:100%;margin-top:6px">ЗАПУСТИТЬ СИНТЕЗ</button><div class="msg" id="m8"></div>
+</div>
+<div id="asm2" style="display:none">
+<p class="description" style="margin-bottom:10px">Тяни детали на места. Порядок — в послании ниже.</p>
+<div id="tray"></div><div id="bot"></div><div class="msg" id="mA"></div>
+<p class="description" style="margin-top:14px">Порядок прост, как жизнь: сперва кость, затем ходули, потом руки; в грудь — сердце, в жилы — кровь, на кость — плоть; в череп — мысль, в мысль — глаз, в руку — гнев. Тяни детали на места. Когда всё стоит, протяни жилу: от сердца к мысли, от мысли к глазу, от глаза к гневу (касайся по очереди). Чип — сперва железному, затем разуму машины.</p>
+</div>
 </section>
 
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div><h1>Защита.</h1>
-<p class="description">Бункер держится на тех, кто не зевает. Что не поймано за два вздоха, то бьёт прямо в сердце.</p>
+<p class="description">Бункер держится на тех, кто не зевает. Железные братья стоят рядом, но и твой выстрел весит. Богов много, а бункер один.</p>
 <div id="hud" style="display:none;margin-bottom:12px">
 <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span>HP: <span id="hpD">100</span></span><span>ВРЕМЯ: <span id="tmD">120</span>с</span></div>
 <div style="height:10px;background:#3a1925;border-radius:5px"><div id="hpBar" style="width:100%;height:100%;background:var(--green)"></div></div></div>
-<div id="gameArea"><div class="cs">🏰</div></div>
+<canvas id="cv" width="360" height="300" style="width:100%;border-radius:7px;border:1px solid #23253a;touch-action:none;cursor:crosshair;display:block"></canvas>
 <div class="msg" id="mG"></div>
-<button class="go" id="btnDef" style="width:100%;margin-top:12px;padding:14px">НАЧАТЬ ЗАЩИТУ</button>
+<button type="button" class="go" id="btnDef" style="width:100%;margin-top:12px;padding:14px">НАЧАТЬ ЗАЩИТУ</button>
 <div class="msg success" id="mEnd" style="display:none">КОНЕЦ 2 ЭТАПА. ЭТАП 3 СКОРО.</div>
 </section>
 
 </div></div>
 <div class="pc">
-<div class="leds"><i class="led on"></i><i class="led hdd" id="hdd"></i></div>
+<div class="leds"><i class="led on" id="pwr"></i><i class="led hdd" id="hdd"></i><i class="led err" id="errL"></i></div>
 <button class="key" id="btnBack">◀ НАЗАД</button>
 <div class="lcd" id="lcd">STEP 01/10</div>
 <button class="key" id="btnFwd">ВПЕРЁД ▶</button>
-<div class="vents"><i></i><i></i><i></i><i></i></div>
+<button class="key" id="btnSnd" style="flex:0 0 auto">🔊</button><div class="vents"><i></i><i></i><i></i><i></i></div>
 </div>
 </div>
 <div class="stand"></div><div class="base"></div>
@@ -210,8 +230,8 @@ const HS={
 4:"e19d974cff7d169a5afd16e2535a6009e076ceb30d3cacd2d9cde4f02d8f3777",
 5:"3bf85e3a647f4bb7b1b173edb828f9424916493d85c214063e9f3b6bc1ad7862",
 6:"5c195c099ffe27c005dd4054aeb4a62864f2ec74e75b76e3efca0c635d96b9e1",
-7:"3d8dbd98077ee9635cc55e3911d6832c2d47b310f0101d56b5c12cd519ac2bf9",
-8:"dcdb7b092f68ab6ffd373a8e8c036afbd43543f9e58594070ed5171f2fff0bd2"};
+7:"4c5e72057519c48e1a2430cbedb7cff3a4a1d244eb28b8d865f85141f643017d",
+8:"84903ba3c96eef4e0351e6e0e11f897873a40c026413be1f2cd381ebd8e3e341"};
 const LK={"А":"A","В":"B","Е":"E","К":"K","М":"M","Н":"H","О":"O","Р":"P","С":"C","Т":"T","Х":"X"};
 const LY={"Й":"Q","Ц":"W","У":"E","К":"R","Е":"T","Н":"Y","Г":"U","Ш":"I","Щ":"O","З":"P","Ф":"A","Ы":"S","В":"D","А":"F","П":"G","Р":"H","О":"J","Л":"K","Д":"L","Я":"Z","Ч":"X","С":"C","М":"V","И":"B","Т":"N","Ь":"M"};
 const fixD=v=>v.replace(/[\u2010-\u2015\u2212]/g,"-");
@@ -229,10 +249,11 @@ function show(i,save=true){
  cur=i;if(i>maxS)maxS=i;
  scr.forEach((s,k)=>s.classList.toggle("active",k===i));
  $("view").scrollTop=0;
- clearTimeout(secT);secOn=false;
- if(i===3)secT=setTimeout(()=>{secOn=true},10000);
- $("btnBack").disabled=i===0;
- $("btnFwd").disabled=i>=maxS||i===3&&maxS<4;
+ clearTimeout(secT);secOn=false;$("pwr").classList.remove("warn");
+ if(G&&i!==9)stopGame();
+ if(i===3)secT=setTimeout(()=>{secOn=true;$("pwr").classList.add("warn")},10000);
+ $("btnBack").disabled=i===0||!!G;
+ $("btnFwd").disabled=!!G||i>=maxS||i===3&&maxS<4;
  $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/10";
  if(save){try{localStorage.setItem("blr_screen",i);localStorage.setItem("blr_max",maxS)}catch(e){}}
 }
@@ -240,19 +261,31 @@ $("btnBack").onclick=()=>show(cur-1);
 $("btnFwd").onclick=()=>{if(cur<maxS)show(cur+1)};
 st.onclick=()=>{if(cur===3&&secOn)show(4)};
 
+let AC=null,mute=false;
+function sfx(k){
+ if(mute)return;
+ try{AC=AC||new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
+ if(AC.state==="suspended")AC.resume();
+ const S={ok:[[660,.08],[880,.12]],err:[[160,.25,"sawtooth"]],click:[[500,.04,"square"]],laser:[[900,.09,"sawtooth",300]],boom:[[110,.25,"square",40]],hit:[[120,.18,"sawtooth",60]],win:[[523,.1],[659,.1],[784,.1],[1047,.25]],snap:[[400,.06,"triangle"]]}[k];
+ let t=AC.currentTime;
+ S.forEach(([f,d,w,f2])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=w||"sine";o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);if(!f2)t+=d*.8});
+}
+document.addEventListener("click",e=>{if(e.target.closest("button"))sfx("click")});
+$("btnSnd").onclick=()=>{mute=!mute;$("btnSnd").textContent=mute?"🔇":"🔊"};
+function bad(){const l=$("errL");l.classList.add("on");sfx("err");setTimeout(()=>l.classList.remove("on"),1500)}
 function blink(){const l=$("hdd");l.classList.add("on");setTimeout(()=>l.classList.remove("on"),400)}
 function msg(id,type,text){const m=$(id);m.className="msg "+type;m.textContent=text}
 
 function bind(i,norm,err){
  const f=$("f"+i),b=f.querySelector("button");
  const run=async()=>{
-  blink();msg("m"+i,"success","ПРОВЕРКА...");
+  blink();$("m"+i).className="msg";
   const raw=$("i"+i).value;
   let ok=false;
   try{for(const t of [raw,mp(raw,LK),mp(raw,LY)]){if(await H(norm(t))===HS[i]){ok=true;break}}}
   catch(x){msg("m"+i,"error","СБОЙ: "+x.message);return}
-  if(ok){msg("m"+i,"success","ДОСТУП РАЗРЕШЁН");setTimeout(()=>{$("m"+i).className="msg";show(i+1)},700)}
-  else{msg("m"+i,"error",err);b.disabled=true;setTimeout(()=>b.disabled=false,2500)}
+  if(ok){msg("m"+i,"success","ДОСТУП РАЗРЕШЁН");setTimeout(()=>{$("m"+i).className="msg";show(i+1)},700);sfx("ok")}
+  else{bad();b.disabled=true;setTimeout(()=>b.disabled=false,2500)}
  };
  f.addEventListener("submit",e=>{e.preventDefault();run()});
  b.addEventListener("click",run);
@@ -264,66 +297,143 @@ bind(4,NORM.an,"ОШИБКА");
 bind(5,v=>(v.match(/\d+/g)||[]).join(","),"НЕ СОВПАЛО");
 bind(6,NORM.an,"НЕ РАСШИФРОВАНО");
 
-/* Судоку: 0 = пусто. Метки A,B,C,D */
+/* Судоку */
 const PZ="53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
-const MK={2:"A",18:"B",40:"C",72:"D"};
+const SG=[];
 (function(){
  const g=$("sg");
  for(let k=0;k<81;k++){
-  const r=Math.floor(k/9),c=k%9,el=document.createElement("input");
-  const ch=PZ[k];
+  const r=Math.floor(k/9),c=k%9,el=document.createElement("input"),ch=PZ[k];
   el.maxLength=1;el.inputMode="numeric";
   if(ch!=="."){el.value=ch;el.readOnly=true}
-  else{el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
-   if(MK[k]){el.className="mk";el.placeholder=MK[k]}}
+  else el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
+  if((Math.floor(r/3)+Math.floor(c/3))%2)el.classList.add("al");
   if(c%3===2&&c<8)el.classList.add("br");
   if(r%3===2&&r<8)el.classList.add("bb");
-  g.appendChild(el);
+  SG.push(el);g.appendChild(el);
  }
 })();
-bind(7,NORM.an,"ОШИБКА");
+$("btnSud").onclick=async()=>{
+ blink();
+ if(await H(SG.map(e=>e.value||"0").join(""))===HS[7]){msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");sfx("ok");setTimeout(()=>{$("m7").className="msg";show(8)},900)}
+ else bad();
+};
 
-/* Сборка */
+/* Сборка: выбор */
+const PT=[["КОРПУС","CF:Углеволокно,TI:Титан,PL:Пластик,AL:Алюминий"],["РУКИ","AL:Алюминий,PM:Полимер,ST:Сталь,TI:Титан"],["НОГИ","PL:Пластик,TI:Титан,AL:Алюминий,ST:Сталь"],["ПРОВОД","AG:Серебро 5 Ом,CU:Медь 3 Ом,AU:Золото 8 Ом,NI:Никель 4 Ом"],["ЯДРО","G:Γ 7 ГВт,A:Α 2 ГВт,D:Δ 9 ГВт,B:Β 5 ГВт"],["ЛИНЗА","GL:Обычное стекло,IR:Инфракрасная,MR:Зеркальная,QZ:Мутный кварц"],["МЫШЦЫ","CT:Хлопковые жгуты,RB:Резина,EF:Электроволокна,LT:Кожаные ремни"],["ОРУЖИЕ","SG:Дробовик,LS:Лазер,SP:Копьё,CL:Дубина"],["МОЗГ","RL:Релейная схема,NP:Нейропроцессор,AR:Арифмометр,PC:Перфокарта"],["КРОВЬ","WT:Вода,OL:Машинное масло,HE:Жидкий гелий,GS:Бензин"]];
+$("sel").innerHTML=PT.map((p,k)=>`<div class="ar"><span>${p[0]}</span><select id="p${k}"><option value="">— выбрать —</option>${p[1].split(",").map(o=>`<option value="${o.split(":")[0]}">${o.split(":")[1]}</option>`).join("")}</select></div>`).join("");
 $("btnAsm").onclick=async()=>{
  blink();
- const v=[0,1,2,3,4].map(k=>$("p"+k).value).join("|");
- const b=$("btnAsm");
- if(await H(v)===HS[8]){msg("m8","success","СИНТЕЗ УСПЕШЕН");setTimeout(()=>{$("m8").className="msg";show(9)},900)}
- else{msg("m8","error","КОНФЛИКТ КОМПОНЕНТОВ");b.disabled=true;setTimeout(()=>b.disabled=false,2500)}
+ const v=PT.map((_,k)=>$("p"+k).value).join("|");
+ if(await H(v)===HS[8]){sfx("ok");$("asm1").style.display="none";$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
+ else bad();
 };
 
-/* Защита */
-let spI,tmI,hp=100,tl=120,on=false;
-const area=$("gameArea"),bd=$("btnDef"),CS='<div class="cs">🏰</div>';
-bd.onclick=()=>{
- if(on)return;on=true;hp=100;tl=120;hud();
- bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";area.innerHTML=CS;
- tmI=setInterval(()=>{tl--;hud();if(tl<=0)end(true)},1000);
- spI=setInterval(spawn,700);
-};
-function spawn(){
- if(!on)return;
- const e=document.createElement("div"),god=Math.random()>.4;
- e.style.cssText="position:absolute;font-size:30px;cursor:pointer;left:"+(Math.random()*80+5)+"%;top:"+(Math.random()*75+5)+"%";
- e.textContent=god?"👹":"☄️";
- const t=setTimeout(()=>{if(e.parentNode){e.remove();hurt(god?10:5)}},2000);
- e.onclick=ev=>{ev.stopPropagation();clearTimeout(t);e.remove();if(god){hp=Math.min(100,hp+2);hud()}};
- area.appendChild(e);
+/* Сборка: перетаскивание */
+const SL={brain:[95,0,50,38,"РАЗУМ"],lens:[150,6,40,30,"ГЛАЗ"],body:[80,44,80,86,"КОСТЬ"],core:[92,50,26,26,"СЕРДЦЕ"],fuel:[122,50,26,26,"ЖИЛЫ"],arms:[30,50,44,70,"РУКИ"],muscles:[166,50,44,70,"ПЛОТЬ"],weapon:[30,126,44,40,"ГНЕВ"],chip:[166,126,44,40,"ЧИП"],legs:[80,136,80,70,"НОГИ"],pc:[0,172,72,36,"🖥 ПК"]};
+const IT=[["body","🧱",0],["legs","🦿",2],["arms","🦾",1],["core","💠",4],["fuel","🩸",9],["muscles","💪",6],["brain","🧠",8],["lens","👁",5],["weapon","🔫",7]];
+const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","w_core","w_brain","w_lens","w_weapon","chip","pc"];
+let st2=0;
+function buildAsm(){
+ const bot=$("bot"),tray=$("tray");bot.innerHTML="";tray.innerHTML="";st2=0;
+ for(const k in SL){const d=document.createElement("div"),p=SL[k];d.className="sl";d.dataset.slot=k;d.textContent=p[4];
+  d.style.cssText=`left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px`;
+  d.onclick=()=>{if(String(STEPS[st2]).startsWith("w_"))act("w_"+k)};bot.appendChild(d)}
+ IT.map(([k,e,n])=>({k,t:e+" "+$("p"+n).selectedOptions[0].text})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
+ msg("mA","success","Шаг 1/15");
 }
-function hurt(a){
- if(!on)return;hp=Math.max(0,hp-a);hud();msg("mG","error","УРОН!");
- setTimeout(()=>{if(on)$("mG").className="msg"},800);
- if(hp<=0)end(false);
+function addChip(k,t){
+ const el=document.createElement("div");el.className="chip";el.textContent=t;
+ el.onpointerdown=e=>{
+  e.preventDefault();el.setPointerCapture(e.pointerId);const sx=e.clientX,sy=e.clientY;el.style.zIndex=9;
+  el.onpointermove=m=>{el.style.transform=`translate(${m.clientX-sx}px,${m.clientY-sy}px)`};
+  el.onpointerup=u=>{el.onpointermove=el.onpointerup=null;el.style.pointerEvents="none";
+   const x=document.elementFromPoint(u.clientX,u.clientY);el.style.pointerEvents="";el.style.transform="";el.style.zIndex="";
+   const sl=x&&x.closest("[data-slot]"),tk=sl&&sl.dataset.slot;
+   if(tk&&(tk===k||k==="chip"&&tk==="pc"))act(tk,el);else bad()}};
+ $("tray").appendChild(el);
+}
+function act(k,el){
+ if(k!==STEPS[st2]){bad();return}
+ st2++;sfx("snap");
+ const sl=document.querySelector('#bot [data-slot="'+k.replace("w_","")+'"]');
+ if(k.startsWith("w_"))sl.classList.add("w");
+ else if(k==="pc"){sfx("win");msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");setTimeout(()=>{$("mA").className="msg";show(9)},1300);return}
+ else{sl.classList.add("f");sl.textContent=k==="chip"?"💾":IT.find(i=>i[0]===k)[1];if(k!=="chip")el.remove()}
+ if(st2===13)addChip("chip","💾 ЧИП");
+ msg("mA","success","Шаг "+(st2+1)+"/15");
+}
+
+/* Защита */
+const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
+const TY={imp:{e:"👹",hp:1,v:55,d:6,s:26},thu:{e:"⚡",hp:2,v:70,d:8,s:26},tit:{e:"👺",hp:5,v:28,d:20,s:40},boss:{e:"🐲",hp:25,v:16,d:45,s:64}};
+const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.random()*1.5+.5]);
+let G=null,raf=0;
+bd.onclick=()=>{
+ if(G)return;
+ G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
+ bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";$("mEnd").style.display="none";
+ show(9,false);hud();raf=requestAnimationFrame(loop);
+};
+function spawn(t){
+ if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.15+p*.15?"tit":r<.5?"thu":"imp"}
+ const y=TY[t];G.en.push({t,x:30+Math.random()*300,y:-20,hp:y.hp,ph:Math.random()*6});
+}
+function fire(x,y,fromX,own){
+ let best=null,bd2=1e9;
+ for(const e of G.en){const d=Math.hypot(e.x-x,e.y-y);if(d<TY[e.t].s&&d<bd2){best=e;bd2=d}}
+ G.fx.push({k:"l",x1:fromX,y1:262,x2:best?best.x:x,y2:best?best.y:y,a:1,c:own?"#ffd36b":"#5c8dff"});sfx("laser");
+ if(best&&--best.hp<=0){G.en.splice(G.en.indexOf(best),1);sfx("boom");for(let i=0;i<10;i++)G.fx.push({k:"p",x:best.x,y:best.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,a:1})}
+}
+cv.onpointerdown=e=>{
+ if(!G)return;const r=cv.getBoundingClientRect();
+ fire((e.clientX-r.left)*360/r.width,(e.clientY-r.top)*300/r.height,180,true);
+};
+function loop(ts){
+ if(!G)return;
+ const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
+ G.t-=dt;G.sp-=dt;G.sh=Math.max(0,G.sh-dt*20);
+ if(G.sp<=0){spawn();G.sp=Math.max(.45,1.2-(120-G.t)/120*.8)}
+ if(!G.boss&&G.t<60){G.boss=1;spawn("boss")}
+ for(const e of G.en.slice()){
+  const y=TY[e.t],dx=180-e.x,dy=250-e.y,d=Math.hypot(dx,dy);
+  e.x+=dx/d*y.v*dt+(e.t==="thu"?Math.sin(G.t*6+e.ph)*60*dt:0);e.y+=dy/d*y.v*dt;
+  if(d<34){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=8;sfx("hit")}
+ }
+ for(const b of G.bots){b.c-=dt;if(b.c<=0&&G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);fire(e.x,e.y,b.x,false);b.c=1.5}}
+ draw();hud();
+ if(G.hp<=0)return endG(false);
+ if(G.t<=0)return endG(true);
+ raf=requestAnimationFrame(loop);
+}
+function draw(){
+ const sx=(Math.random()-.5)*G.sh,sy=(Math.random()-.5)*G.sh;
+ cx.save();cx.translate(sx,sy);
+ const g=cx.createLinearGradient(0,0,0,300);g.addColorStop(0,"#07081a");g.addColorStop(1,"#3a1a4a");cx.fillStyle=g;cx.fillRect(-10,-10,380,320);
+ cx.fillStyle="#fff";STR.forEach(s=>{cx.globalAlpha=.4+.4*Math.sin(G.t*2+s[0]);cx.fillRect(s[0],s[1],s[2],s[2])});cx.globalAlpha=1;
+ cx.fillStyle="#14121f";cx.fillRect(-10,268,380,40);
+ cx.fillStyle="#2a2d44";cx.fillRect(140,248,80,30);cx.beginPath();cx.arc(180,248,40,Math.PI,0);cx.fill();
+ cx.fillStyle="#5c8dff";cx.fillRect(170,252,20,26);
+ cx.font="26px serif";cx.textAlign="center";
+ G.bots.forEach(b=>cx.fillText("🤖",b.x,276));
+ for(const e of G.en){const y=TY[e.t];cx.font=y.s+"px serif";cx.fillText(y.e,e.x,e.y+y.s/3);
+  if(y.hp>1){cx.fillStyle="#3a1925";cx.fillRect(e.x-15,e.y-y.s/2-6,30,4);cx.fillStyle="#ff4444";cx.fillRect(e.x-15,e.y-y.s/2-6,30*e.hp/y.hp,4)}}
+ for(const f of G.fx.slice()){f.a-=.06;if(f.a<=0){G.fx.splice(G.fx.indexOf(f),1);continue}
+  cx.globalAlpha=f.a;
+  if(f.k==="l"){cx.strokeStyle=f.c;cx.lineWidth=3;cx.beginPath();cx.moveTo(f.x1,f.y1);cx.lineTo(f.x2,f.y2);cx.stroke()}
+  else{f.x+=f.vx*.016;f.y+=f.vy*.016;cx.fillStyle="#ffa500";cx.fillRect(f.x,f.y,4,4)}}
+ cx.globalAlpha=1;cx.restore();
 }
 function hud(){
- $("hpD").textContent=hp;$("tmD").textContent=tl;
+ const hp=Math.max(0,Math.round(G?G.hp:100)),t=G?Math.max(0,Math.ceil(G.t)):120;
+ $("hpD").textContent=hp;$("tmD").textContent=t;
  const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
 }
-function end(win){
- on=false;clearInterval(spI);clearInterval(tmI);area.innerHTML=CS;
- $("hud").style.display="none";bd.style.display="block";
- if(win){msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";$("mEnd").style.display="block"}
- else{msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
+function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
+function endG(win){
+ stopGame();show(9,false);
+ if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";$("mEnd").style.display="block"}
+ else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
 }
 
 /* Восстановление прогресса */
