@@ -5,338 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#090a10">
   <title>Unknown Transmission | Ball Ricoshet</title>
-
   <style>
     * { box-sizing: border-box; }
-
-    :root {
-      --bg: #090a10;
-      --panel: #11131d;
-      --purple: #9b7bff;
-      --blue: #5c8dff;
-      --text: #f0efff;
-      --muted: #777d96;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 24px 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:
-        radial-gradient(ellipse at 50% 0%, #222044 0%, transparent 55%),
-        var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
+    :root { --bg: #090a10; --panel: #11131d; --purple: #9b7bff; --blue: #5c8dff; --text: #f0efff; --muted: #777d96; }
+    body { margin: 0; min-height: 100vh; padding: 24px 16px; display: flex; justify-content: center; align-items: center; background: radial-gradient(ellipse at 50% 0%, #222044 0%, transparent 55%), var(--bg); color: var(--text); font-family: Arial, Helvetica, sans-serif; }
     .container { width: 100%; max-width: 520px; }
-
-    .topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 2px;
-      margin-bottom: 22px;
-    }
-
-    .status {
-      color: #8be0b5;
-      user-select: none;
-      cursor: default;
-    }
-
-    .status.secret-ready {
-      cursor: pointer;
-    }
-
-    .status.secret-ready:hover {
-      color: #c6b8ff;
-    }
-
-    .panel {
-      position: relative;
-      padding: 34px 28px;
-      background: rgba(17, 19, 29, 0.96);
-      border: 1px solid #292b42;
-      border-radius: 14px;
-      box-shadow: 0 20px 70px #0008;
-      overflow: hidden;
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--purple));
-    }
-
-    .symbol {
-      width: 58px;
-      height: 58px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 27px;
-      border: 1px solid #514477;
-      border-radius: 12px;
-      color: var(--purple);
-      font-size: 28px;
-      background: #201a35;
-    }
-
-    .eyebrow {
-      color: var(--purple);
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      margin: 0 0 16px;
-      font-size: clamp(28px, 7vw, 40px);
-      line-height: 1.1;
-      letter-spacing: -1px;
-    }
-
-    .description {
-      color: #a6aac0;
-      font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 28px;
-    }
-
-    .description strong {
-      color: #d9d7ef;
-      letter-spacing: 1px;
-    }
-
-    .separator {
-      height: 1px;
-      background: #292b3d;
-      margin: 26px 0;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      color: #d9d7ef;
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
+    .topline { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 10px; letter-spacing: 2px; margin-bottom: 22px; }
+    .status { color: #8be0b5; user-select: none; cursor: default; }
+    .status.secret-ready { cursor: pointer; }
+    .status.secret-ready:hover { color: #c6b8ff; }
+    .panel { position: relative; padding: 34px 28px; background: rgba(17, 19, 29, 0.96); border: 1px solid #292b42; border-radius: 14px; box-shadow: 0 20px 70px #0008; overflow: hidden; }
+    .panel::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--purple)); }
+    .symbol { width: 58px; height: 58px; display: grid; place-items: center; margin-bottom: 27px; border: 1px solid #514477; border-radius: 12px; color: var(--purple); font-size: 28px; background: #201a35; }
+    .eyebrow { color: var(--purple); font-size: 10px; font-weight: bold; letter-spacing: 3px; margin-bottom: 12px; }
+    h1 { margin: 0 0 16px; font-size: clamp(28px, 7vw, 40px); line-height: 1.1; letter-spacing: -1px; }
+    .description { color: #a6aac0; font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
+    .description strong { color: #d9d7ef; letter-spacing: 1px; }
+    .separator { height: 1px; background: #292b3d; margin: 26px 0; }
+    label { display: block; margin-bottom: 10px; color: #d9d7ef; font-size: 12px; font-weight: bold; letter-spacing: 1px; }
     .input-row { display: flex; gap: 9px; }
-
-    input {
-      width: 100%;
-      min-width: 0;
-      padding: 15px 13px;
-      color: white;
-      background: #090b13;
-      border: 1px solid #34364d;
-      border-radius: 7px;
-      outline: none;
-      font-size: 14px;
-      text-transform: uppercase;
-    }
-
-    input:focus {
-      border-color: var(--purple);
-      box-shadow: 0 0 0 2px #9b7bff20;
-    }
-
-    input::placeholder {
-      color: #565b72;
-      text-transform: none;
-    }
-
-    button {
-      padding: 0 18px;
-      border: 0;
-      border-radius: 7px;
-      color: white;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      background: linear-gradient(120deg, #6550c8, #426dd4);
-      transition: filter 0.2s, transform 0.2s;
-    }
-
+    input { width: 100%; min-width: 0; padding: 15px 13px; color: white; background: #090b13; border: 1px solid #34364d; border-radius: 7px; outline: none; font-size: 14px; text-transform: uppercase; }
+    input:focus { border-color: var(--purple); box-shadow: 0 0 0 2px #9b7bff20; }
+    input::placeholder { color: #565b72; text-transform: none; }
+    button { padding: 0 18px; border: 0; border-radius: 7px; color: white; font-size: 12px; font-weight: bold; cursor: pointer; background: linear-gradient(120deg, #6550c8, #426dd4); transition: filter 0.2s, transform 0.2s; }
     button:hover { filter: brightness(1.2); }
     button:active { transform: scale(0.97); }
-
     .mirror { display: inline-block; transform: scaleX(-1); }
-
-    .message {
-      display: none;
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 7px;
-      font-size: 13px;
-      line-height: 1.7;
-      overflow-wrap: anywhere;
-    }
-
-    .message.error {
-      display: block;
-      color: #ff9aab;
-      background: #3a1925;
-      border: 1px solid #6c293d;
-    }
-
-    .message.success {
-      display: block;
-      color: #c6b8ff;
-      background: #211a37;
-      border: 1px solid #59468b;
-    }
-
-    .numbers {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 18px 22px;
-      margin: 22px 0 30px;
-      padding: 20px 10px;
-      background: #0c0e17;
-      border: 1px solid #23253a;
-      border-radius: 10px;
-    }
-
-    .num-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .num-color {
-      font-size: 11px;
-      letter-spacing: 1px;
-      color: #f0efff;
-      font-family: Consolas, monospace;
-      opacity: 0.85;
-    }
-
-    .num-value {
-      font-size: 22px;
-      font-weight: bold;
-      color: #f0efff;
-      letter-spacing: 1px;
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 20px;
-      color: #555a70;
-      font-size: 9px;
-      letter-spacing: 1px;
-    }
-
-    .back-link {
-      color: #777d96;
-      cursor: pointer;
-      text-decoration: none;
-      user-select: none;
-    }
-
+    .message { display: none; margin-top: 18px; padding: 15px; border-radius: 7px; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+    .message.error { display: block; color: #ff9aab; background: #3a1925; border: 1px solid #6c293d; }
+    .message.success { display: block; color: #c6b8ff; background: #211a37; border: 1px solid #59468b; }
+    .numbers { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 22px; margin: 22px 0 30px; padding: 20px 10px; background: #0c0e17; border: 1px solid #23253a; border-radius: 10px; }
+    .num-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .num-color { font-size: 11px; letter-spacing: 1px; color: #f0efff; font-family: Consolas, monospace; opacity: 0.85; }
+    .num-value { font-size: 22px; font-weight: bold; color: #f0efff; letter-spacing: 1px; }
+    .footer { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 20px; color: #555a70; font-size: 9px; letter-spacing: 1px; }
+    .back-link { color: #777d96; cursor: pointer; text-decoration: none; user-select: none; }
     .back-link:hover { color: #c6b8ff; }
-
     .screen { display: none; }
     .screen.active { display: block; }
-
-    /* Стили для Судоку */
-    .sudoku-grid {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      gap: 2px;
-      background: #23253a;
-      border: 2px solid #5c8dff;
-      padding: 2px;
-      max-width: 360px;
-      margin: 0 auto 20px;
-    }
-    
-    .sudoku-cell {
-      background: #090b13;
-      color: #f0efff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      aspect-ratio: 1;
-      font-size: 14px;
-      font-family: Consolas, monospace;
-    }
-
+    .sudoku-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 2px; background: #23253a; border: 2px solid #5c8dff; padding: 2px; max-width: 360px; margin: 0 auto 20px; }
+    .sudoku-cell { background: #090b13; color: #f0efff; display: flex; justify-content: center; align-items: center; aspect-ratio: 1; font-size: 14px; font-family: Consolas, monospace; }
     .sudoku-cell:nth-child(3n) { border-right: 1px solid #5c8dff; }
     .sudoku-cell:nth-child(9n) { border-right: none; }
-    .sudoku-cell:nth-child(n+19):nth-child(-n+27),
-    .sudoku-cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 1px solid #5c8dff; }
-
-    .sudoku-cell.empty {
-      color: #8be0b5;
-      animation: pulse 1.5s infinite;
-    }
-
-    /* Стили для Сборки */
-    .assembly-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #0c0e17;
-      padding: 10px;
-      border-radius: 7px;
-      border: 1px solid #23253a;
-    }
-
+    .sudoku-cell:nth-child(n+19):nth-child(-n+27), .sudoku-cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 1px solid #5c8dff; }
+    .sudoku-cell.empty { color: #8be0b5; animation: pulse 1.5s infinite; }
+    .assembly-row { display: flex; justify-content: space-between; align-items: center; background: #0c0e17; padding: 10px; border-radius: 7px; border: 1px solid #23253a; }
     .assembly-row span { font-size: 12px; color: #d9d7ef; }
-
-    .assembly-row select {
-      background: #090b13;
-      color: white;
-      border: 1px solid #34364d;
-      padding: 8px;
-      border-radius: 5px;
-      font-size: 12px;
-      outline: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
-    }
-
-    @media (max-width: 420px) {
-      .panel { padding: 27px 19px; }
-      .input-row { flex-direction: column; }
-      button { min-height: 46px; }
-      .num-value { font-size: 18px; }
-      .num-color { font-size: 10px; }
-      .numbers { gap: 14px 16px; }
-    }
+    .assembly-row select { background: #090b13; color: white; border: 1px solid #34364d; padding: 8px; border-radius: 5px; font-size: 12px; outline: none; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+    @media (max-width: 420px) { .panel { padding: 27px 19px; } .input-row { flex-direction: column; } button { min-height: 46px; } .num-value { font-size: 18px; } .num-color { font-size: 10px; } .numbers { gap: 14px 16px; } }
   </style>
 </head>
-
 <body>
   <main class="container">
     <div class="topline">
       <span>BR // ARCHIVE</span>
       <span id="statusText" class="status">● SIGNAL ACTIVE</span>
     </div>
-
     <section class="panel">
       <div class="symbol">⌁</div>
 
-      <!-- ЭКРАН 1 -->
       <div id="screen1" class="screen active">
         <div class="eyebrow">UNKNOWN TRANSMISSION</div>
         <h1>Ты нашёл нас.</h1>
@@ -357,7 +85,6 @@
         <div id="message1" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 2 -->
       <div id="screen2" class="screen">
         <div class="eyebrow">TRANSMISSION 002</div>
         <h1>Семь осколков.</h1>
@@ -388,7 +115,6 @@
         <div id="message2" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 3 -->
       <div id="screen3" class="screen">
         <div class="eyebrow">TRANSMISSION 003</div>
         <h1>Редукция.</h1>
@@ -411,7 +137,6 @@
         <div id="message3" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 4 (Индекс / Секретная кнопка) -->
       <div id="screen4" class="screen">
         <div class="eyebrow">TRANSMISSION 004</div>
         <h1>Индекс.</h1>
@@ -428,7 +153,6 @@
         </p>
       </div>
 
-      <!-- ЭКРАН 5 (Второй этап - Двоичный код) -->
       <div id="screen5" class="screen">
         <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div>
         <h1>Протокол Ares.</h1>
@@ -450,7 +174,6 @@
         <div id="message5" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 6 (Цвета) -->
       <div id="screen6" class="screen">
         <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div>
         <h1>Спектр.</h1>
@@ -460,14 +183,7 @@
         </p>
         <div class="separator"></div>
         <div style="padding:20px; background:#0c0e17; border:1px solid #23253a; border-radius:7px; margin-bottom:20px; font-family:Consolas, monospace; font-size:12px; line-height:1.8; color:#d9d7ef;">
-          #006400<br>
-          #800000<br>
-          #ffa500<br>
-          #000000<br>
-          #ffc0cb<br>
-          #00bfff<br>
-          #ff0000<br>
-          #a52a2a
+          #006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a
         </div>
         <form id="form6">
           <label for="code6">ВВЕДИ РЕЗОНАНС (X,X,X)</label>
@@ -479,7 +195,6 @@
         <div id="message6" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 7 (Шифр Атбаш) -->
       <div id="screen7" class="screen">
         <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div>
         <h1>Перехват.</h1>
@@ -504,7 +219,6 @@
         <div id="message7" class="message"></div>
       </div>
 
-      <!-- ЭКРАН 8 (Судоку) -->
       <div id="screen8" class="screen">
         <div class="eyebrow">TRANSMISSION 008 // SYSTEM CORRUPTED</div>
         <h1>Сбой ядра.</h1>
@@ -514,7 +228,6 @@
           Найди единственный пустой слот в матрице.
         </p>
         <div class="separator"></div>
-
         <div class="sudoku-grid">
           <div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">8</div><div class="sudoku-cell">9</div><div class="sudoku-cell">1</div><div class="sudoku-cell">2</div>
           <div class="sudoku-cell">6</div><div class="sudoku-cell">7</div><div class="sudoku-cell">2</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">5</div><div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">8</div>
@@ -526,7 +239,6 @@
           <div class="sudoku-cell">2</div><div class="sudoku-cell">8</div><div class="sudoku-cell">7</div><div class="sudoku-cell">4</div><div class="sudoku-cell">1</div><div class="sudoku-cell">9</div><div class="sudoku-cell">6</div><div class="sudoku-cell">3</div><div class="sudoku-cell">5</div>
           <div class="sudoku-cell">3</div><div class="sudoku-cell">4</div><div class="sudoku-cell">5</div><div class="sudoku-cell empty">?</div><div class="sudoku-cell">2</div><div class="sudoku-cell">6</div><div class="sudoku-cell">1</div><div class="sudoku-cell">7</div><div class="sudoku-cell">9</div>
         </div>
-
         <form id="form8">
           <label for="code8">ВВЕДИ ПРОПУЩЕННУЮ ЦИФРУ</label>
           <div class="input-row">
@@ -540,7 +252,6 @@
         </div>
       </div>
 
-      <!-- ЭКРАН 9 (Сборка робота) -->
       <div id="screen9" class="screen">
         <div class="eyebrow">TRANSMISSION 009 // ROBOT ASSEMBLY</div>
         <h1>Сборка шаблона.</h1>
@@ -548,7 +259,6 @@
           Конвейер поврежден. Шаблон утерян. Система выдает список деталей, но часть из них — брак.
           Прочитай логи ошибок и собери идеального робота, чтобы запустить производство.
         </p>
-        
         <div style="background:#0c0e17; padding:10px; border:1px solid #ff4444; border-radius:7px; font-family:monospace; font-size:11px; color:#ff9aab; margin-bottom:15px;">
           > СИСТЕМА: Шаблон сброшен.<br>
           > ЛОГ 1: Корпус должен выдерживать вакуум. Только металл.<br>
@@ -556,6 +266,366 @@
           > ЛОГ 3: Для зарядки от ядра бункера нужен провод с сопротивлением строго 5 Ом.<br>
           > ЛОГ 4: Ноги должны быть адаптированы к гравитации. Никакого пластика.
         </div>
-
         <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="assembly-row">
+            <span>КОРПУС:</span>
+            <select id="part_body">
+              <option value="wrong1">Пластиковый корпус</option>
+              <option value="right">Титановый корпус</option>
+              <option value="wrong2">Деревянный корпус</option>
+            </select>
+          </div>
+          <div class="assembly-row">
+            <span>РУКИ:</span>
+            <select id="part_arms">
+              <option value="wrong1">Полимерные манипуляторы</option>
+              <option value="wrong2">Магнитные захваты</option>
+              <option value="right">Стальные манипуляторы</option>
+            </select>
+          </div>
+          <div class="assembly-row">
+            <span>НОГИ:</span>
+            <select id="part_legs">
+              <option value="right">Металлические опоры</option>
+              <option value="wrong1">Пластиковые протезы</option>
+              <option value="wrong2">Резиновые амортизаторы</option>
+            </select>
+          </div>
+          <div class="assembly-row">
+            <span>ПРОВОД:</span>
+            <select id="part_wire">
+              <option value="wrong1">Медный (3 Ом)</option>
+              <option value="right">Серебряный (5 Ом)</option>
+              <option value="wrong2">Алюминиевый (7 Ом)</option>
+            </select>
+          </div>
+        </div>
+        <div class="separator"></div>
+        <button id="btnAssemble" style="width:100%; padding:15px;">ЗАПУСТИТЬ СИНТЕЗ</button>
+        <div id="message9" class="message"></div>
+        <div id="panelNext9" style="display:none; margin-top:20px; text-align:center;">
+          <button onclick="showScreen(9)" style="padding:12px 24px; font-size:14px; background:linear-gradient(120deg, #8b0000, #ff0000);">ЗАЩИТИТЬ БУНКЕР</button>
+        </div>
+      </div>
+
+      <div id="screen10" class="screen">
+        <div class="eyebrow">TRANSMISSION 010 // FINAL DEFENSE</div>
+        <h1>Защита бункера.</h1>
+        <div id="defenseHUD" style="display:none; margin-bottom: 15px;">
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:#d9d7ef; margin-bottom:5px;">
+            <span>HP БУНКЕРА: <span id="hpDisplay">100</span></span>
+            <span>ВРЕМЯ: <span id="timeDisplay">120</span>с</span>
+          </div>
+          <div style="height:10px; background:#3a1925; border:1px solid #6c293d; border-radius:5px; overflow:hidden;">
+            <div id="hpBar" style="width:100%; height:100%; background:#8be0b5; transition:width 0.2s;"></div>
+          </div>
+        </div>
+        <div id="gameArea" style="position:relative; width:100%; height:300px; background:#090b13; border:1px solid #23253a; border-radius:7px; overflow:hidden; cursor:crosshair;">
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>
+          <div id="messageGame" class="message" style="position:absolute; top:10px; left:10px; right:10px; z-index:10;"></div>
+        </div>
+        <button id="btnStartDefense" style="width:100%; margin-top:15px; padding:15px;">НАЧАТЬ ЗАЩИТУ</button>
+        <div id="panelNext10" style="display:none; margin-top:20px; text-align:center;">
+          <button onclick="alert('ПЕРЕХОД К 3 ЭТАПУ (в разработке)')" style="padding:15px; width:100%; background:linear-gradient(120deg, #8be0b5, #5c8dff); color:#000;">ПЕРЕЙТИ К ЭТАПУ 3</button>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="footer">
+      <span>BALL RICOSHet</span>
+      <span id="backLink" class="back-link">← НАЗАД</span>
+      <span>ARCHIVE 001</span>
+    </div>
+  </main>
+    <script>
+    // --- ХЕШИ ---
+    const HASH_1 = "fb7a25138bcda407e481628c87f85bbe894ab0a51bec5945a33469c2dceb814a"; // PRUZEK-07
+    const HASH_2 = "2200dfe5ad5eeabae9d226f93752e38055f94470cf46567fc55d217f55d68435"; // 67000903
+    const HASH_3 = "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569"; // 25
     
+    // ВСТАВЬ СВОИ ЗНАЧЕНИЯ СЮДА:
+    const HASH_5 = "ВСТАВЬ_ХЕШ_ОТ_ARESPROTOCOLPURGEALPHA"; // AresProtocolPurgeAlpha
+    const HASH_7 = "ВСТАВЬ_ХЕШ_ОТ_AREXPROTECTIONCODEACTIVEBLIR"; // AREX_PROTECTION_CODE_ACTIVE_BLIR
+
+    async function makeHash(text) {
+      const data = new TextEncoder().encode(text);
+      const buffer = await crypto.subtle.digest("SHA-256", data);
+      return [...new Uint8Array(buffer)]
+        .map(x => x.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    const screens = ["screen1", "screen2", "screen3", "screen4", "screen5", "screen6", "screen7", "screen8", "screen9", "screen10"];
+    let currentScreen = 0;
+    let secretTimer = null;
+
+    function showScreen(index, save = true) {
+      screens.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if(el) el.classList.toggle("active", i === index);
+      });
+      currentScreen = index;
+
+      if (secretTimer) {
+        clearTimeout(secretTimer);
+        secretTimer = null;
+      }
+      const status = document.getElementById("statusText");
+      status.classList.remove("secret-ready");
+
+      if (index === 3) {
+        secretTimer = setTimeout(function() {
+          status.classList.add("secret-ready");
+        }, 10000);
+      }
+
+      if (save) {
+        localStorage.setItem("blr_screen", index);
+      }
+    }
+
+    const saved = localStorage.getItem("blr_screen");
+    if (saved !== null) {
+      const idx = parseInt(saved, 10);
+      if (idx >= 0 && idx < screens.length) {
+        showScreen(idx, false);
+      }
+    }
+
+    document.getElementById("statusText").addEventListener("click", function() {
+      if (currentScreen === 3 && this.classList.contains("secret-ready")) {
+        showScreen(4); 
+      }
+    });
+
+    document.getElementById("backLink").addEventListener("click", function() {
+      if (currentScreen > 0) showScreen(currentScreen - 1);
+    });
+
+    document.getElementById("form1").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code1").value.trim().toUpperCase();
+      if (await makeHash(val) === HASH_1) { showScreen(1); } 
+      else {
+        const m = document.getElementById("message1");
+        m.className = "message error";
+        m.textContent = "ДОСТУП ОТКЛОНЁН. Код неверный.";
+      }
+    });
+
+    document.getElementById("form2").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code2").value.trim().toUpperCase();
+      if (await makeHash(val) === HASH_2) { showScreen(2); } 
+      else {
+        const m = document.getElementById("message2");
+        m.className = "message error";
+        m.textContent = "ДОСТУП ОТКЛОНЁН. Ответ неверный.";
+      }
+    });
+
+    document.getElementById("form3").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code3").value.trim().toUpperCase();
+      if (await makeHash(val) === HASH_3) { showScreen(3); } 
+      else {
+        const m = document.getElementById("message3");
+        m.className = "message error";
+        m.textContent = "ДОСТУП ОТКЛОНЁН. Ответ неверный.";
+      }
+    });
+
+    document.getElementById("form5").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code5").value.trim().toUpperCase();
+      if (await makeHash(val) === HASH_5) { showScreen(5); } 
+      else {
+        const m = document.getElementById("message5");
+        m.className = "message error";
+        m.textContent = "ОШИБКА. СИГНАЛ НЕ РАСПОЗНАН.";
+      }
+    });
+
+    document.getElementById("form6").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code6").value.trim().replace(/\s/g, '');
+      if (val === "338,330,140") { showScreen(6); } 
+      else {
+        const m = document.getElementById("message6");
+        m.className = "message error";
+        m.textContent = "РЕЗОНАНС НЕ СОВПАЛ. ПРОВЕРЬ СПЕКТР.";
+      }
+    });
+
+    document.getElementById("form7").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code7").value.trim().toUpperCase();
+      if (await makeHash(val) === HASH_7) { showScreen(7); } 
+      else {
+        const m = document.getElementById("message7");
+        m.className = "message error";
+        m.textContent = "СИГНАЛ НЕ РАСШИФРОВАН. ПОПРОБУЙ ЕЩЕ РАЗ.";
+      }
+    });
+
+    document.getElementById("form8").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const val = document.getElementById("code8").value.trim();
+      if (val === "8") {
+        const m = document.getElementById("message8");
+        m.className = "message success";
+        m.textContent = "СИСТЕМА СИНХРОНИЗИРОВАНА. ДОСТУП К ПАНЕЛИ УПРАВЛЕНИЯ ОТКРЫТ.";
+        document.getElementById("form8").style.display = "none";
+        document.getElementById("panelNext8").style.display = "block";
+      } else {
+        const m = document.getElementById("message8");
+        m.className = "message error";
+        m.textContent = "ОШИБКА. ЦИФРА НЕВЕРНА. СИСТЕМА ОТКЛОНЯЕТ ЗАПРОС.";
+      }
+    });
+
+    document.getElementById("btnAssemble").addEventListener("click", function() {
+      const body = document.getElementById("part_body").value;
+      const arms = document.getElementById("part_arms").value;
+      const legs = document.getElementById("part_legs").value;
+      const wire = document.getElementById("part_wire").value;
+
+      if (body === "right" && arms === "right" && legs === "right" && wire === "right") {
+        const m = document.getElementById("message9");
+        m.className = "message success";
+        m.textContent = "СИНТЕЗ УСПЕШЕН. ШАБЛОН ВОССТАНОВЛЕН. КОНВЕЙЕР ЗАПУЩЕН.";
+        document.getElementById("btnAssemble").style.display = "none";
+        document.getElementById("panelNext9").style.display = "block";
+      } else {
+        const m = document.getElementById("message9");
+        m.className = "message error";
+        m.textContent = "ОШИБКА СИНТЕЗА. НЕСОВМЕСТИМЫЕ КОМПОНЕНТЫ. СВЕРЬТЕСЬ С ЛОГАМИ.";
+      }
+    });
+
+    let gameInterval, spawnInterval, timerInterval;
+    let hp = 100;
+    let timeLeft = 120;
+    let isGameActive = false;
+
+    const gameArea = document.getElementById("gameArea");
+    const hpDisplay = document.getElementById("hpDisplay");
+    const hpBar = document.getElementById("hpBar");
+    const timeDisplay = document.getElementById("timeDisplay");
+    const btnStartDefense = document.getElementById("btnStartDefense");
+    const messageGame = document.getElementById("messageGame");
+
+    btnStartDefense.addEventListener("click", startDefenseGame);
+
+    function startDefenseGame() {
+      if (isGameActive) return;
+      isGameActive = true;
+      hp = 100;
+      timeLeft = 120;
+      updateHUD();
+      
+      btnStartDefense.style.display = "none";
+      document.getElementById("defenseHUD").style.display = "block";
+      messageGame.style.display = "none";
+      gameArea.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>';
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateHUD();
+        if (timeLeft <= 0) endGame(true);
+      }, 1000);
+
+      spawnInterval = setInterval(spawnEnemy, 700);
+    }
+
+    function spawnEnemy() {
+      if (!isGameActive) return;
+      const enemy = document.createElement("div");
+      const x = Math.random() * 80 + 10;
+      const y = Math.random() * 80 + 10;
+      const isGod = Math.random() > 0.4;
+      
+      enemy.style.position = "absolute";
+      enemy.style.left = x + "%";
+      enemy.style.top = y + "%";
+      enemy.style.fontSize = "30px";
+      enemy.style.cursor = "pointer";
+      enemy.style.userSelect = "none";
+      
+      if (isGod) enemy.textContent = "👹";
+      else enemy.textContent = "☄️";
+
+      enemy.addEventListener("click", (e) => {
+        e.stopPropagation();
+        enemy.remove();
+        if (isGod) {
+           hp = Math.min(100, hp + 2);
+           updateHUD();
+        }
+      });
+
+      const timeout = setTimeout(() => {
+        if (enemy.parentNode) {
+          enemy.remove();
+          takeDamage(isGod ? 10 : 5);
+          showHitEffect(isGod ? "БОГ НАНЕС УРОН!" : "СНАРЯД ПОПАЛ!");
+        }
+      }, 2000);
+
+      enemy.addEventListener("click", () => { clearTimeout(timeout); });
+
+      gameArea.appendChild(enemy);
+      setTimeout(() => { if (enemy.parentNode) enemy.remove(); }, 3000);
+    }
+
+    function takeDamage(amount) {
+      if (!isGameActive) return;
+      hp -= amount;
+      if (hp < 0) hp = 0;
+      updateHUD();
+      if (hp <= 0) endGame(false);
+    }
+
+    function showHitEffect(text) {
+      messageGame.style.display = "block";
+      messageGame.className = "message error";
+      messageGame.textContent = text;
+      setTimeout(() => { if (isGameActive) messageGame.style.display = "none"; }, 1000);
+    }
+
+    function updateHUD() {
+      hpDisplay.textContent = hp;
+      timeDisplay.textContent = timeLeft;
+      hpBar.style.width = hp + "%";
+      if (hp > 50) hpBar.style.background = "#8be0b5";
+      else if (hp > 20) hpBar.style.background = "#ffa500";
+      else hpBar.style.background = "#ff4444";
+    }
+
+    function endGame(win) {
+      isGameActive = false;
+      clearInterval(spawnInterval);
+      clearInterval(timerInterval);
+      
+      gameArea.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:40px; color:#5c8dff; opacity:0.5;">🏰</div>';
+      document.getElementById("defenseHUD").style.display = "none";
+      btnStartDefense.style.display = "block";
+
+      if (win) {
+        messageGame.style.display = "block";
+        messageGame.className = "message success";
+        messageGame.innerHTML = "<strong>ПОБЕДА!</strong> Атака богов отбита. Бункер выстоял.";
+        btnStartDefense.style.display = "none";
+        document.getElementById("panelNext10").style.display = "block";
+        localStorage.setItem("blr_screen", 10);
+      } else {
+        messageGame.style.display = "block";
+        messageGame.className = "message error";
+        messageGame.textContent = "БУНКЕР УНИЧТОЖЕН. ЗАЩИТА ПРОБИТА. ПОПРОБУЙ СНОВА.";
+        btnStartDefense.textContent = "ПОПРОБОВАТЬ СНОВА";
+      }
+    }
+  </script>
+</body>
+</html>
