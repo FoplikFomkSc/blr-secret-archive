@@ -469,9 +469,22 @@ function hud(){
 }
 function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
 function endG(win){
- stopGame();show(9,false);
- if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";}
- else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
+ stopGame();
+ if(win){
+   sfx("win");
+   msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");
+   bd.style.display="none";
+   // Даем 2 секунды прочитать, а потом сами перекидываем в комнату (11 экран)
+   setTimeout(() => {
+       msg("mG","success","ПЕРЕХОД В ОТСЕК 3...");
+       show(10); 
+   }, 2000);
+ } else {
+   show(9,false); // Остаемся на экране 9 при поражении
+   sfx("err");
+   msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");
+   bd.textContent="ПОПРОБОВАТЬ СНОВА";
+ }
 }
 
 /* ЭТАП 3: КОМНАТА */
