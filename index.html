@@ -42,7 +42,6 @@ body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;alig
 .sl{position:absolute;display:grid;place-items:center;border:1px dashed #514477;border-radius:6px;font-size:8px;color:#777d96;text-align:center;background:#0c0e17;user-select:none}
 .sl.f{border:1px solid var(--blue);font-size:20px;background:#15183a}
 .sl.w{box-shadow:0 0 10px #ffd36b;border-color:#ffd36b}
-#pcs{padding:12px;text-align:center;border:1px dashed #514477;border-radius:8px;font-size:13px;color:#a6aac0}
 .scr{display:none}.scr.active{display:block}
 .symbol{width:46px;height:46px;display:grid;place-items:center;margin-bottom:16px;border:1px solid #514477;border-radius:10px;color:var(--purple);font-size:24px;background:#201a35}
 .eyebrow{color:var(--purple);font-size:10px;font-weight:bold;letter-spacing:3px;margin-bottom:10px}
@@ -62,18 +61,13 @@ input.txt:focus{border-color:var(--purple)}
 .box{padding:14px;background:#0c0e17;border:1px solid #23253a;border-radius:7px;margin-bottom:16px;font-family:monospace;font-size:12px}
 .numbers{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 20px;padding:18px 10px;background:#0c0e17;border:1px solid #23253a;border-radius:10px;margin-bottom:20px}
 .nb{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:monospace}.nb b{font-size:20px}.nb span{font-size:11px}
-.frag{display:flex;gap:10px;align-items:center;margin:6px 0;color:var(--purple);font-size:16px;letter-spacing:2px}
-.frag small{color:var(--muted);font-size:11px;letter-spacing:1px}
 .sg{display:grid;grid-template-columns:repeat(9,1fr);max-width:340px;margin:0 auto 12px;border:2px solid var(--blue);background:var(--blue);gap:1px}
 .sg input{width:100%;aspect-ratio:1;min-width:0;padding:0;text-align:center;font-size:15px;color:var(--green);background:#090b13;border:0;border-radius:0;outline:none}
 .sg input[readonly]{color:#f0efff}
-.sg input.mk{background:#2a1f4d;color:#ffd36b;font-weight:bold}
 .sg input:focus{background:#1b2040}
 .sg .br{border-right:2px solid var(--blue)}.sg .bb{border-bottom:2px solid var(--blue)}
 .ar{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#0c0e17;padding:8px 10px;border-radius:6px;border:1px solid #23253a;margin-bottom:8px;font-size:12px}
 .ar select{max-width:62%;background:#090b13;color:#fff;padding:8px;border-radius:5px;border:1px solid #34364d}
-#gameArea{position:relative;height:260px;background:#090b13;border:1px solid #23253a;border-radius:7px;overflow:hidden;cursor:crosshair}
-#gameArea .cs{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:.5}
 .room-tool { display:inline-block; padding:5px 10px; background:#23253a; border:1px solid #555a70; border-radius:5px; cursor:pointer; font-size:14px; margin:2px; }
 .room-tool.active { border-color:#8be0b5; background:#15183a; box-shadow:0 0 8px #8be0b5; }
 </style>
@@ -89,7 +83,7 @@ input.txt:focus{border-color:var(--purple)}
 <div class="symbol">⌁</div><div class="eyebrow">UNKNOWN TRANSMISSION</div><h1>Ты нашёл нас.</h1>
 <p class="description">Эта передача не для чужих глаз. Кто ищет, тот найдёт; кто нашёл, тот знает ключ.<br><br>Назови его, и дверь отворится.</p>
 <div class="sep"></div>
-<form id="f0"><label for="i0">ACCESS CODE</label><div class="row"><input class="txt" id="i0" placeholder="Введи код..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m0"></div>
+<form id="f0"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i0" placeholder="Введи код..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m0"></div>
 </section>
 
 <!-- ЭКРАН 1 -->
@@ -99,7 +93,7 @@ input.txt:focus{border-color:var(--purple)}
 <div class="numbers">
 <div class="nb"><span>c94444</span><b>7072</b></div><div class="nb"><span>55aa55</span><b>3</b></div><div class="nb"><span>e05555</span><b>5081</b></div><div class="nb"><span>5577cc</span><b>6202</b></div><div class="nb"><span>449944</span><b>1</b></div><div class="nb"><span>ff88aa</span><b>2113</b></div><div class="nb"><span>4466bb</span><b>7202</b></div>
 </div>
-<form id="f1"><label for="i1">ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go"><span class="mir">ПРОВЕРИТЬ</span></button></div></form><div class="msg" id="m1"></div>
+<form id="f1"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i1" placeholder="Введи ответ..." required><button type="button" class="go"><span class="mir">ПРОВЕРИТЬ</span></button></div></form><div class="msg" id="m1"></div>
 </section>
 
 <!-- ЭКРАН 2 -->
@@ -107,7 +101,7 @@ input.txt:focus{border-color:var(--purple)}
 <div class="eyebrow">TRANSMISSION 003</div><h1>Редукция.</h1>
 <p class="description">Из песчинок вырастает пустыня, из капель — река.<br><br><strong style="font-size:20px">67000903</strong><br><br>Рассыпь целое на части и сложи заново, не обронив ни одной.</p>
 <div class="sep"></div>
-<form id="f2"><label for="i2">ACCESS CODE</label><div class="row"><input class="txt" id="i2" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m2"></div>
+<form id="f2"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i2" placeholder="Введи ответ..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m2"></div>
 </section>
 
 <!-- ЭКРАН 3 -->
@@ -121,41 +115,40 @@ input.txt:focus{border-color:var(--purple)}
 <div class="eyebrow">TRANSMISSION 005 // STAGE 2</div><h1>Протокол Ares.</h1>
 <p class="description">Два знака правят миром: ноль да единица. Восемь птиц в стае — одна буква. Прочти стаю и назови зверя по имени.</p>
 <div class="box" style="text-align:center;color:var(--blue)">01000001 01110010 01100101 01110011 01010000 01110010 01101111 01110100 01101111 01100011 01101111 01101100 01010000 01110101 01110010 01100111 01100101 01000001 01101100 01110000 01101000 01100001</div>
-<form id="f4"><label for="i4">ACCESS CODE</label><div class="row"><input class="txt" id="i4" placeholder="Введи название..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m4"></div>
+<form id="f4"><label>ACCESS CODE</label><div class="row"><input class="txt" id="i4" placeholder="Введи название..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m4"></div>
 </section>
 
-<!-- ЭКРАН 5 (Спектр) -->
+<!-- ЭКРАН 5 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 006 // SPECTRUM</div><h1>Спектр.</h1>
 <p class="description">Цвет — не один голос, а хор. Сложи одноимённые голоса всех, а круг мерь градусами: что осталось за полным кругом, то и есть эхо.</p>
-<!-- Круг HSL как подсказка -->
 <div style="text-align:center; margin-bottom:15px;">
   <div style="width:100px; height:100px; border-radius:50%; margin:0 auto; background:conic-gradient(red, yellow, lime, cyan, blue, magenta, red); border:2px solid #fff; box-shadow:0 0 10px #000;"></div>
   <div style="font-size:10px; color:var(--muted); margin-top:5px;">Круг градусов (0-360)</div>
 </div>
 <div class="box">#006400<br>#800000<br>#ffa500<br>#000000<br>#ffc0cb<br>#00bfff<br>#ff0000<br>#a52a2a</div>
-<form id="f5"><label for="i5">РЕЗОНАНС</label><div class="row"><input class="txt" id="i5" placeholder="..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m5"></div>
+<form id="f5"><label>РЕЗОНАНС</label><div class="row"><input class="txt" id="i5" placeholder="..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m5"></div>
 </section>
 
-<!-- ЭКРАН 6 (Твой Атбаш) -->
+<!-- ЭКРАН 6 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 007 // INTERCEPT</div><h1>Перехват.</h1>
 <p class="description">Спектр активирован. Система зафиксировала сигнал с орбиты.<br><br>Врата откроются тому, кто узрит суть в отражении. То, что впереди, станет позади, а свет обернётся тьмой. Прочти послание богов, глядя в зеркало.</p>
 <div class="box" style="text-align:center;color:var(--purple);font-size:16px;letter-spacing:2px;word-break:break-all;">
 ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
 </div>
-<form id="f6"><label for="i6">КЛЮЧ</label><div class="row"><input class="txt" id="i6" placeholder="Расшифровка..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m6"></div>
+<form id="f6"><label>КЛЮЧ</label><div class="row"><input class="txt" id="i6" placeholder="Расшифровка..." required><button type="button" class="go">ПРОВЕРИТЬ</button></div></form><div class="msg" id="m6"></div>
 </section>
 
-<!-- ЭКРАН 7 (Судоку) -->
+<!-- ЭКРАН 7 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 008 // CORRUPTED</div><h1>Сбой ядра.</h1>
-<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Найди единственную пустую клетку и восстанови матрицу.</p>
+<p class="description">Как ни тасуй колоду, двоим не бывать в одном ряду, в одном столбце и в одном тройном доме. Заполни пропуски, чтобы восстановить систему.</p>
 <div class="sg" id="sg"></div>
 <button type="button" class="go" id="btnSud" style="width:100%">ВОССТАНОВИТЬ</button><div class="msg" id="m7"></div>
 </section>
 
-<!-- ЭКРАН 8 (Сборка) -->
+<!-- ЭКРАН 8 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 009 // ASSEMBLY</div><h1>Сборка шаблона.</h1>
 <div id="asm1">
@@ -183,7 +176,7 @@ ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
 </div>
 </section>
 
-<!-- ЭКРАН 9 (Защита) -->
+<!-- ЭКРАН 9 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div><h1>Защита.</h1>
 <p class="description">Бункер держится на тех, кто не зевает. Железные братья стоят рядом, но и твой выстрел весит. Богов много, а бункер один.</p>
@@ -195,7 +188,7 @@ ZIVC_KILGVXGRLM_XLWV_ZXGRAV_YORI
 <button type="button" class="go" id="btnDef" style="width:100%;margin-top:12px;padding:14px">НАЧАТЬ ЗАЩИТУ</button>
 </section>
 
-<!-- ЭКРАН 10 (КОМНАТА - ЭТАП 3) -->
+<!-- ЭКРАН 10 -->
 <section class="scr">
 <div class="eyebrow">TRANSMISSION 011 // STAGE 3</div><h1>Бункер. Отсек 3.</h1>
 <p class="description">Связь с внешним миром потеряна. Вам нужно найти ключ доступа, чтобы открыть дверь в командный центр. Оглядитесь.</p>
@@ -268,9 +261,7 @@ const HS={
 2:"b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569",
 4:"7d7fa5865a2bb65d219ee11319a07b36339c0f7275552e39a246c074fe5e9694", 
 5:"c6be512eb57a1b0dc7d938b84b5c87185448d3a7c7e5f10b2a2c33c1c4b2c4c1", 
-6:"72dfcfb0c470ac255cde83fb8fe38de8a128188e03ea5ba5b2a93adbea1062fa",
-7:"3d8dbd98077ee9635cc55e3911d6832c2d47b310f0101d56b5c12cd519ac2bf9",
-8:"dcdb7b092f68ab6ffd373a8e8c036afbd43543f9e58594070ed5171f2fff0bd2"};
+6:"72dfcfb0c470ac255cde83fb8fe38de8a128188e03ea5ba5b2a93adbea1062fa"};
 const LK={"А":"A","В":"B","Е":"E","К":"K","М":"M","Н":"H","О":"O","Р":"P","С":"C","Т":"T","Х":"X"};
 const LY={"Й":"Q","Ц":"W","У":"E","К":"R","Е":"T","Н":"Y","Г":"U","Ш":"I","Щ":"O","З":"P","Ф":"A","Ы":"S","В":"D","А":"F","П":"G","Р":"H","О":"J","Л":"K","Д":"L","Я":"Z","Ч":"X","С":"C","М":"V","И":"B","Т":"N","Ь":"M"};
 const fixD=v=>v.replace(/[\u2010-\u2015\u2212]/g,"-");
@@ -334,54 +325,32 @@ bind(5,v=>(v.match(/\d+/g)||[]).join(","),"НЕ СОВПАЛО");
 bind(6,NORM.an,"НЕ РАСШИФРОВАНО");
 
 /* Судоку */
-/* Судоку (Полная) */
 const SG=[];
 (function(){
  const g=$("sg");
- // Правильное решение
  const sol=[5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,6,1,7,9,8];
- // Индексы клеток, которые будут ПУСТЫМИ (нужно заполнить игроку)
- const emptyCells = [1, 2, 6, 9, 12, 14, 17, 19, 22, 24, 26, 28, 31, 33, 35, 37, 39, 42, 45, 47, 50, 52, 55, 57, 59, 61, 64, 66, 68, 71, 73, 76, 78, 80];
- 
+ // Оставляем 9 пустых клеток для игрока
+ const empty = [2, 12, 20, 30, 40, 50, 60, 70, 78];
  for(let k=0;k<81;k++){
   const r=Math.floor(k/9),c=k%9,el=document.createElement("input");
   el.maxLength=1;el.inputMode="numeric";
-  
-  if(emptyCells.includes(k)){
-    el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
-  } else {
-    el.value=sol[k];
-    el.readOnly=true;
-  }
-  
+  if(empty.includes(k)) el.addEventListener("input",()=>{el.value=el.value.replace(/[^1-9]/g,"")});
+  else { el.value=sol[k]; el.readOnly=true; }
   if((Math.floor(r/3)+Math.floor(c/3))%2)el.classList.add("al");
   if(c%3===2&&c<8)el.classList.add("br");
   if(r%3===2&&r<8)el.classList.add("bb");
   SG.push(el);g.appendChild(el);
  }
 })();
-
 $("btnSud").onclick=async()=>{
  blink();
- // Проверяем, что все пустые клетки заполнены и совпадают с решением
  const sol=[5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,6,1,7,9,8];
- let isCorrect = true;
- 
- for(let k=0; k<81; k++) {
-    if(SG[k].value === "" || parseInt(SG[k].value) !== sol[k]) {
-        isCorrect = false;
-        break;
-    }
- }
- 
- if(isCorrect){
-   msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");
-   sfx("ok");
-   setTimeout(()=>{$("m7").className="msg";show(7)},900);
- } else {
-   bad();
- }
+ let ok=true;
+ for(let k=0; k<81; k++) { if(SG[k].value === "" || parseInt(SG[k].value) !== sol[k]) { ok=false; break; } }
+ if(ok){msg("m7","success","МАТРИЦА ВОССТАНОВЛЕНА");sfx("ok");setTimeout(()=>{$("m7").className="msg";show(7)},900)}
+ else bad();
 };
+
 /* Сборка: выбор */
 const PT=[["КОРПУС","CF:Углеволокно,TI:Титан,PL:Пластик,AL:Алюминий"],["РУКИ","AL:Алюминий,PM:Полимер,ST:Сталь,TI:Титан"],["НОГИ","PL:Пластик,TI:Титан,AL:Алюминий,ST:Сталь"],["ПРОВОД","AG:Серебро 5 Ом,CU:Медь 3 Ом,AU:Золото 8 Ом,NI:Никель 4 Ом"],["ЯДРО","G:Γ 7 ГВт,A:Α 2 ГВт,D:Δ 9 ГВт,B:Β 5 ГВт"],["ЛИНЗА","GL:Обычное стекло,IR:Инфракрасная,MR:Зеркальная,QZ:Мутный кварц"],["МЫШЦЫ","CT:Хлопковые жгуты,RB:Резина,EF:Электроволокна,LT:Кожаные ремни"],["ОРУЖИЕ","SG:Дробовик,LS:Лазер,SP:Копьё,CL:Дубина"],["МОЗГ","RL:Релейная схема,NP:Нейропроцессор,AR:Арифмометр,PC:Перфокарта"],["КРОВЬ","WT:Вода,OL:Машинное масло,HE:Жидкий гелий,GS:Бензин"]];
 $("sel").innerHTML=PT.map((p,k)=>`<div class="ar"><span>${p[0]}</span><select id="p${k}"><option value="">— выбрать —</option>${p[1].split(",").map(o=>`<option value="${o.split(":")[0]}">${o.split(":")[1]}</option>`).join("")}</select></div>`).join("");
@@ -395,99 +364,6 @@ $("btnAsm").onclick=async()=>{
 /* Сборка: перетаскивание */
 const SL={brain:[95,0,50,38,"РАЗУМ"],lens:[150,6,40,30,"ГЛАЗ"],body:[80,44,80,86,"КОСТЬ"],core:[92,50,26,26,"СЕРДЦЕ"],fuel:[122,50,26,26,"ЖИЛЫ"],arms:[30,50,44,70,"РУКИ"],muscles:[166,50,44,70,"ПЛОТЬ"],weapon:[30,126,44,40,"ГНЕВ"],chip:[166,126,44,40,"ЧИП"],legs:[80,136,80,70,"НОГИ"],pc:[0,172,72,36,"🖥 ПК"]};
 const IT=[["body","🧱"],["legs","🦿"],["arms","🦾"],["core","💠"],["fuel","🩸"],["muscles","💪"],["brain","🧠"],["lens","👁"],["weapon","🔫"]];
-const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","w_core","w_brain","w_lens","w_weapon","chip","pc"];
-let st2=0;
-function buildAsm(){
- const bot=$("bot"),tray=$("tray");bot.innerHTML="";tray.innerHTML="";st2=0;
- for(const k in SL){const d=document.createElement("div"),p=SL[k];d.className="sl";d.dataset.slot=k;d.textContent=p[4];
-  d.style.cssText=`left:${p[0]}px;top:${p[1]}px;width:${p[2]}px;height:${p[3]}px`;
-  d.onclick=()=>{if(String(STEPS[st2]).startsWith("w_"))act("w_"+k)};bot.appendChild(d)}
- IT.map(([k,e])=>({k,t:e})).sort(()=>Math.random()-.5).forEach(o=>addChip(o.k,o.t));
- msg("mA","success","Шаг 1/14");
-}
-function addChip(k,t){
- const el=document.createElement("div");el.className="chip";el.textContent=t;
- el.onpointerdown=e=>{
-  e.preventDefault();el.setPointerCapture(e.pointerId);const sx=e.clientX,sy=e.clientY;el.style.zIndex=9;
-  el.onpointermove=m=>{el.style.transform=`translate(${m.clientX-sx}px,${m.clientY-sy}px)`};
-  el.onpointerup=u=>{el.onpointermove=el.onpointerup=null;el.style.pointerEvents="none";
-   const x=document.elementFromPoint(u.clientX,u.clientY);el.style.pointerEvents="";el.style.transform="";el.style.zIndex="";
-   const sl=x&&x.closest("[data-slot]"),tk=sl&&sl.dataset.slot;
-   if(tk&&(tk===k||k==="chip"&&tk==="pc"))act(tk,el);else bad()}};
- $("tray").appendChild(el);
-}
-function act(k,el){
- if(k!==STEPS[st2]){bad();return}
- st2++;sfx("snap");
- const sl=document.querySelector('#bot [data-slot="'+k.replace("w_","")+'"]');
- if(k.startsWith("w_"))sl.classList.add("w");
- else if(k==="pc"){sfx("win");msg("mA","success","ЧИП ЗАГРУЖЕН. СИСТЕМА ЗАПУЩЕНА.");setTimeout(()=>{$("mA").className="msg";show(8)},1300);return}
- else{sl.classList.add("f");sl.textContent=k==="chip"?"💾":IT.find(i=>i[0]===k)[1];if(k!=="chip")el.remove()}
- if(st2===13)addChip("chip","💾 ЧИП");
- msg("mA","success","Шаг "+(st2+1)+"/15");
-}
-
-/* Защита */
-const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
-const TY={imp:{e:"👹",hp:1,v:65,d:6,s:26},thu:{e:"⚡",hp:2,v:85,d:8,s:26},tit:{e:"👺",hp:5,v:35,d:20,s:40},boss:{e:"🐲",hp:25,v:20,d:45,s:64}};
-const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.random()*1.5+.5]);
-let G=null,raf=0;
-bd.onclick=()=>{
- if(G)return;
- G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
- bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";$("mEnd").style.display="none";
- show(8,false);hud();raf=requestAnimationFrame(loop);
-};
-function spawn(t){
- if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.15+p*.15?"tit":r<.5?"thu":"imp"}
- const y=TY[t];G.en.push({t,x:30+Math.random()*300,y:-20,hp:y.hp,ph:Math.random()*6});
-}
-function fire(x,y,fromX,own){
- let best=null,bd2=1e9;
- for(const e of G.en){const d=Math.hypot(e.x-x,e.y-y);if(d<TY[e.t].s&&d<bd2){best=e;bd2=d}}
- G.fx.push({k:"l",x1:fromX,y1:262,x2:best?best.x:x,y2:best?best.y:y,a:1,c:own?"#ffd36b":"#5c8dff"});sfx("laser");
- if(best&&--best.hp<=0){G.en.splice(G.en.indexOf(best),1);sfx("boom");for(let i=0;i<10;i++)G.fx.push({k:"p",x:best.x,y:best.y,vx:(Math.random()-.5)*160,vy:(Math.random()-.5)*160,a:1})}
-}
-cv.onpointerdown=e=>{
- if(!G)return;const r=cv.getBoundingClientRect();
- fire((e.clientX-r.left)*360/r.width,(e.clientY-r.top)*300/r.height,180,true);
-};
-function loop(ts){
- if(!G)return;
- const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
- G.t-=dt;G.sp-=dt;G.sh=Math.max(0,G.sh-dt*20);
- if(G.sp<=0){spawn();G.sp=Math.max(.35,1.0-(120-G.t)/120*.8)}
- if(!G.boss&&G.t<60){G.boss=1;spawn("boss")}
- for(const e of G.en.slice()){
-  const y=TY[e.t],dx=180-e.x,dy=250-e.y,d=Math.hypot(dx,dy);
-  e.x+=dx/d*y.v*dt+(e.t==="thu"?Math.sin(G.t*6+e.ph)*60*dt:0);e.y+=dy/d*y.v*dt;
-  if(d<34){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=8;sfx("hit")}
- }
- for(const b of G.bots){b.c-=dt;if(b.c<=0&&G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);fire(e.x,e.y,b.x,false);b.c=3.0}} // Роботы стреляют реже (раз в 3 сек)
- draw();hud();
- if(G.hp<=0)return endG(false);
- if(G.t<=0)return endG(true);
- raf=requestAnimationFrame(loop);
-}
-function draw(){
- const sx=(Math.random()-.5)*G.sh,sy=(Math.random()-.5)*G.sh;
- cx.save();cx.translate(sx,sy);
- const g=cx.createLinearGradient(0,0,0,300);g.addColorStop(0,"#07081a");g.addColorStop(1,"#3a1a4a");cx.fillStyle=g;cx.fillRect(-10,-10,380,320);
- cx.fillStyle="#fff";STR.forEach(s=>{cx.globalAlpha=.4+.4*Math.sin(G.t*2+s[0]);cx.fillRect(s[0],s[1],s[2],s[2])});cx.globalAlpha=1;
-/* Сборка: выбор */
-const PT=[["КОРПУС","CF:Углеволокно,TI:Титан,PL:Пластик,AL:Алюминий"],["РУКИ","AL:Алюминий,PM:Полимер,ST:Сталь,TI:Титан"],["НОГИ","PL:Пластик,TI:Титан,AL:Алюминий,ST:Сталь"],["ПРОВОД","AG:Серебро 5 Ом,CU:Медь 3 Ом,AU:Золото 8 Ом,NI:Никель 4 Ом"],["ЯДРО","G:Γ 7 ГВт,A:Α 2 ГВт,D:Δ 9 ГВт,B:Β 5 ГВт"],["ЛИНЗА","GL:Обычное стекло,IR:Инфракрасная,MR:Зеркальная,QZ:Мутный кварц"],["МЫШЦЫ","CT:Хлопковые жгуты,RB:Резина,EF:Электроволокна,LT:Кожаные ремни"],["ОРУЖИЕ","SG:Дробовик,LS:Лазер,SP:Копьё,CL:Дубина"],["МОЗГ","RL:Релейная схема,NP:Нейропроцессор,AR:Арифмометр,PC:Перфокарта"],["КРОВЬ","WT:Вода,OL:Машинное масло,HE:Жидкий гелий,GS:Бензин"]];
-$("sel").innerHTML=PT.map((p,k)=>`<div class="ar"><span>${p[0]}</span><select id="p${k}"><option value="">— выбрать —</option>${p[1].split(",").map(o=>`<option value="${o.split(":")[0]}">${o.split(":")[1]}</option>`).join("")}</select></div>`).join("");
-$("btnAsm").onclick=async()=>{
- blink();
- const v=PT.map((_,k)=>$("p"+k).value).join("|");
- if(v === "TI|ST|AL|AG|A|IR|EF|LS|NP|HE"){sfx("ok");$("asm1").style.display="none";$("asm2").style.display="block";$("view").scrollTop=0;buildAsm()}
- else bad();
-};
-
-/* Сборка: перетаскивание */
-const SL={brain:[95,0,50,38,"РАЗУМ"],lens:[150,6,40,30,"ГЛАЗ"],body:[80,44,80,86,"КОСТЬ"],core:[92,50,26,26,"СЕРДЦЕ"],fuel:[122,50,26,26,"ЖИЛЫ"],arms:[30,50,44,70,"РУКИ"],muscles:[166,50,44,70,"ПЛОТЬ"],weapon:[30,126,44,40,"ГНЕВ"],chip:[166,126,44,40,"ЧИП"],legs:[80,136,80,70,"НОГИ"],pc:[0,172,72,36,"🖥 ПК"]};
-const IT=[["body","🧱"],["legs","🦿"],["arms","🦾"],["core","💠"],["fuel","🩸"],["muscles","💪"],["brain","🧠"],["lens","👁"],["weapon","🔫"]];
-// ВАЖНО: теперь ровно 13 шагов, чтобы дойти до ПК
 const STEPS=["body","legs","arms","core","fuel","muscles","brain","lens","weapon","w_core","w_brain","w_lens","w_weapon","chip","pc"];
 let st2=0;
 function buildAsm(){
@@ -533,12 +409,8 @@ const STR=Array.from({length:40},()=>[Math.random()*360,Math.random()*200,Math.r
 let G=null,raf=0;
 bd.onclick=()=>{
  if(G)return;
- // Инициализация игры
  G={hp:100,t:120,en:[],fx:[],sh:0,sp:0,boss:0,last:0,bots:[{x:105,c:.5},{x:255,c:1.2}]};
- bd.style.display="none";
- $("hud").style.display="block"; 
- $("mG").className="msg"; 
- if($("mEnd")) $("mEnd").style.display="none";
+ bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";
  show(9,false);hud();raf=requestAnimationFrame(loop);
 };
 function spawn(t){
@@ -595,15 +467,11 @@ function hud(){
  $("hpD").textContent=hp;$("tmD").textContent=t;
  const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
 }
-function stopGame(){
- cancelAnimationFrame(raf);G=null;
- if($("hud")) $("hud").style.display="none";
- if($("btnDef")) bd.style.display="block";
-}
+function stopGame(){cancelAnimationFrame(raf);G=null;$("hud").style.display="none";bd.style.display="block"}
 function endG(win){
  stopGame();show(9,false);
- if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");if($("btnDef"))bd.style.display="none";}
- else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");if($("btnDef"))bd.textContent="ПОПРОБОВАТЬ СНОВА"}
+ if(win){sfx("win");msg("mG","success","ПОБЕДА! БУНКЕР ВЫСТОЯЛ.");bd.style.display="none";}
+ else{sfx("err");msg("mG","error","БУНКЕР УНИЧТОЖЕН. ПОПРОБУЙ СНОВА.");bd.textContent="ПОПРОБОВАТЬ СНОВА"}
 }
 
 /* ЭТАП 3: КОМНАТА */
@@ -720,3 +588,14 @@ if(door) door.onclick = () => {
     sfx("err");
   }
 };
+
+/* Восстановление прогресса */
+(function(){
+ let s=0,m=0;
+ try{s=parseInt(localStorage.getItem("blr_screen"),10)||0;m=parseInt(localStorage.getItem("blr_max"),10)||0}catch(e){}
+ maxS=Math.min(Math.max(m,s),scr.length-1);
+ show(Math.min(s,maxS),false);
+})();
+</script>
+</body>
+</html>
