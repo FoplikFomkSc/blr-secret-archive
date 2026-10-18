@@ -62,15 +62,25 @@ body{min-height:100vh;padding:14px 10px;display:flex;justify-content:center;alig
 #hdoor{transition:transform .8s,opacity .8s;transform-box:fill-box;transform-origin:left}#hdoor.op{transform:scaleX(.15);opacity:.4}
 .cap .cp,.cap .crk{opacity:0;transition:opacity .6s}.cap.br .cp,.cap.br .crk{opacity:1}.cap.br .fog{opacity:0}.fog{transition:opacity .6s;pointer-events:none}.cap.br [data-a^="cap"]{pointer-events:none}
 #sdoor{transition:opacity .6s}#sdoor.op{opacity:0;pointer-events:none}
-.off{opacity:0;pointer-events:none}.hid{display:none}
-#s3{position:relative}
+.off{opacity:0;pointer-events:none}.hid{display:none!important}
+#s3{position:relative}#room4{touch-action:none}
 .mod{position:absolute;inset:0;background:#000b;display:none;place-items:center;z-index:5}.mod.on{display:grid}
 .mod>div{background:#11131d;border:1px solid #514477;border-radius:10px;padding:18px;width:min(300px,90%);text-align:center;font-size:13px;line-height:1.6}
 #inv{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:34px}
 .it{padding:8px 12px;border:1px solid #514477;border-radius:6px;font-size:12px;background:#15163a;cursor:pointer;user-select:none}
-.it.sel{border-color:#ffd36b;box-shadow:0 0 8px #ffd36b88}
+.it.hot{color:#ffb07a;border-color:#ff8a4d}.it.sel{border-color:#ffd36b;box-shadow:0 0 8px #ffd36b88}
 #rmsg{margin-top:10px;min-height:40px;padding:10px 12px;background:#0c0e17;border:1px solid #23253a;border-radius:6px;font-size:13px;color:#cfd2e6;line-height:1.5}
 #notes{margin-top:8px;font-size:11px;color:#8fa6ff;line-height:1.6}
+[data-a]:hover{filter:brightness(1.3)}
+.dust{animation:du 7s linear infinite}@keyframes du{from{transform:translateY(0);opacity:0}20%{opacity:.6}to{transform:translateY(-40px);opacity:0}}
+.blk{animation:bk 1.4s steps(2) infinite}@keyframes bk{50%{opacity:.15}}
+.fd{opacity:0;transition:opacity 1s}.pw .fd{opacity:1}.pw .dk{opacity:0}.dk{transition:opacity 1.5s}
+.scrn{fill:#05080c}.pw .scrn{fill:#0b3a30}
+.nz{animation:nz .3s steps(3) infinite}@keyframes nz{50%{opacity:.4}}
+.shk{animation:sk .25s}@keyframes sk{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+#lp .trk{position:relative;height:28px;background:#090b13;border:1px solid #34364d;border-radius:5px;margin:12px 0}
+#lp .z{position:absolute;top:0;height:100%;background:#2a6a4a}#lp .m{position:absolute;top:-3px;width:4px;height:34px;background:#ffd36b}
+#tout{height:150px;overflow:auto;text-align:left;font:12px monospace;color:#7cf0b0;background:#05110b;border:1px solid #1b3a2a;border-radius:6px;padding:8px;margin-bottom:10px;white-space:pre-wrap}
 .scr{display:none}.scr.active{display:block}
 .symbol{width:46px;height:46px;display:grid;place-items:center;margin-bottom:16px;border:1px solid #514477;border-radius:10px;color:var(--purple);font-size:24px;background:#201a35}
 .eyebrow{color:var(--purple);font-size:10px;font-weight:bold;letter-spacing:3px;margin-bottom:10px}
@@ -105,6 +115,7 @@ input.txt:focus{border-color:var(--purple)}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e3243"/><stop offset="1" stop-color="#171923"/></linearGradient><linearGradient id="m3" x1="0" x2="1"><stop offset="0" stop-color="#8a93a8"/><stop offset=".5" stop-color="#454c60"/><stop offset="1" stop-color="#262b3a"/></linearGradient><radialGradient id="vg"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".7"/></radialGradient><radialGradient id="lg"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".5"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient></defs></svg>
 <main class="rig">
 <div class="monitor"><div class="glass">
 <div class="osbar"><span>BLR SecArh</span><span id="statusText" class="status">● SIGNAL ACTIVE</span></div>
@@ -198,7 +209,7 @@ input.txt:focus{border-color:var(--purple)}
 <div class="eyebrow">TRANSMISSION 010 // DEFENSE</div><h1>Защита.</h1>
 <p class="description">Бункер держится на тех, кто не зевает. Железные братья стоят рядом, но стреляют редко. Щит гаснет лишь на миг, а красный круг не прощает промедления.</p>
 <div id="hud" style="display:none;margin-bottom:12px">
-<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span>HP: <span id="hpD">100</span></span><span>ВРЕМЯ: <span id="tmD">120</span>с</span></div>
+<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span>HP: <span id="hpD">100</span></span><span>ВРЕМЯ: <span id="tmD">80</span>с</span></div>
 <div style="height:10px;background:#3a1925;border-radius:5px"><div id="hpBar" style="width:100%;height:100%;background:var(--green)"></div></div></div>
 <canvas id="cv" width="360" height="300" style="width:100%;max-width:380px;margin:0 auto;border-radius:7px;border:1px solid #23253a;touch-action:none;cursor:crosshair;display:block"></canvas>
 <div class="msg" id="mG"></div>
@@ -208,10 +219,15 @@ input.txt:focus{border-color:var(--purple)}
 </section>
 
 <section class="scr" id="s3">
-<div id="room"></div>
+<div id="room"></div><div id="rx"><div id="room2" class="hid"></div><div id="room3" class="hid"></div><div id="room4" class="hid"></div><div id="room5" class="hid"></div></div>
 <div id="inv"></div><div id="rmsg">Тишина. Гудит вентиляция.</div><div id="notes"></div>
 <div class="mod" id="kp"><div><div style="color:#ffd36b;margin-bottom:10px">ЗАМОК СЕЙФА</div><input class="txt" id="kpI" inputmode="numeric" placeholder="_ _ _ _ _ _ _" style="text-align:center;letter-spacing:4px"><div class="row" style="margin-top:12px"><button type="button" class="go" id="kpOk" style="flex:1">ОТКРЫТЬ</button><button type="button" class="go" id="kpX" style="flex:1;background:#2a2d44">ЗАКРЫТЬ</button></div></div></div>
 <div class="mod" id="rw"><div><div style="color:#8be0b5;margin-bottom:8px">ТАЙНИК ЗА СЕЙФОМ</div>НАГРАДА ДЛЯ ИГРЫ:<br><strong id="rwC" style="font-size:18px;letter-spacing:2px"></strong><br><button type="button" class="go" id="rwX" style="margin-top:12px;padding:10px 18px">ЗАКРЫТЬ</button></div></div>
+
+<div class="mod" id="lp"><div><div style="color:#ffd36b">ВЗЛОМ ЗАМКА</div><div class="trk"><div class="z" id="lpz"></div><div class="m" id="lpm"></div></div><div id="lps" style="letter-spacing:6px;margin-bottom:10px"></div><div class="row"><button type="button" class="go" id="lpb" style="flex:1;padding:12px">ЩЁЛК</button><button type="button" class="go" id="lpx" style="flex:1;background:#2a2d44">ВЫЙТИ</button></div></div></div>
+<div class="mod" id="heat"><div><div style="color:#ff8a4d">НАГРЕВ ЛАМПОЧКИ</div><svg viewBox="0 0 100 100" width="110" style="display:block;margin:8px auto"><circle id="hg" cx="50" cy="42" r="30" fill="#ff8a4d" opacity="0" filter="blur(6px)"/><circle id="hb" cx="50" cy="42" r="20" fill="#5a4a3a" stroke="#ccc"/><rect x="40" y="62" width="20" height="14" fill="#8a93a8"/></svg><div style="height:10px;background:#1b1d2c;border-radius:5px;margin-bottom:12px"><div id="hbar" style="height:100%;width:0;background:#ff8a4d;border-radius:5px"></div></div><div class="row"><button type="button" class="go" id="hbtn" style="flex:2;padding:16px">ЖМИ!</button><button type="button" class="go" id="hx" style="flex:1;background:#2a2d44">ОТМЕНА</button></div></div></div>
+<div class="mod" id="wr"><div><div style="color:#ffd36b;margin-bottom:6px">КЛЕММЫ ЩИТКА</div><svg id="wsv" viewBox="0 0 260 230" width="100%"></svg><button type="button" class="go" id="wx" style="margin-top:8px;padding:10px 18px;background:#2a2d44">ЗАКРЫТЬ</button></div></div>
+<div class="mod" id="term"><div style="width:min(420px,95%);text-align:left"><div style="color:#7cf0b0;font:12px monospace;margin-bottom:6px">BLR-OS // АРХИВ БУНКЕРА</div><div id="tout"></div><div class="row"><input class="txt" id="tq" placeholder="запрос..."><button type="button" class="go" id="tgo">НАЙТИ</button></div><button type="button" class="go" id="tx" style="margin-top:8px;padding:10px 18px;background:#2a2d44">ВЫЙТИ</button></div></div>
 </section>
 </div></div>
 <div class="pc">
@@ -283,11 +299,11 @@ function show(i,save=true){
  scr.forEach((s,k)=>s.classList.toggle("active",k===i));
  $("view").scrollTop=0;
  clearTimeout(secT);secOn=false;$("pwr").classList.remove("warn");
- if(G&&i!==9)stopGame();
+ if(G&&i!==9)stopGame();if(i>=10)amb();
  if(i===3)secT=setTimeout(()=>{secOn=true;$("pwr").classList.add("warn")},10000);
  $("btnBack").disabled=i===0||!!G;
  $("btnFwd").disabled=!!G||i>=maxS||i===3&&maxS<4;
- $("lcd").textContent="STEP "+String(i+1).padStart(2,"0")+"/"+scr.length;
+ $("lcd").textContent=i>=10?"ROOM 0"+((typeof R!=="undefined"&&R.cur)||1)+"/5":"STEP "+String(i+1).padStart(2,"0")+"/10";
  if(save){try{localStorage.setItem("blr_screen",i);localStorage.setItem("blr_max",maxS)}catch(e){}}
 }
 $("btnBack").onclick=()=>show(cur-1);
@@ -299,12 +315,13 @@ function sfx(k){
  if(mute)return;
  try{AC=AC||new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
  if(AC.state==="suspended")AC.resume();
- const S={ok:[[660,.08],[880,.12]],err:[[160,.25,"sawtooth"]],click:[[500,.04,"square"]],laser:[[900,.09,"sawtooth",300]],boom:[[110,.25,"square",40]],hit:[[120,.18,"sawtooth",60]],win:[[523,.1],[659,.1],[784,.1],[1047,.25]],snap:[[400,.06,"triangle"]]}[k];
+ const S={pop:[[800,.06,"square",100]],creak:[[120,.4,"sawtooth",80]],zap:[[1200,.25,"sawtooth",80]],tick:[[1000,.03,"square"]],door:[[90,.35,"square",45]],power:[[200,.6,"sawtooth",900]],glass:[[2200,.08,"square",500],[3200,.06,"square",900]],ok:[[660,.08],[880,.12]],err:[[160,.25,"sawtooth"]],click:[[500,.04,"square"]],laser:[[900,.09,"sawtooth",300]],boom:[[110,.25,"square",40]],hit:[[120,.18,"sawtooth",60]],win:[[523,.1],[659,.1],[784,.1],[1047,.25]],snap:[[400,.06,"triangle"]]}[k];
  let t=AC.currentTime;
  S.forEach(([f,d,w,f2])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=w||"sine";o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(.08,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);if(!f2)t+=d*.8});
 }
 document.addEventListener("click",e=>{if(e.target.closest("button"))sfx("click")});
-$("btnSnd").onclick=()=>{mute=!mute;$("btnSnd").textContent=mute?"🔇":"🔊"};
+$("btnSnd").onclick=()=>{mute=!mute;if(AMB)AMB.gain.value=mute?0:.012;$("btnSnd").textContent=mute?"🔇":"🔊"};
+let AMB=null;function amb(){if(AMB||mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type="sawtooth";o.frequency.value=48;g.gain.value=.012;o.connect(g);g.connect(AC.destination);o.start();AMB=g}catch(e){}}
 function bad(){const l=$("errL");l.classList.add("on");sfx("err");setTimeout(()=>l.classList.remove("on"),1500)}
 function blink(){const l=$("hdd");l.classList.add("on");setTimeout(()=>l.classList.remove("on"),400)}
 function msg(id,type,text){const m=$(id);m.className="msg "+type;m.textContent=text}
@@ -428,19 +445,20 @@ function act(k,el){
 
 /* Защита */
 const cv=$("cv"),cx=cv.getContext("2d"),bd=$("btnDef");
-const TY={imp:{hp:1,v:72,d:7,s:24},thu:{hp:2,v:88,d:9,s:24},tit:{hp:6,v:34,d:20,s:42},boss:{hp:30,v:20,d:45,s:64}};
+const DUR=80;
+const TY={imp:{hp:1,v:50,d:4,s:26},thu:{hp:2,v:60,d:5,s:26},tit:{hp:4,v:24,d:12,s:44},boss:{hp:16,v:14,d:28,s:66}};
 const SK=[0,268,0,236,30,236,30,214,60,214,60,244,95,244,95,200,125,200,125,230,170,230,170,190,200,190,200,238,240,238,240,212,280,212,280,246,320,246,320,205,360,205,360,268];
 const STR=Array.from({length:50},()=>[Math.random()*360,Math.random()*160,Math.random()*1.4+.4]);
 let G=null,raf=0;
 bd.onclick=()=>{
  if(G)return;
- G={hp:100,t:120,en:[],fx:[],st:[],sh:0,sp:0,sk:4,cd:0,fl:0,boss:0,last:0,bots:[{x:92,c:2.5,a:-1.57},{x:268,c:3.6,a:-1.57}]};
+ G={hp:100,t:DUR,en:[],fx:[],st:[],sh:0,sp:0,sk:4,cd:0,fl:0,boss:0,last:0,bots:[{x:92,c:2.5,a:-1.57},{x:268,c:3.6,a:-1.57}]};
  bd.style.display="none";$("hud").style.display="block";$("mG").className="msg";$("mEnd").style.display="none";
  show(9,false);hud();cv.scrollIntoView({block:"center"});raf=requestAnimationFrame(loop);
 };
-const shielded=e=>{const y=TY[e.t];if(!y.sh&&e.t!=="tit"&&e.t!=="boss")return false;const b=e.t==="boss";return((G.t+e.ph)%(b?3:2.2))>(b?1.3:.9)};
+const shielded=e=>{const y=TY[e.t];if(!y.sh&&e.t!=="tit"&&e.t!=="boss")return false;const b=e.t==="boss";return((G.t+e.ph)%(b?3:2.2))>(b?2:1.5)};
 function spawn(t){
- if(!t){const r=Math.random(),p=(120-G.t)/120;t=r<.12+p*.18?"tit":r<.5?"thu":"imp"}
+ if(!t){const r=Math.random(),p=(DUR-G.t)/DUR;t=r<.12+p*.18?"tit":r<.5?"thu":"imp"}
  G.en.push({t,x:30+Math.random()*300,y:-30,hp:TY[t].hp,ph:Math.random()*6});
 }
 function burst(x,y,n,c){for(let i=0;i<n;i++)G.fx.push({k:"p",x,y,vx:(Math.random()-.5)*200,vy:(Math.random()-.5)*200,a:1,c})}
@@ -463,18 +481,18 @@ function loop(ts){
  if(!G)return;
  const dt=Math.min(.05,(ts-(G.last||ts))/1000);G.last=ts;
  G.t-=dt;G.sp-=dt;G.sk-=dt;G.cd-=dt;G.sh=Math.max(0,G.sh-dt*20);G.fl=Math.max(0,G.fl-dt*3);
- const p=(120-G.t)/120;
- if(G.sp<=0){spawn();G.sp=Math.max(.35,1-p*.65)}
- if(G.sk<=0){G.st.push({x:90+Math.random()*180,t:1.3});G.sk=Math.max(2.6,5-p*3)}
- if(!G.boss&&G.t<60){G.boss=1;spawn("boss")}
+ const p=(DUR-G.t)/DUR;
+ if(G.sp<=0){spawn();G.sp=Math.max(.8,1.5-p*.6)}
+ if(G.sk<=0){G.st.push({x:90+Math.random()*180,t:2.4});G.sk=Math.max(6,10-p*3)}
+ if(!G.boss&&G.t<DUR/2){G.boss=1;spawn("boss")}
  for(const e of G.en.slice()){
   const y=TY[e.t],dx=180-e.x,dy=250-e.y,d=Math.hypot(dx,dy);
   e.x+=dx/d*y.v*dt+(e.t==="imp"?Math.sin(G.t*5+e.ph)*55*dt:e.t==="thu"?Math.sin(G.t*8+e.ph)*90*dt:0);e.y+=dy/d*y.v*dt;
   if(d<36){G.en.splice(G.en.indexOf(e),1);G.hp-=y.d;G.sh=9;G.fl=.6;sfx("hit")}
  }
- for(const s of G.st.slice()){s.t-=dt;if(s.t<=0){G.st.splice(G.st.indexOf(s),1);G.hp-=12;G.sh=12;G.fl=1;sfx("hit");burst(s.x,258,16,"#fff")}}
+ for(const s of G.st.slice()){s.t-=dt;if(s.t<=0){G.st.splice(G.st.indexOf(s),1);G.hp-=7;G.sh=12;G.fl=1;sfx("hit");burst(s.x,258,16,"#fff")}}
  for(const b of G.bots){b.c-=dt;
-  if(G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);b.a=Math.atan2(e.y-250,e.x-b.x);if(b.c<=0){fire(e.x,e.y,b.x,250,false);b.c=3.8}}}
+  if(G.en.length){const e=G.en.reduce((m,c)=>c.y>m.y?c:m);b.a=Math.atan2(e.y-250,e.x-b.x);if(b.c<=0){fire(e.x,e.y,b.x,250,false);b.c=2.8}}}
  draw();hud();
  if(G.hp<=0)return endG(false);
  if(G.t<=0)return endG(true);
@@ -515,14 +533,14 @@ function draw(){
  for(const b of G.bots){cx.save();cx.translate(b.x,266);cx.fillStyle="#454c60";cx.fillRect(-10,-18,20,18);cx.fillStyle="#9aa3b8";cx.fillRect(-7,-30,14,11);cx.fillStyle="#5c8dff";cx.fillRect(-4,-26,8,3);
   cx.translate(0,-14);cx.rotate(b.a);cx.fillStyle="#2a2f40";cx.fillRect(0,-3,18,6);cx.restore()}
  for(const e of G.en)drawE(e);
- for(const s of G.st){const k=s.t/1.3;cx.strokeStyle="#ff4d6d";cx.lineWidth=2;cx.globalAlpha=.5+.5*Math.sin(G.t*20);cx.beginPath();cx.arc(s.x,258,10+22*k,0,7);cx.stroke();cx.beginPath();cx.moveTo(s.x,0);cx.lineTo(s.x,258);cx.globalAlpha=.15;cx.stroke();cx.globalAlpha=1}
+ for(const s of G.st){const k=s.t/2.4;cx.strokeStyle="#ff4d6d";cx.lineWidth=2;cx.globalAlpha=.5+.5*Math.sin(G.t*20);cx.beginPath();cx.arc(s.x,258,10+22*k,0,7);cx.stroke();cx.beginPath();cx.moveTo(s.x,0);cx.lineTo(s.x,258);cx.globalAlpha=.15;cx.stroke();cx.globalAlpha=1}
  for(const f of G.fx.slice()){f.a-=.06;if(f.a<=0){G.fx.splice(G.fx.indexOf(f),1);continue}cx.globalAlpha=f.a;
   if(f.k==="l"){cx.strokeStyle=f.c;cx.lineWidth=3;cx.beginPath();cx.moveTo(f.x1,f.y1);cx.lineTo(f.x2,f.y2);cx.stroke()}
   else{f.x+=f.vx*.016;f.y+=f.vy*.016;cx.fillStyle=f.c||"#ffa500";cx.fillRect(f.x,f.y,3,3)}}
  cx.globalAlpha=1;if(G.fl>0){cx.fillStyle="rgba(255,60,80,"+G.fl*.25+")";cx.fillRect(-10,-10,380,320)}cx.restore();
 }
 function hud(){
- const hp=Math.max(0,Math.round(G?G.hp:100)),t=G?Math.max(0,Math.ceil(G.t)):120;
+ const hp=Math.max(0,Math.round(G?G.hp:100)),t=G?Math.max(0,Math.ceil(G.t)):DUR;
  $("hpD").textContent=hp;$("tmD").textContent=t;
  const b=$("hpBar");b.style.width=hp+"%";b.style.background=hp>50?"#8be0b5":hp>20?"#ffa500":"#ff4444";
 }
@@ -539,7 +557,8 @@ if(location.hash==="#dev")$("btnSkip").style.display="block";
 /* Этап 3: комната */
 const REWARD="BLR-ARES-7Q2K-91XM";
 const R={inv:[],sel:null,moved:0,hatch:0,safe:0,fell:0,notes:[]};
-const NM={sd:"Отвёртка",hm:"Молоток",key:"Ключ"};
+const NM={sd:"Отвёртка",hm:"Молоток",key:"Ключ",card:"Ключ-карта",key2:"Ключ №2",bulb:"Лампочка"};
+const R2={},R3={},R4={w:[]};
 const cap=(n,x)=>`<g class="cap" id="c${n}"><rect x="${x-4}" y="232" width="50" height="8" fill="#20232f"/><rect x="${x}" y="105" width="42" height="130" rx="14" fill="url(#m3)" stroke="#5a6178"/><rect x="${x+6}" y="116" width="30" height="100" rx="10" fill="#071218"/><g class="cp"><circle cx="${x+21}" cy="140" r="7" fill="#d9c3b0"/><rect x="${x+13}" y="149" width="16" height="36" rx="3" fill="#8a96a8"/><rect x="${x+14}" y="185" width="14" height="26" fill="#6e7a8c"/><rect data-a="body${n}" x="${x+15}" y="158" width="12" height="14" fill="#f3efe0" stroke="#999"/></g><rect class="fog" x="${x+6}" y="116" width="30" height="100" rx="10" fill="#b8f0ff" opacity=".3"/><rect data-a="cap${n}" x="${x+6}" y="116" width="30" height="100" rx="10" fill="url(#gl2)"/><path class="crk" d="M${x+10} 130L${x+22} 160L${x+12} 190M${x+34} 128L${x+22} 158L${x+32} 200" stroke="#e8fbff" fill="none" pointer-events="none"/><circle cx="${x+21}" cy="110" r="3" fill="#ff3b3b"/></g>`;
 $("room").innerHTML=`<svg viewBox="0 0 480 300" style="display:block;width:100%;border-radius:8px;border:1px solid #23253a"><defs><linearGradient id="wl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e3243"/><stop offset="1" stop-color="#171923"/></linearGradient><linearGradient id="m3" x1="0" x2="1"><stop offset="0" stop-color="#8a93a8"/><stop offset=".5" stop-color="#454c60"/><stop offset="1" stop-color="#262b3a"/></linearGradient><linearGradient id="gl2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ff3ff" stop-opacity=".45"/><stop offset="1" stop-color="#2a6a8a" stop-opacity=".2"/></linearGradient><radialGradient id="lg"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".5"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient></defs>
 <rect width="480" height="240" fill="url(#wl)"/><path d="M120 16V240M240 16V240M360 16V240" stroke="#0d0e14" stroke-width="2" opacity=".6"/><rect y="240" width="480" height="60" fill="#10111a"/><path d="M0 254H480M0 270H480M0 288H480" stroke="#1d2030" stroke-width="2"/><rect width="480" height="16" fill="#1a1c28"/><path d="M0 8H480" stroke="#3a3f55" stroke-width="3"/>
@@ -554,10 +573,10 @@ ${cap(1,150)}${cap(2,200)}
 <g data-a="door"><rect x="436" y="110" width="40" height="130" fill="#10111a" stroke="#5a6178" stroke-width="3"/><rect id="dr" x="438" y="112" width="36" height="126" fill="url(#m3)"/><circle cx="456" cy="176" r="9" fill="none" stroke="#1b1f2c" stroke-width="3"/><rect x="446" y="150" width="20" height="8" fill="#0b0d14"/><circle id="dl" cx="456" cy="132" r="4" fill="#ff3b3b"/></g></svg>`;
 function say(t){$("rmsg").textContent=t}
 function inv(){
- $("inv").innerHTML=R.inv.map(i=>'<span class="it'+(R.sel===i?" sel":"")+'" data-i="'+i+'">'+NM[i]+'</span>').join("");
+ $("inv").innerHTML=R.inv.map(i=>'<span class="it'+(i==="bulb"&&R4.hot?" hot":"")+(R.sel===i?" sel":"")+'" data-i="'+i+'">'+NM[i]+(i==="bulb"&&R4.hot?" (раскалена)":"")+'</span>').join("");
  $("notes").innerHTML=R.notes.length?"ЗАПИСИ:<br>"+R.notes.join("<br>"):"";
 }
-$("inv").onclick=e=>{const t=e.target.closest("[data-i]");if(t){R.sel=R.sel===t.dataset.i?null:t.dataset.i;inv()}};
+$("inv").onclick=e=>{const t=e.target.closest("[data-i]");if(!t)return;const i=t.dataset.i;if(i==="bulb"&&!R4.hot){openHeat();return}R.sel=R.sel===i?null:i;inv()};
 function note(t){say(t);if(!R.notes.includes(t)){R.notes.push(t);inv()}}
 function take(i,id){R.inv.push(i);$(id).classList.add("off");sfx("ok");inv()}
 function use(i){if(R.sel===i){R.sel=null;inv()}}
@@ -576,7 +595,7 @@ $("room").onclick=e=>{
  else if(a==="hm"){if(R.hatch&&!R.inv.includes("hm")&&!R.hmt){R.hmt=1;take("hm","hmo");say("Молоток.")}}
  else if(a==="cap1"||a==="cap2"){const c=N("c"+a[3]);
   if(c.classList.contains("br"))say("Стекло уже разбито.");
-  else if(sel==="hm"){c.classList.add("br");sfx("boom");say("Стекло разлетелось. Внутри тело и бумажка на груди.");use("hm")}
+  else if(sel==="hm"){c.classList.add("br");R["c"+a[3]]=1;sfx("boom");say("Стекло разлетелось. Внутри тело и бумажка на груди.");use("hm")}
   else say("Стекло не поддаётся. Нужно что-то тяжёлое.")}
  else if(a==="body1")note("Бумажка (левая капсула): «ПЕРВАЯ ЧАСТЬ КОДА: 301»");
  else if(a==="body2")note("Бумажка (правая капсула): «ВТОРАЯ ЧАСТЬ КОДА: 4599»");
@@ -588,7 +607,8 @@ $("room").onclick=e=>{
  else if(a==="key"){if(R.safe&&!R.kt){R.kt=1;take("key","keyg");say("Ключ от двери.")}}
  else if(a==="niche"){$("rwC").textContent=REWARD;$("rw").classList.add("on");sfx("win")}
  else if(a==="door"){
-  if(sel==="key"){N("dr").setAttribute("fill","#05060a");N("dl").setAttribute("fill","#6bf0a0");sfx("win");say("Замок щёлкнул. Дверь открыта. Задание пройдено. Следующее задание скоро.");use("key")}
+  if(sel==="key"){N("dr").setAttribute("fill","#05060a");N("dl").setAttribute("fill","#6bf0a0");sfx("win");R.door=1;say("Замок щёлкнул. Дверь открыта.");use("key");sfx("door");setTimeout(()=>go(2),1300)}
+  else if(R.door)go(2)
   else say("Тяжёлая дверь. Замок на месте, ключа нет.")}
 };
 $("kpX").onclick=()=>$("kp").classList.remove("on");
@@ -598,7 +618,145 @@ $("kpOk").onclick=async()=>{
  if(await H($("kpI").value.replace(/\D/g,""))===HS[10]){R.safe=1;$("kp").classList.remove("on");N("sdoor").classList.add("op");N("keyg").classList.remove("off");sfx("ok");say("Сейф открыт. Внутри лежит ключ.")}
  else bad();
 };
+/* Комнаты 2-5 */
+const FLR='<rect y="240" width="480" height="60" fill="#10111a"/><path d="M0 254H480M0 270H480M0 288H480" stroke="#1d2030" stroke-width="2"/><rect width="480" height="16" fill="#1a1c28"/><path d="M0 8H480" stroke="#3a3f55" stroke-width="3"/>';
+const WALL='<rect width="480" height="240" fill="url(#wl)"/><path d="M120 16V240M240 16V240M360 16V240" stroke="#0d0e14" stroke-width="2" opacity=".6"/>';
+const VG='<rect width="480" height="300" fill="url(#vg)" pointer-events="none"/>';
+const DST=Array.from({length:12},(_,i)=>`<circle class="dust" cx="${30+i*38}" cy="${180+i%4*20}" r="1.4" fill="#ffe9a8" style="animation-delay:${i*.6}s"/>`).join("");
+const door=(x,a,l)=>`<g data-a="${a}"><rect x="${x}" y="110" width="40" height="130" fill="#10111a" stroke="#5a6178" stroke-width="3"/><rect x="${x+2}" y="112" width="36" height="126" fill="url(#m3)"/><circle cx="${x+20}" cy="176" r="8" fill="none" stroke="#1b1f2c" stroke-width="3"/><text x="${x+20}" y="128" fill="#8fa6ff" font-size="12" text-anchor="middle">${l}</text></g>`;
+const svg=b=>`<svg viewBox="0 0 480 300" style="display:block;width:100%;border-radius:8px;border:1px solid #23253a">${b}${VG}</svg>`;
+// комната 2
+let sc="";for(let i=0;i<6;i++){const x=100+i%3*96,y=28+Math.floor(i/3)*66;sc+=`<rect class="scrn" x="${x}" y="${y}" width="88" height="58" rx="3" stroke="#3a3f55" stroke-width="2"/><g class="fd nz"><path d="M${x+8} ${y+48}L${x+30} ${y+20}L${x+52} ${y+40}L${x+80} ${y+14}" stroke="#7cf0b0" fill="none"/><rect x="${x+8}" y="${y+8}" width="${20+i*6}" height="3" fill="#7cf0b0"/></g><text class="fd" x="${x+6}" y="${y+54}" fill="#7cf0b0" font-size="7">CAM 0${i+1}</text>`}
+$("room2").innerHTML=svg(`<g id="g2">${WALL}${FLR}<rect x="88" y="20" width="304" height="140" fill="#12141d" stroke="#3a3f55"/>${sc}<polygon points="66,236 92,172 388,172 414,236" fill="url(#m3)" stroke="#5a6178" data-a="pc"/><rect x="150" y="190" width="120" height="22" rx="3" fill="#1b1f2c" data-a="pc"/><g fill="#d6dbea" data-a="pc">${Array.from({length:14},(_,i)=>`<circle cx="${110+i*18}" cy="182" r="3" fill="${i%3?"#3ddc84":"#ff5555"}"/>`).join("")}<rect x="290" y="186" width="80" height="6" rx="3"/><rect x="290" y="198" width="60" height="6" rx="3"/></g><ellipse cx="240" cy="232" rx="26" ry="6" fill="#0b0c12"/><rect x="226" y="206" width="28" height="24" rx="6" fill="#262a39"/>${door(10,"d21","◀")}${door(430,"d23","▶")}<rect class="dk" id="dk2" width="480" height="300" fill="#000" opacity=".72" pointer-events="none"/></g>`);
+// комната 3
+$("room3").innerHTML=svg(`<g id="g3">${WALL}${FLR}${door(10,"d32","◀")}<rect x="120" y="76" width="236" height="164" fill="#7fd0ff" fill-opacity=".07" stroke="#5a6178" stroke-width="3"/><g id="in3" class="off" style="transition:opacity 1s"><rect x="270" y="96" width="36" height="42" fill="#3a2a22" stroke="#aa8a60" stroke-width="3" data-a="port" id="pt3"/><circle cx="288" cy="112" r="7" fill="#d9c3b0" pointer-events="none"/><rect x="278" y="120" width="20" height="16" fill="#44506a" pointer-events="none"/><rect x="196" y="140" width="56" height="100" fill="#363b4d" stroke="#1b1e2a"/>${[0,1,2].map(i=>`<g data-a="dw${i+1}"><rect id="dw${i+1}" x="200" y="${146+i*30}" width="48" height="24" fill="#4a5168" stroke="#1b1e2a"/><rect x="216" y="${155+i*30}" width="16" height="4" fill="#aab2c6"/></g>`).join("")}<rect x="262" y="196" width="70" height="8" fill="#4a3f33"/><rect x="268" y="204" width="6" height="36" fill="#2e2620"/><rect x="320" y="204" width="6" height="36" fill="#2e2620"/></g><g data-a="bdoor"><rect id="bd3" x="128" y="120" width="46" height="120" fill="#5a7086" fill-opacity=".5" stroke="#8a93a8" stroke-width="3" style="transition:transform .8s;transform-box:fill-box;transform-origin:left"/><circle cx="164" cy="184" r="4" fill="#ff3b3b" id="bl3"/></g>${door(430,"d34","▶")}<rect x="394" y="150" width="22" height="34" rx="3" fill="#20232f" stroke="#8a93a8" data-a="reader"/><rect id="rl3" x="400" y="156" width="10" height="5" fill="#ff3b3b" pointer-events="none"/><rect class="dk" id="dk3" width="480" height="300" fill="#000" opacity=".5" pointer-events="none"/></g>`);
+// комната 4
+$("room4").innerHTML=svg(`<g id="g4">${WALL}${FLR}${door(10,"d43","◀")}<g data-a="panel"><rect x="64" y="64" width="120" height="176" fill="#2a2e3d" stroke="#6a728a" stroke-width="3"/>${Array.from({length:12},(_,i)=>`<rect x="${74+i%4*26}" y="${76+Math.floor(i/4)*20}" width="18" height="12" fill="#14161f" stroke="#555d75"/><rect id="pl4${i}" x="${79+i%4*26}" y="${79+Math.floor(i/4)*20}" width="8" height="6" fill="#444"/>`).join("")}</g><g data-a="wires"><rect x="74" y="142" width="100" height="30" fill="#0c0e17" stroke="#ffd36b"/><path d="M80 150H168M80 157H168M80 164H168" stroke="#ffd36b" stroke-dasharray="4 3"/></g><g data-a="sw"><rect x="104" y="184" width="40" height="46" rx="4" fill="#14161f" stroke="#8a93a8"/><rect id="lv4" x="118" y="190" width="12" height="20" rx="3" fill="#ff4d4d"/></g><path d="M64 120C30 130 30 200 60 215M64 200C40 214 36 236 90 240" stroke="#3a3f55" stroke-width="4" fill="none"/><g data-a="boiler"><rect x="236" y="96" width="100" height="144" rx="26" fill="url(#m3)" stroke="#6a728a" stroke-width="3"/><path d="M236 130H336M236 206H336" stroke="#1b1f2c" stroke-width="3"/><circle cx="286" cy="118" r="14" fill="#10111a" stroke="#aab2c6" stroke-width="3"/><path id="ndl4" d="M286 118L286 108" stroke="#7be8ff" stroke-width="2" style="transition:transform 2s;transform-origin:286px 118px"/><circle id="hd4c" cx="286" cy="176" r="22" fill="#14161f" stroke="#aab2c6" stroke-width="3"/></g><g data-a="hatch4"><circle id="hd4" cx="286" cy="176" r="19" fill="url(#m3)" style="transition:transform .6s,opacity .6s;transform-box:fill-box;transform-origin:left"/><circle cx="286" cy="176" r="4" fill="#1b1f2c" pointer-events="none"/><circle cx="286" cy="176" r="23" fill="transparent"/></g><g id="stm4" class="off"><circle class="dust" cx="266" cy="90" r="6" fill="#fff" opacity=".5"/><circle class="dust" cx="290" cy="86" r="8" fill="#fff" opacity=".4" style="animation-delay:1s"/><circle class="dust" cx="310" cy="90" r="5" fill="#fff" opacity=".5" style="animation-delay:2s"/></g><path d="M336 150H380V240M336 214H360" stroke="#3a3f55" stroke-width="6" fill="none"/><g id="lamp4" style="transition:transform .35s ease-out,opacity .3s;transform-origin:200px 16px"><path d="M200 16V62" stroke="#777d96" stroke-width="2"/><polygon points="180,62 220,62 210,84 190,84" fill="#6a728a" stroke="#aab2c6"/><circle cx="200" cy="88" r="6" fill="#ffe9a8"/><ellipse cx="200" cy="100" rx="60" ry="40" fill="url(#lg)"/></g><g id="ch4" class="off" data-a="chand"><rect x="172" y="224" width="56" height="14" rx="3" fill="#6a728a" stroke="#aab2c6"/><circle cx="200" cy="222" r="9" fill="#cfefff" fill-opacity=".6" stroke="#fff"/></g><g id="bg4" class="off" data-a="bulb"><circle cx="200" cy="226" r="8" fill="#ffe9a8" stroke="#fff"/><rect x="196" y="232" width="8" height="6" fill="#8a93a8"/></g><g data-a="secret"><rect x="444" y="120" width="32" height="120" fill="#20232f" stroke="#3a3f55" stroke-dasharray="3 3"/><circle cx="460" cy="180" r="4" fill="#0b0d14" stroke="#555d75"/></g></g>`);
+$("room5").innerHTML=svg(`${WALL}${FLR}${door(10,"d54","◀")}<text x="240" y="150" fill="#8fa6ff" font-size="16" text-anchor="middle">КОМНАТА 5</text><text x="240" y="176" fill="#777d96" font-size="11" text-anchor="middle">Задание скоро</text>`);
+// декор комнаты 1
+document.querySelector("#room svg").insertAdjacentHTML("beforeend",`<g pointer-events="none"><path d="M0 24H480M0 34H480" stroke="#3a3f55" stroke-width="5"/><circle cx="60" cy="29" r="6" fill="#aa4444"/><circle class="blk" cx="450" cy="30" r="4" fill="#ff3b3b"/><path d="M380 16V60M390 16V48" stroke="#14161f" stroke-width="3"/>${DST}<circle class="dust" cx="60" cy="40" r="5" fill="#fff" opacity=".25"/><rect y="250" width="480" height="3" fill="#ffd36b" opacity=".15"/></g>${VG}`);
+function go(n,q){
+ R.cur=n;$("lcd").textContent="ROOM 0"+n+"/5";["room","room2","room3","room4","room5"].forEach((id,i)=>$(id).classList.toggle("hid",i+1!==n));
+ $("view").scrollTop=0;if(!q)sfx("door");save();
+}
+function lit(q){R.power=1;["g2","g3"].forEach(i=>N(i).parentNode.classList.add("pw"));if(!q)sfx("power")}
+const ACT={
+ d21:()=>go(1),d23:()=>go(3),d32:()=>go(2),d43:()=>go(3),d54:()=>go(4),
+ pc:()=>{if(!R.power)say("Мониторы мертвы. В комнате нет питания.");else{$("term").classList.add("on");if(!$("tout").textContent)tp("BLR-ARCH v0.9. Введите запрос. (подсказка: help)");$("tq").focus()}},
+ bdoor:()=>{if(R3.open)say("Дверь поста открыта.");else{say("Электронный замок. Придётся вскрывать.");lpOpen()}},
+ dw1:()=>{if(!R3.open)return;say("Пусто. Скрепки и старый журнал.")},
+ dw2:()=>{if(!R3.open)return;say("Связка старых ключей без бирок. Не подходят.")},
+ dw3:()=>{if(!R3.open)return;N("dw3").setAttribute("x",208);if(!R3.card){R3.card=1;R.inv.push("card");sfx("ok");inv();say("В нижнем ящике лежала ключ-карта.")}else say("Ящик пуст.")},
+ port:()=>{if(!R3.open)return;N("pt3").style.transform="rotate(-12deg)";N("pt3").style.transformOrigin="288px 96px";if(!R3.k2){R3.k2=1;R.inv.push("key2");sfx("ok");inv();say("За портретом был спрятан ключ.")}else say("Портрет висит криво.")},
+ reader:()=>{if(R3.rd)say("Считыватель горит зелёным.");else if(R.sel==="card"){R3.rd=1;N("rl3").setAttribute("fill","#3ddc84");sfx("ok");say("Считыватель пискнул. Техническая дверь разблокирована.");use("card")}else say("Считыватель. Нужна ключ-карта.")},
+ d34:()=>{if(R3.rd)go(4);else say("Дверь заперта. Рядом считыватель карт.")},
+ panel:()=>say("Мощный электрощит. Клеммы и рубильник внизу."),
+ wires:()=>{if(R4.wires)say("Провода подключены.");else{wbuild();$("wr").classList.add("on")}},
+ sw:()=>{if(R.power)say("Питание уже подано.");else if(!R4.wires)say("Рубильник не держится: провода не подключены.");else if(!R4.heated)say("Автомат выбило: контур охлаждения холодный. Бойлер не прогрет.");else{N("lv4").setAttribute("y",212);lit();say("Рубильник вверх. Гул, свет, ток есть. Пора проверить компьютер.");setTimeout(()=>{document.querySelectorAll("[id^=pl4]").forEach(e=>e.setAttribute("fill","#3ddc84"))},200)}},
+ hatch4:()=>{
+  const sel=R.sel;
+  if(sel==="bulb"&&R4.hot&&!R4.in){R4.open=1;N("hd4").style.transform="scaleX(.15)";N("hd4").style.opacity=".3";R4.in=1;R.inv=R.inv.filter(i=>i!=="bulb");R.sel=null;inv();sfx("snap");say("Раскалённая лампочка влетела в бойлер. Закрой люк (нажми на него), потом нажми на сам бойлер.");return}
+  if(R4.in&&!R4.open&&!R4.heated){ACT.boiler();return}
+  R4.open=!R4.open;N("hd4").style.transform=R4.open?"scaleX(.15)":"";N("hd4").style.opacity=R4.open?".3":"1";sfx("door");say(R4.open?"Люк бойлера открыт. Внутри холодно и гулко.":"Люк закрыт.")},
+boiler:()=>{
+  if(R.sel==="bulb"&&R4.hot&&!R4.in){ACT.hatch4();return}
+  if(R4.in&&!R4.heated){if(R4.open){R4.open=0;N("hd4").style.transform="";N("hd4").style.opacity="1";sfx("door")}R4.heated=1;sfx("pop");sfx("zap");N("stm4").classList.remove("off");N("ndl4").style.transform="rotate(110deg)";say("Хлопок! Лампа лопнула, бойлер быстро прогрелся. Стрелка пошла вверх.")}
+  else if(R4.heated)say("Бойлер горячий, стрелка в красной зоне.");else say("Огромный бойлер охлаждения. Он совсем холодный.")},
+ chand:()=>{if(R.sel==="hm"){N("ch4").classList.add("off");N("bg4").classList.remove("off");R4.broke=1;sfx("glass");say("Люстра разбита. Внутри уцелела лампочка.");use("hm")}else say("Тяжёлая упавшая люстра. Её нужно разбить.")},
+ bulb:()=>{if(!R4.bt){R4.bt=1;R.inv.push("bulb");N("bg4").classList.add("off");sfx("ok");inv();say("Лампочка. Она холодная.")}},
+ secret:()=>{if(R.sel==="key2"){say("Ключ повернулся. Секретная дверь открывается.");use("key2");sfx("door");setTimeout(()=>go(5),1300)}else say("Участок стены с замочной скважиной. Что-то тут не так.")}
+};
+$("rx").onclick=e=>{const t=e.target.closest("[data-a]");if(t&&ACT[t.dataset.a])ACT[t.dataset.a]()};
+// тряска (комната 4)
+let shN=0,lx=0,ld=0;
+function shake(){
+ if(R.cur!==4||R4.fell)return;shN++;const l=N("lamp4");l.style.transform="rotate("+((shN%2?1:-1)*Math.min(40,shN*3))+"deg)";
+ N("g4").classList.remove("shk");void N("g4").getBoundingClientRect();N("g4").classList.add("shk");
+ if(shN===4){say("Под потолком что-то поскрипывает.");sfx("creak")}
+ if(shN>=10){R4.fell=1;l.style.transform="translateY(150px)";l.style.transition="transform .9s cubic-bezier(.5,0,1,.6)";sfx("creak");setTimeout(()=>{l.style.opacity=0;N("ch4").classList.remove("off");sfx("boom");say("Лампа сорвалась и рухнула на пол.")},900)}
+}
+$("room4").addEventListener("pointermove",e=>{
+ const dx=e.clientX-lx,d=Math.sign(dx);if(!d)return;
+ if(d===ld||!ld){ld=d;lx=e.clientX}
+ else if(Math.abs(dx)>22){shake();ld=d;lx=e.clientX}
+});
+window.addEventListener("devicemotion",e=>{const a=e.accelerationIncludingGravity;if(a&&Math.hypot(a.x||0,a.y||0,a.z||0)>22)shake()});
+// взлом
+let lpS=0,lpP=0,lpZ=0;
+function lpNew(){lpZ=15+Math.random()*55;$("lpz").style.left=lpZ+"%";$("lpz").style.width="16%";$("lps").textContent="●".repeat(lpS)+"○".repeat(3-lpS)}
+function lpLoop(ts){if(!$("lp").classList.contains("on"))return;lpP=50+48*Math.sin(ts/(340-lpS*60));$("lpm").style.left=lpP+"%";requestAnimationFrame(lpLoop)}
+function lpOpen(){lpS=0;lpNew();$("lp").classList.add("on");requestAnimationFrame(lpLoop)}
+$("lpx").onclick=()=>$("lp").classList.remove("on");
+$("lpb").onclick=()=>{
+ if(lpP>=lpZ&&lpP<=lpZ+16){lpS++;sfx("tick");if(lpS>=3){$("lp").classList.remove("on");R3.open=1;N("bd3").style.transform="scaleX(.15)";N("bl3").setAttribute("fill","#3ddc84");N("in3").classList.remove("off");sfx("ok");say("Замок взломан. Внутри пост охраны: шкаф с ящиками, стол, портрет.")}else lpNew()}
+ else{bad();lpS=0;lpNew()}
+};
+// нагрев
+let ht=0,hl=0;
+function openHeat(){ht=0;hl=0;$("heat").classList.add("on");requestAnimationFrame(hLoop)}
+function hDone(){R4.hot=1;$("heat").classList.remove("on");sfx("win");R.sel="bulb";inv();save();say("Лампочка раскалена и выбрана. Нажми на люк бойлера, чтобы бросить её внутрь.");}
+function hLoop(ts){
+ if(!$("heat").classList.contains("on"))return;
+ const dt=hl?(ts-hl)/1000:0;hl=ts;ht=Math.max(0,ht-16*dt);
+ $("hbar").style.width=ht+"%";$("hg").setAttribute("opacity",ht/100);$("hb").setAttribute("fill","rgb("+(90+ht*1.6)+","+(74+ht*.6)+",58)");
+ if(ht>=100){hDone();return}
+ requestAnimationFrame(hLoop);
+}
+$("hbtn").onpointerdown=e=>{e.preventDefault();ht=Math.min(100,ht+10);sfx("tick");if(ht>=100&&!R4.hot)hDone()};
+$("hx").onclick=()=>$("heat").classList.remove("on");
+// провода
+const WC=["#3a7bff","#ff3b3b","#222","#3ddc84","#ffd24d"],RO=[2,4,1,3,0];let wsl=null;
+function wbuild(){
+ let o="";WC.forEach((c,i)=>{if(!R4.w.includes(i))o+=`<circle data-l="${i}" cx="30" cy="${30+i*42}" r="13" fill="${c}" stroke="#fff" stroke-width="2"/>`});
+ RO.forEach((ci,j)=>{o+=`<circle data-r="${ci}" cx="230" cy="${30+j*42}" r="13" fill="${WC[ci]}" stroke="#fff" stroke-width="2"/>`});
+ R4.w.forEach(i=>o="<line x1=\"30\" y1=\""+(30+i*42)+"\" x2=\"230\" y2=\""+(30+RO.indexOf(i)*42)+"\" stroke=\""+WC[i]+"\" stroke-width=\"5\"/><circle cx=\"30\" cy=\""+(30+i*42)+"\" r=\"13\" fill=\""+WC[i]+"\" stroke=\"#fff\" stroke-width=\"2\"/>"+o);
+ $("wsv").innerHTML=o;
+}
+$("wsv").onclick=e=>{
+ const c=e.target;
+ if(c.dataset.l!==undefined){wsl=+c.dataset.l;sfx("tick")}
+ else if(c.dataset.r!==undefined&&wsl!==null){
+  if(+c.dataset.r===wsl){R4.w.push(wsl);sfx("ok");wbuild();if(R4.w.length>=5){R4.wires=1;setTimeout(()=>{$("wr").classList.remove("on");N("pl40").setAttribute("fill","#3ddc84");say("Все пять проводов подключены. Рубильник теперь можно включать.")},500)}}
+  else{bad()}
+  wsl=null;
+ }
+};
+$("wx").onclick=()=>$("wr").classList.remove("on");
+// компьютер
+const DB=[["help|помощь","Введи слово: имя, предмет или место."],["ares|арес","ПРОТОКОЛ ARES: оборонная система бункера. Режим: резерв."],["blr|ricoshet|рикошет","BLR — Ball Ricoshet. Архив 001. Секретные архивы, протокол B."],["pruzek|прузек","PRUZEK-07: код доступа к архиву. Статус: использован."],["ключ|key|запас","ЗАПАСНОЙ КЛЮЧ: на посту охраны, где дежурный смотрит со стены. Ищи за тем, кто висит в раме."],["охран|пост|карта|card","ПОСТ ОХРАНЫ: замок электронный. Ключ-карта лежит там, где хранят то, что ниже всего."],["бойлер|кот","БОЙЛЕР ОХЛАЖДЕНИЯ: для запуска нужен резкий перегрев. Тепло берётся из света."],["питани|ток|щит|провод","ЩИТОК: провода идут цвет в цвет. Синий, красный, чёрный, зелёный, жёлтый. Рубильник включается последним."],["сейф|награ|reward","ХРАНИЛИЩЕ: за сейфом тайник. Крепление на винтах."],["камер|cam","КАМЕРЫ 01-06: все помещения без движения. Аварийный режим."]];
+function tp(t){$("tout").textContent+=(t?"\n":"")+t;$("tout").scrollTop=1e5}
+function tq(){const q=$("tq").value.toLowerCase().trim();if(!q)return;tp("> "+q);const h=DB.find(d=>d[0].split("|").some(k=>q.includes(k)));tp(h?h[1]:"ПО ЗАПРОСУ НИЧЕГО НЕ НАЙДЕНО.");$("tq").value="";sfx("tick")}
+$("tgo").onclick=tq;$("tq").onkeydown=e=>{if(e.key==="Enter")tq()};$("tx").onclick=()=>$("term").classList.remove("on");
+
 inv();
+
+function save(){try{localStorage.setItem("blr3",JSON.stringify({R:{inv:R.inv,moved:R.moved,hatch:R.hatch,safe:R.safe,fell:R.fell,notes:R.notes,sdt:R.sdt,hmt:R.hmt,kt:R.kt,door:R.door,power:R.power,cur:R.cur,c1:R.c1,c2:R.c2},R3,R4,shN}))}catch(e){}}
+document.addEventListener("click",()=>setTimeout(save,60));
+function load3(){
+ let d;try{d=JSON.parse(localStorage.getItem("blr3"))}catch(e){}
+ if(!d)return;
+ Object.assign(R,d.R);Object.assign(R3,d.R3);Object.assign(R4,d.R4);shN=d.shN||0;
+ const cl=(id,c)=>N(id).classList.add(c),ok=(id,c)=>N(id).setAttribute("fill",c);
+ if(R.moved)cl("ward","mv");
+ if(R.hatch){cl("hdoor","op");if(!R.hmt)N("hmo").classList.remove("off")}
+ if(R.sdt)cl("sdo","off");
+ [1,2].forEach(n=>{if(R["c"+n])cl("c"+n,"br")});
+ if(R.safe){cl("sdoor","op");if(!R.kt)N("keyg").classList.remove("off")}
+ if(R.fell){cl("safeg","fell");N("niche").classList.remove("off")}
+ if(R.door){ok("dr","#05060a");ok("dl","#6bf0a0")}
+ if(R3.open){N("in3").classList.remove("off");N("bd3").style.transform="scaleX(.15)";ok("bl3","#3ddc84")}
+ if(R3.card)N("dw3").setAttribute("x",208);
+ if(R3.k2){N("pt3").style.transform="rotate(-12deg)";N("pt3").style.transformOrigin="288px 96px"}
+ if(R3.rd)ok("rl3","#3ddc84");
+ if(R4.fell){N("lamp4").style.opacity=0;if(!R4.broke)N("ch4").classList.remove("off")}
+ if(R4.broke&&!R4.bt)N("bg4").classList.remove("off");
+ if(R4.open){N("hd4").style.transform="scaleX(.15)";N("hd4").style.opacity=".3"}
+ if(R4.heated){N("stm4").classList.remove("off");N("ndl4").style.transform="rotate(110deg)"}
+ if(R4.wires)ok("pl40","#3ddc84");
+ if(R.power){lit(1);N("lv4").setAttribute("y",212);document.querySelectorAll("[id^=pl4]").forEach(e=>e.setAttribute("fill","#3ddc84"))}
+ R.sel=null;inv();go(R.cur||1,1);
+}
+load3();
 
 /* Восстановление прогресса */
 (function(){
